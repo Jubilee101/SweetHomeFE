@@ -2,7 +2,7 @@ const domain = "http://localhost:8080";
 
 
 export const login = (credential, asManager) => {
-  const loginUrl = `${domain}/authenticate/${asManager ? "manager" : "residen"}`;
+  const loginUrl = `${domain}/authenticate/${asManager ? "manager" : "resident"}`;
   return fetch(loginUrl, {
     method: "POST",
     headers: {

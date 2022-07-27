@@ -1,87 +1,247 @@
 import React from "react";
-import { Button, Checkbox, Form, Input, Layout } from "antd"
+import { Form, Button, Input, Space, Checkbox, message, Modal, } from "antd";
+import { UserOutlined } from "@ant-design/icons";
+import { login, register } from "../utils";
 
-const { Component } = React;
-const { Content, Row } = Layout;
-const tailLayout = {
-  wrapperCol: {
-    offset: 8,
-    span: 16,
-  },
-};
+class LoginPage extends React.Component {
+  formRef = React.createRef();
+  state = {
+    asManager: false,
+    loading: false,
+  };
 
-class LoginPage extends Component {
+  onFinish = () => {
+    console.log("finish form");
+  };
+  handleCheckboxOnChange = (e) => {
+    this.setState({
+      asManager: e.target.checked,
+    });
+  };
+
+  handleLogin = async () => {
+    const formInstance = this.formRef.current;
+
+    try {
+      await formInstance.validateFields();
+    } catch (error) {
+      return;
+    }
+
+    this.setState({
+      loading: true,
+    });
+
+    try {
+      const { asManager } = this.state;
+      const resp = await login(formInstance.getFieldsValue(true), asManager);
+      this.props.handleLoginSuccess(resp.token, asManager);
+    } catch (error) {
+      message.error(error.message);
+    } finally {
+      this.setState({
+        loading: false,
+      });
+    }
+  };
 
   render() {
     return (
       <div style={{ width: 500, margin: "20px auto" }}>
-      <Form
-        name="basic"
-        type="flex" justify="center" align="middle" style={{ minHeight: '100vh', marginTop: "64px" }}
-        labelCol={{
-          span: 8,
-        }}
-        wrapperCol={{
-          span: 12,
-        }}
-        initialValues={{
-          remember: true,
-        }}
-        // onFinish={onFinish}
-        // onFinishFailed={onFinishFailed}
-        autoComplete="off"
-      >
-        <Form.Item
-          label="Email"
-          name="username"
-          labelCol={{
-            span: 4
-          }}
-          wrapperCol={{
-            span: 12
-          }}
-          rules={[
-            {
-              required: true,
-              message: 'Please input your Email!',
-            },
-          ]}
-        >
-          <Input />
-        </Form.Item>
-
-        <Form.Item
-          label="Password"
-          name="password"
-          rules={[
-            {
-              required: true,
-              message: 'Please input your password!',
-            },
-          ]}
-          labelCol={{
-            span: 4
-          }}
-          wrapperCol={{
-            span: 12
-          }}
-        >
-          <Input.Password />
-
-        </Form.Item>
-
-        <Form.Item>
-
-          <Button type="primary" htmlType="submit" style={{display: "flex", justifyContent: "center"}}>
-            Submit
+        <Form ref={this.formRef} onFinish={this.onFinish} style={{ marginTop: "192px" }}>
+          <Form.Item
+            name="email"
+            rules={[
+              {
+                required: true,
+                message: "Please input your Email!",
+              },
+            ]}
+          >
+            <Input
+              disabled={this.state.loading}
+              prefix={<UserOutlined className="site-form-item-icon" />}
+              placeholder="Email: email@example.com"
+            />
+          </Form.Item>
+          <Form.Item
+            name="password"
+            rules={[
+              {
+                required: true,
+                message: "Please input your Password!",
+              },
+            ]}
+          >
+            <Input.Password
+              disabled={this.state.loading}
+              placeholder="Password"
+            />
+          </Form.Item>
+        </Form>
+        <Space>
+          <Button
+            onClick={this.handleLogin}
+            disabled={this.state.loading}
+            shape="round"
+            type="primary"
+          >
+            Login
           </Button>
-          <Button type="link" htmlType="button" style={{display: "flex", justifyContent: "center"}}>
-            New here? Create your account
-          </Button>
-
-        </Form.Item>
-      </Form>
+          <Checkbox
+            disabled={this.state.loading}
+            checked={this.state.asManager}
+            onChange={this.handleCheckboxOnChange}
+          >
+            As Manager
+          </Checkbox>
+          <RegiterButton />
+        </Space>
       </div>
     );
   }
 }
+
+class RegiterButton extends React.Component {
+  formRef = React.createRef();
+  state = {
+    asManager: false,
+    loading: false,
+    modalVisible: false,
+  }
+  onFinish = () => {
+    console.log("finish form");
+  };
+
+  handleCancel = () => {
+    this.setState({
+      modalVisible: false,
+    });
+  };
+
+  handleCheckboxOnChange = (e) => {
+    this.setState({
+      asManager: e.target.checked,
+    });
+  };
+
+  handleRegister = async () => {
+    const formInstance = this.formRef.current;
+    try {
+      await formInstance.validateFields();
+    } catch (error) {
+      return;
+    }
+
+    this.setState({
+      loading: true,
+    });
+
+    try {
+      await register(formInstance.getFieldsValue(true), this.state.asManager);
+      message.success("Thanks for signing up!");
+      this.handleCancel();
+    } catch (error) {
+      message.error(error.message);
+    } finally {
+      this.setState({
+        loading: false,
+      });
+    }
+  };
+
+
+
+  handleLoginPageRegister = () => {
+    this.setState({
+      modalVisible: true,
+    });
+  };
+
+  render() {
+    return (
+      <>
+        <Button onClick={this.handleLoginPageRegister} shape="round" type="link">
+          New here? Create your account
+        </Button>
+        <Modal
+          destroyOnClose={true}
+          title="Create Your Account"
+          visible={this.state.modalVisible}
+          footer={null}
+          onCancel={this.handleCancel}
+        >
+          <Form
+            preserve={false}
+            labelCol={{ span: 8 }}
+            wrapperCol={{ span: 16 }}
+            ref={this.formRef}
+            onFinish={this.onFinish}
+          >
+            <Form.Item
+              label="Name"
+              name="name"
+              rules={[{ required: true }]}
+            >
+              <Input
+                disabled={this.state.loading}
+                placeholder="Please input your name"
+              />
+            </Form.Item>
+            <Form.Item
+              label="Email"
+              name="email"
+              rules={[{ required: true }]}
+            >
+              <Input
+                disabled={this.state.loading}
+                placeholder="Please input your email"
+              />
+            </Form.Item>
+            <Form.Item
+              label="Password"
+              name="password"
+              rules={[{ required: true }]}
+            >
+              <Input.Password
+                disabled={this.state.loading}
+                placeholder="Please input your password"
+              />
+            </Form.Item>
+
+            <Form.Item
+              label="Room Number(optional)"
+              name="room"
+            >
+              <Input
+                disabled={this.state.loading}
+                placeholder="Only for resident signing up"
+              />
+            </Form.Item>
+            <Space style={{ display: "flex", justifyContent: "center" }}>
+              <Checkbox
+                disabled={this.state.loading}
+                checked={this.state.asManager}
+                onChange={this.handleCheckboxOnChange}
+              >
+                Register a manager account
+              </Checkbox>
+              <Button
+                onClick={this.handleRegister}
+                disabled={this.state.loading}
+                loading={this.state.loading}
+                shape="round"
+                type="primary"
+                htmlType="submit"
+              >
+                Create Account
+              </Button>
+            </Space>
+          </Form>
+        </Modal>
+      </>
+    );
+  }
+}
+
+export default LoginPage;
