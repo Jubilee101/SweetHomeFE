@@ -1,25 +1,33 @@
-import logo from './logo.svg';
-import './App.css';
+import { Layout } from "antd";
+import React from "react";
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+import LoginPage from "./components/LoginPage";
+
+const { Component } = React;
+const { Header, Content } = Layout;
+class App extends Component {
+  componentDidMount() {
+
+  }
+  renderContent() {
+    if (true) {
+      return <LoginPage />
+    }
+  }
+  render() {
+    return (
+      <Layout style={{ height: "100vh" }}>
+        <Header style={{ display: "flex", justifyContent: "space-between", backgroundColor: "#6667AB", height: "96px"}}>
+          <div style={{ fontSize: 24, fontWeight: 600, color: "white", lineHeight: "96px"}}>
+            SweetHome
+          </div>
+        </Header>
+        <Content>
+          {this.renderContent()}
+        </Content>
+      </Layout>
+    )
+  }
 }
 
 export default App;
