@@ -108,6 +108,7 @@ class RegiterButton extends React.Component {
     asManager: false,
     loading: false,
     modalVisible: false,
+    componentDisabled: false,
   }
   onFinish = () => {
     console.log("finish form");
@@ -122,6 +123,7 @@ class RegiterButton extends React.Component {
   handleCheckboxOnChange = (e) => {
     this.setState({
       asManager: e.target.checked,
+      componentDisabled: e.target.checked,
     });
   };
 
@@ -178,6 +180,20 @@ class RegiterButton extends React.Component {
             ref={this.formRef}
             onFinish={this.onFinish}
           >
+            <Form.Item name="account_type" 
+            labelCol={{ span: 8 }}
+            wrapperCol={{ span: 20 }}
+            style={{marginLeft: "158px", marginBottom: "20px"}}
+            >
+              <Checkbox
+                disabled={this.state.loading}
+                checked={this.state.asManager}
+                onChange={this.handleCheckboxOnChange}
+              >
+                Registering a manager account?
+              </Checkbox>
+            </Form.Item>
+
             <Form.Item
               label="Name"
               name="name"
@@ -214,18 +230,11 @@ class RegiterButton extends React.Component {
               name="room"
             >
               <Input
-                disabled={this.state.loading}
+                disabled={this.state.loading || this.state.componentDisabled}
                 placeholder="Only for resident signing up"
               />
             </Form.Item>
             <Space style={{ display: "flex", justifyContent: "center" }}>
-              <Checkbox
-                disabled={this.state.loading}
-                checked={this.state.asManager}
-                onChange={this.handleCheckboxOnChange}
-              >
-                Register a manager account
-              </Checkbox>
               <Button
                 onClick={this.handleRegister}
                 disabled={this.state.loading}
