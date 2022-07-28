@@ -92,6 +92,7 @@ class LoginPage extends React.Component {
             disabled={this.state.loading}
             checked={this.state.asManager}
             onChange={this.handleCheckboxOnChange}
+            style={{ marginLeft: "24px" }}
           >
             As Manager
           </Checkbox>
@@ -180,10 +181,10 @@ class RegiterButton extends React.Component {
             ref={this.formRef}
             onFinish={this.onFinish}
           >
-            <Form.Item name="account_type" 
-            labelCol={{ span: 8 }}
-            wrapperCol={{ span: 20 }}
-            style={{marginLeft: "158px", marginBottom: "20px"}}
+            <Form.Item name="account_type"
+              labelCol={{ span: 8 }}
+              wrapperCol={{ span: 20 }}
+              style={{ marginLeft: "158px", marginBottom: "20px" }}
             >
               <Checkbox
                 disabled={this.state.loading}
