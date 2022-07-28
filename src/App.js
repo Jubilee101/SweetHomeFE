@@ -49,6 +49,7 @@ class App extends Component {
       return <LoginPage handleLoginSuccess={this.handleLoginSuccess}/>
     }
   }
+  
   render() {
     return (
       <Layout style={{ height: "100vh" }}>

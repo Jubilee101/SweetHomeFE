@@ -109,7 +109,6 @@ class RegiterButton extends React.Component {
     asManager: false,
     loading: false,
     modalVisible: false,
-    componentDisabled: false,
   }
   onFinish = () => {
     console.log("finish form");
@@ -124,7 +123,6 @@ class RegiterButton extends React.Component {
   handleCheckboxOnChange = (e) => {
     this.setState({
       asManager: e.target.checked,
-      componentDisabled: e.target.checked,
     });
   };
 
@@ -153,8 +151,6 @@ class RegiterButton extends React.Component {
     }
   };
 
-
-
   handleLoginPageRegister = () => {
     this.setState({
       modalVisible: true,
@@ -164,7 +160,7 @@ class RegiterButton extends React.Component {
   render() {
     return (
       <>
-        <Button onClick={this.handleLoginPageRegister} shape="round" type="link">
+        <Button onClick={this.handleLoginPageRegister} shape="round" type="link" >
           New here? Create your account
         </Button>
         <Modal
@@ -202,7 +198,7 @@ class RegiterButton extends React.Component {
             >
               <Input
                 disabled={this.state.loading}
-                placeholder="Please input your name"
+                placeholder="your name"
               />
             </Form.Item>
             <Form.Item
@@ -212,7 +208,7 @@ class RegiterButton extends React.Component {
             >
               <Input
                 disabled={this.state.loading}
-                placeholder="Please input your email"
+                placeholder="email@example.com"
               />
             </Form.Item>
             <Form.Item
@@ -222,7 +218,7 @@ class RegiterButton extends React.Component {
             >
               <Input.Password
                 disabled={this.state.loading}
-                placeholder="Please input your password"
+                placeholder="*****—*****—*****"
               />
             </Form.Item>
 
@@ -231,8 +227,8 @@ class RegiterButton extends React.Component {
               name="room"
             >
               <Input
-                disabled={this.state.loading || this.state.componentDisabled}
-                placeholder="Only for resident signing up"
+                disabled={this.state.loading || this.state.asManager}
+                placeholder="only for resident signing up"
               />
             </Form.Item>
             <Space style={{ display: "flex", justifyContent: "center" }}>
