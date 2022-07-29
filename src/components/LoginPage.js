@@ -92,6 +92,7 @@ class LoginPage extends React.Component {
             disabled={this.state.loading}
             checked={this.state.asManager}
             onChange={this.handleCheckboxOnChange}
+            style={{ marginLeft: "24px" }}
           >
             As Manager
           </Checkbox>
@@ -150,8 +151,6 @@ class RegiterButton extends React.Component {
     }
   };
 
-
-
   handleLoginPageRegister = () => {
     this.setState({
       modalVisible: true,
@@ -161,7 +160,7 @@ class RegiterButton extends React.Component {
   render() {
     return (
       <>
-        <Button onClick={this.handleLoginPageRegister} shape="round" type="link">
+        <Button onClick={this.handleLoginPageRegister} shape="round" type="link" >
           New here? Create your account
         </Button>
         <Modal
@@ -178,6 +177,20 @@ class RegiterButton extends React.Component {
             ref={this.formRef}
             onFinish={this.onFinish}
           >
+            <Form.Item name="account_type"
+              labelCol={{ span: 8 }}
+              wrapperCol={{ span: 20 }}
+              style={{ marginLeft: "158px", marginBottom: "20px" }}
+            >
+              <Checkbox
+                disabled={this.state.loading}
+                checked={this.state.asManager}
+                onChange={this.handleCheckboxOnChange}
+              >
+                Registering a manager account?
+              </Checkbox>
+            </Form.Item>
+
             <Form.Item
               label="Name"
               name="name"
@@ -185,7 +198,7 @@ class RegiterButton extends React.Component {
             >
               <Input
                 disabled={this.state.loading}
-                placeholder="Please input your name"
+                placeholder="your name"
               />
             </Form.Item>
             <Form.Item
@@ -195,7 +208,7 @@ class RegiterButton extends React.Component {
             >
               <Input
                 disabled={this.state.loading}
-                placeholder="Please input your email"
+                placeholder="email@example.com"
               />
             </Form.Item>
             <Form.Item
@@ -205,7 +218,7 @@ class RegiterButton extends React.Component {
             >
               <Input.Password
                 disabled={this.state.loading}
-                placeholder="Please input your password"
+                placeholder="*****—*****—*****"
               />
             </Form.Item>
 
@@ -214,18 +227,11 @@ class RegiterButton extends React.Component {
               name="room"
             >
               <Input
-                disabled={this.state.loading}
-                placeholder="Only for resident signing up"
+                disabled={this.state.loading || this.state.asManager}
+                placeholder="only for resident signing up"
               />
             </Form.Item>
             <Space style={{ display: "flex", justifyContent: "center" }}>
-              <Checkbox
-                disabled={this.state.loading}
-                checked={this.state.asManager}
-                onChange={this.handleCheckboxOnChange}
-              >
-                Register a manager account
-              </Checkbox>
               <Button
                 onClick={this.handleRegister}
                 disabled={this.state.loading}
