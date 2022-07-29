@@ -1,6 +1,6 @@
 import React from "react";
 import { Form, Button, Input, Space, Checkbox, message, Modal, Typography, Divider, Layout } from "antd";
-import { UserOutlined, CheckCircleOutlined, CloseCircleOutlined } from "@ant-design/icons";
+import { CheckCircleOutlined, CloseCircleOutlined, KeyOutlined, MailOutlined, LockOutlined } from "@ant-design/icons";
 import { login, register } from "../utils";
 const { Content } = Layout;
 const { Title } = Typography;
@@ -64,7 +64,7 @@ class LoginPageAlter extends React.Component {
           >
             <Input
               disabled={this.state.loading}
-              prefix={<UserOutlined className="site-form-item-icon" />}
+              prefix={<MailOutlined className="site-form-item-icon" />}
               placeholder="Email: email@example.com"
             />
           </Form.Item>
@@ -79,6 +79,7 @@ class LoginPageAlter extends React.Component {
           >
             <Input.Password
               disabled={this.state.loading}
+              prefix={<KeyOutlined className="site-form-item-icon" />}
               placeholder="Password"
             />
           </Form.Item>
@@ -102,13 +103,13 @@ class LoginPageAlter extends React.Component {
           </Checkbox>
         </Space>
         <Divider style={{ margin: "24 0px" }}></Divider>
-        <RegiterButton />
+        <RegisterButton />
       </div>
     );
   }
 }
 
-class RegiterButton extends React.Component {
+class RegisterButton extends React.Component {
   formRef = React.createRef();
   state = {
     asManager: false,
