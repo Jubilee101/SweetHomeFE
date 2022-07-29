@@ -152,7 +152,7 @@ class RegiterButton extends React.Component {
         registered: true,
       })
     } catch (error) {
-      message.error(error.message + ". The user may already exist");
+      message.error(error.message + ". The user may already exist.");
     } finally {
       this.setState({
         loading: false,
