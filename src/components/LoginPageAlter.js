@@ -1,8 +1,8 @@
 import React from "react";
 import { Form, Button, Input, Space, Checkbox, message, Modal, Typography, Divider, Layout } from "antd";
-import { UserOutlined, CheckCircleOutlined } from "@ant-design/icons";
+import { UserOutlined, CheckCircleOutlined, CloseCircleOutlined } from "@ant-design/icons";
 import { login, register } from "../utils";
-const{ Content } = Layout;
+const { Content } = Layout;
 const { Title } = Typography;
 
 class LoginPageAlter extends React.Component {
@@ -114,7 +114,7 @@ class RegiterButton extends React.Component {
     asManager: false,
     loading: false,
     modalVisible: false,
-    registered: true
+    registered: false,
   }
   onFinish = () => {
     console.log("finish form");
@@ -149,10 +149,10 @@ class RegiterButton extends React.Component {
       await register(formInstance.getFieldsValue(true), this.state.asManager);
       // message.success("Thanks for signing up!");
       this.setState({
-        registered: true
+        registered: true,
       })
     } catch (error) {
-      message.error(error.message);
+      message.error(error.message + ". The user may already exist");
     } finally {
       this.setState({
         loading: false,
@@ -170,7 +170,7 @@ class RegiterButton extends React.Component {
     if (!this.state.registered) {
       return (
         <Content
-        style={{display: "none"}}
+          loading={this.state.loading}
         >
           <Title level={3} style={{ display: "flex", justifyContent: "center" }}>
             Create your account
@@ -255,24 +255,24 @@ class RegiterButton extends React.Component {
     } else {
       return (
         <Content
-        loading={this.state.loading}
-        style={{
-          display: "flex", 
-          flexDirection: "column", 
-          justifyContent: "space-evenly ",
-          alignContent: "center",
-          height: 360}}
-          >
-        <Space style={{display: "flex", justifyContent: "center", height: "64"}}>
-        <Title level={2} style={{textAlign: "center"}}>
-            Thanks for signing up!
-          </Title>
-        </Space>
-          <CheckCircleOutlined  style={{display: "flex", justifyContent: "center", fontSize: "100px", margin: "32px", color: "green"}}/>
-          <Button 
-          shape="round"
-          style={{display: "flex", justifyContent: "center", margin: "0 auto"}}
-          onClick={this.handleCancel}
+          style={{
+            display: "flex",
+            flexDirection: "column",
+            justifyContent: "space-evenly ",
+            alignContent: "center",
+            height: 360
+          }}
+        >
+          <Space style={{ display: "flex", justifyContent: "center", height: "64" }}>
+            <Title level={2} style={{ textAlign: "center" }}>
+              Thanks for signing up!
+            </Title>
+          </Space>
+          <CheckCircleOutlined style={{ display: "flex", justifyContent: "center", fontSize: "100px", margin: "32px", color: "green" }} />
+          <Button
+            shape="round"
+            style={{ display: "flex", justifyContent: "center", margin: "0 auto" }}
+            onClick={this.handleCancel}
           >
             Start your SweetHome experience
           </Button>
@@ -294,7 +294,7 @@ class RegiterButton extends React.Component {
           closable={!this.state.registered}
           footer={null}
           onCancel={this.handleCancel}
-          bodyStyle={{height: 440}}
+          bodyStyle={{ height: 440 }}
         >
           {this.renderContent()}
         </Modal>
