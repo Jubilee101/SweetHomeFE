@@ -2,6 +2,8 @@ import { Layout, Menu, Dropdown, Button } from "antd";
 import { UserOutlined } from "@ant-design/icons";
 import React from "react";
 import LoginPage from "./components/LoginPage";
+import LoginPageAlter from "./components/LoginPageAlter";
+
 
 const { Component } = React;
 const { Header, Content } = Layout;
@@ -46,7 +48,7 @@ class App extends Component {
 
   renderContent() {
     if (!this.state.authed) {
-      return <LoginPage handleLoginSuccess={this.handleLoginSuccess}/>
+      return <LoginPageAlter handleLoginSuccess={this.handleLoginSuccess}/>
     }
   }
   
