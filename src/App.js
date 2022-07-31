@@ -2,6 +2,8 @@ import { Layout, Menu, Dropdown, Button } from "antd";
 import { UserOutlined } from "@ant-design/icons";
 import React from "react";
 import LoginPage from "./components/LoginPage";
+import ResidentHomePage from "./components/ResidentHomePage"
+import ManagerHomePage from "./components/ManagerHomePage"
 
 const { Component } = React;
 const { Header, Content } = Layout;
@@ -36,6 +38,18 @@ class App extends Component {
     });
   }
 
+  renderContent = () => {
+    // if (!this.state.authed) {
+    //   return <LoginPage handleLoginSuccess={this.handleLoginSuccess} />;
+    // }
+
+    // if (this.state.asManager) {
+      // return <ManagerHomePage />;
+    // }
+
+    return <ResidentHomePage />;
+  };
+
   userMenu = (
     <Menu>
       <Menu.Item key="logout" onClick={this.handleLogOut}>
@@ -44,11 +58,8 @@ class App extends Component {
     </Menu>
   );
 
-  renderContent() {
-    if (!this.state.authed) {
-      return <LoginPage handleLoginSuccess={this.handleLoginSuccess}/>
-    }
-  }
+  logoutClick = () => {};
+
   render() {
     return (
       <Layout style={{ height: "100vh" }}>
@@ -63,6 +74,10 @@ class App extends Component {
               </Dropdown>
             </div>
           )}
+          <Button 
+            onClick={this.logoutClick}
+            >logout
+          </Button>
         </Header>
         <Content>
           {this.renderContent()}
