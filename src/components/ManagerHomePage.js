@@ -7,19 +7,18 @@ import {
     Button,
     Row,
     Col,
-    Checkbox,
     List,
- //   Divider,
-    // Avatar,
-    // Skeleton,
+    message,
     Input,
     Form,
     Select,
     DatePicker,
-  } from "antd";
+} from "antd";
+import {sendPublicInvoice, sendPersonalInvoice, getUnreadNum} from "../utils";
+import Discussion from "./Discussion";
 
-
-  const { TabPane } = Tabs;
+const { TabPane } = Tabs;
+const {TextArea} = Input;
 
 class ManagerHomePage extends React.Component {
 
@@ -57,10 +56,26 @@ class DashBoard extends React.Component {
     }
 }
 
-const PublicMessage = () =>{
+const PublicMessage = () => {
+    const [loading, setLoading] = useState(false);
+    const [num, setNum] = useState(getUnreadNum("public")); 
 
-    const onPubilcSubmit = () => {};
-    const onCheckboxChange = () => {};
+    const onPubilcSubmit = async (data) => {
+        const formData = new FormData();
+    
+        formData.append("text", data.text);
+    
+        setLoading(true);
+        try {
+            sendPublicInvoice(formData);
+            message.success("send successfully");
+        } catch (error) {
+            message.error(error.message);
+        } finally {
+            setLoading(false);
+            setNum(num+1);
+        }
+    };
 
     return (
             <Form
@@ -73,16 +88,13 @@ const PublicMessage = () =>{
                     label="Text"
                     rules={[{ required: true, message: 'Text' }]}
                 >
-                    <Input />
-                </Form.Item>
-                <Form.Item
-                    name="flag"
-                >
-                    <Checkbox
-                    onChange={onCheckboxChange}
-                    >
-                    flag
-                    </Checkbox>
+                    <TextArea
+                        showCount
+                        allowClear
+                        style={{
+                            height: 100,
+                        }}
+                    />
                 </Form.Item>
                 <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
                     <Button type="primary" htmlType="submit">
@@ -95,9 +107,31 @@ const PublicMessage = () =>{
 };
 
 const PersonalMessage = () => {
+    const [loading, setLoading] = useState(false);
+    const [otherNum, setOtherNum] = useState(getUnreadNum("other")); 
+    const [mailNum, setMailNum] = useState(getUnreadNum("mail")); 
 
-    const onPersonalSubmit = () => {};
-    const onTypeChange = () => {
+    const onPersonalSubmit = async (data) => {
+        const formData = new FormData();
+    
+        formData.append("type", data.type);
+        formData.append("room", data.room);
+        formData.append("name", data.name);
+        formData.append("text", data.text);
+    
+        setLoading(true);
+        try {
+          await sendPersonalInvoice(formData);
+          message.success("send successfully");
+        } catch (error) {
+          message.error(error.message);
+        } finally {
+            setLoading(false);
+            {
+                data.type="mail"? setMailNum(mailNum+1)
+                    : setOtherNum(otherNum+1)
+            }
+        }
       };
 
     return (
@@ -108,6 +142,7 @@ const PersonalMessage = () => {
             onFinish={onPersonalSubmit}
             >
             <Form.Item
+                name="type"
                 label="Type"
                 rules={[
                 {
@@ -117,7 +152,6 @@ const PersonalMessage = () => {
             >
                 <Select
                 placeholder="Select type"
-                onChange={onTypeChange}
                 allowClear
                 >
                     <Select.Option value="mail">mail</Select.Option>
@@ -125,22 +159,31 @@ const PersonalMessage = () => {
                 </Select>
             </Form.Item>
             <Form.Item
+                name="room"
                 label="Room"
                 rules={[{ required: true, message: 'Please input your Room' }]}
             >
                 <Input />
             </Form.Item>
             <Form.Item
+                name="name"
                 label="Name"
                 rules={[{ required: true, message: 'Please input your Name' }]}
             >
                 <Input />
             </Form.Item>
             <Form.Item
+                name="text"
                 label="Text"
                 rules={[{ required: true, message: 'Please input your Text' }]}
             >
-                <Input />
+                <TextArea
+                    showCount
+                    allowClear
+                    style={{
+                        height: 120,
+                    }}
+                />
             </Form.Item>
             <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
                 <Button type="primary" htmlType="submit">
@@ -272,101 +315,5 @@ const Reservation = () => {
         </>
     );   
 }
-
- const Discussion = () =>{
-//     const [loading, setLoading] = useState(false);
-//     const [data, setData] = useState([]);
-
-//     const loadMoreData = () => {
-//         if (loading) {
-//           return;
-//         }
-    
-//         setLoading(true);
-//         fetch()//数据
-//           .then((res) => res.json())
-//           .then((body) => {
-//             setData([...data, ...body.results]);
-//             setLoading(false);
-//           })
-//           .catch(() => {
-//             setLoading(false);
-//           });
-//       };
-
-//     useEffect(() => {
-//         loadMoreData();
-//     }, []);
-
-     const onDiscussionSubmit = () => {};
-
-     return (
-//         <>
-//             <div
-//                 id="dicussionMessage"
-//                 style={{
-//                   height: 400,
-//                   overflow: 'auto',
-//                   padding: '0 16px',
-//                   border: '1px solid rgba(140, 140, 140, 0.35)',
-//                 }}
-//             >
-//                 <InfiniteScroll
-//                     dataLength={data.length}
-//                     next={loadMoreData}
-//                     hasMore={data.length < 50}
-//                     loader={
-//                     <Skeleton
-//                         avatar
-//                         paragraph={{
-//                         rows: 1,
-//                         }}
-//                         active
-//                     />
-//                     }
-//                     endMessage={<Divider plain>No more</Divider>}
-//                     scrollableTarget="dicussionMessage"
-//                 >
-//                     <List
-//                         dataSource={data}
-//                         renderItem={(item) => (
-//                             <List.Item key={item.content}>
-//                                 <List.Item.Meta
-//                                     avatar={<Avatar src={item.picture} />}
-//                                     title={<p>{item.name}</p>}
-//                                     description={item.content}
-//                                     //unfinished
-//                                 />
-//                             </List.Item>
-
-//                         )}
-//                     />
-//                     </InfiniteScroll>
-//             </div>
-            <div
-            
-            >
-               <Form
-                    className="discussion-send"
-                    labelCol={{ span: 8 }}
-                    wrapperCol={{ span: 16 }}
-                    onFinish={onDiscussionSubmit}
-                    >
-                    <Form.Item
-                        label="Text"
-                        rules={[{ required: true, message: 'Please input your Text' }]}
-                    >
-                        <Input />
-                    </Form.Item>
-                    <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
-                        <Button type="primary" htmlType="submit">
-                        send
-                        </Button>
-                    </Form.Item>
-                </Form>
-            </div>
-//         </>
-     );
- }
 
 export default ManagerHomePage;
