@@ -2,7 +2,7 @@ import React from "react";
 import { Form, Button, Input, Space, Checkbox, message, Modal, Typography, Divider, Layout } from "antd";
 import { CheckCircleOutlined, CloseCircleOutlined, KeyOutlined, MailOutlined, LockOutlined } from "@ant-design/icons";
 import { login, register } from "../utils";
-const { Content } = Layout;
+const { Content, Sider, Menu } = Layout;
 const { Title } = Typography;
 
 class LoginPageAlter extends React.Component {
@@ -51,60 +51,132 @@ class LoginPageAlter extends React.Component {
 
   render() {
     return (
-      <div style={{ width: 500, margin: "20px auto" }}>
-        <Form ref={this.formRef} onFinish={this.onFinish} style={{ marginTop: "192px" }}>
-          <Form.Item
-            name="email"
-            rules={[
-              {
-                required: true,
-                message: "Please input your Email!",
-              },
-            ]}
-          >
-            <Input
-              disabled={this.state.loading}
-              prefix={<MailOutlined className="site-form-item-icon" />}
-              placeholder="Email: email@example.com"
-            />
-          </Form.Item>
-          <Form.Item
-            name="password"
-            rules={[
-              {
-                required: true,
-                message: "Please input your Password!",
-              },
-            ]}
-          >
-            <Input.Password
-              disabled={this.state.loading}
-              prefix={<KeyOutlined className="site-form-item-icon" />}
-              placeholder="Password"
-            />
-          </Form.Item>
-        </Form>
-        <Space style={{ display: "flex", justifyContent: "center" }}>
-          <Button
-            onClick={this.handleLogin}
-            disabled={this.state.loading}
-            shape="round"
-            type="primary"
-          >
-            Login
-          </Button>
-          <Checkbox
-            disabled={this.state.loading}
-            checked={this.state.asManager}
-            onChange={this.handleCheckboxOnChange}
-            style={{ marginLeft: "18px" }}
-          >
-            As Manager
-          </Checkbox>
-        </Space>
-        <Divider style={{ margin: "24 0px" }}></Divider>
-        <RegisterButton />
-      </div>
+      <Layout className="site-layout">
+        <Content
+          className="site-layout-background"
+          style={{
+            margin: '96px 128px',
+            padding: 0,
+            minHeight: 800,
+            display: "flex",
+            justifyContent: "center"
+          }}>
+          <Layout hasSider>
+            <Content
+              className="site-layout-background"
+            >
+              <Title
+              className="loginPage-title"
+                style={{
+                  display: "flex",
+                  justifyContent: "center",
+                  marginTop: "270px",
+                  fontWeight: "640",
+                  fontSize: "42px",
+                  color: "#6667AB"
+                }}>
+                Login to Your Account
+              </Title>
+              <div style={{ width: "33%", margin: "20px auto" }}>
+                <Form ref={this.formRef} onFinish={this.onFinish} style={{marginTop: "80px"}}>
+                  <Form.Item
+                    className="antd-input"
+                    name="email"
+                    rules={[
+                      {
+                        required: true,
+                        message: "Please input your Email!",
+                      },
+                    ]}
+                  >
+                    <Input
+                      disabled={this.state.loading}
+                      prefix={<MailOutlined className="site-form-item-icon" />}
+                      placeholder="Email: email@example.com"
+                    />
+                  </Form.Item>
+                  <Form.Item
+                    className="antd-input"
+                    name="password"
+                    rules={[
+                      {
+                        required: true,
+                        message: "Please input your Password!",
+                      },
+                    ]}
+                  >
+                    <Input.Password
+
+                      disabled={this.state.loading}
+                      prefix={<KeyOutlined className="site-form-item-icon" />}
+                      placeholder="Password"
+                    />
+                  </Form.Item>
+                </Form>
+                <Space style={{ display: "flex", justifyContent: "center" }}>
+                  <Button
+                    onClick={this.handleLogin}
+                    disabled={this.state.loading}
+                    size={"large"}
+                    shape="round"
+                    type="primary"
+                    background="#6667AB"
+                  >
+                    Login
+                  </Button>
+                  <Checkbox
+                    disabled={this.state.loading}
+                    checked={this.state.asManager}
+                    onChange={this.handleCheckboxOnChange}
+                    style={{ marginLeft: "18px", fontSize: "16px" }}
+                  >
+                    As Manager
+                  </Checkbox>
+                </Space>
+              </div>
+
+            </Content>
+            <Sider
+              width={"33%"}
+              style={{ background: "#6667AB" }}>
+                <Title
+              className="loginPage-title"
+                style={{
+                  display: "flex",
+                  justifyContent: "center",
+                  marginTop: "270px",
+                  fontWeight: "640",
+                  fontSize: "42px",
+                  color: "#fff"
+                }}>
+                New Here?
+              </Title>
+              <Title
+              className="loginPage-title"
+                style={{
+                  display: "inline-block",
+                  justifyContent: "center",
+                  fontWeight: "280",
+                  fontSize: "28px",
+                  color: "#fff",
+                  marginTop: "50px",
+                  marginLeft: "80px",
+                  marginRight: "80px",
+                  marginBottom: "50px",
+                  textAlign: "center"
+                }}
+                >
+                Create your account and start your journey to SweetHome
+              </Title>
+              <div style={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
+                <div>
+                  <RegisterButton />
+                </div>
+              </div>
+            </Sider>
+          </Layout>
+        </Content>
+      </Layout>
     );
   }
 }
@@ -285,8 +357,17 @@ class RegisterButton extends React.Component {
   render() {
     return (
       <>
-        <Button onClick={this.handleLoginPageRegister} type="link" style={{ margin: "0 auto", display: "flex", justifyContent: "center" }}>
-          New here? Create your account
+        <Button onClick={this.handleLoginPageRegister}
+          style={{
+            margin: "0 auto",
+            display: "flex",
+            justifyContent: "center"
+          }}
+          size={"large"}
+          ghost
+          shape="round"
+        >
+          Create your account
         </Button>
         <Modal
           destroyOnClose={true}
