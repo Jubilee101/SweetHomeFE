@@ -1,9 +1,11 @@
 import React from "react";
-import { Form, Button, Input, Space, Checkbox, message, Modal, } from "antd";
-import { UserOutlined } from "@ant-design/icons";
+import { Form, Button, Input, Space, Checkbox, message, Modal, Typography, Divider, Layout } from "antd";
+import { CheckCircleOutlined, CloseCircleOutlined, KeyOutlined, MailOutlined, LockOutlined } from "@ant-design/icons";
 import { login, register } from "../utils";
+const { Content } = Layout;
+const { Title } = Typography;
 
-class LoginPage extends React.Component {
+class LoginPageAlter extends React.Component {
   formRef = React.createRef();
   state = {
     asManager: false,
@@ -45,6 +47,8 @@ class LoginPage extends React.Component {
     }
   };
 
+
+
   render() {
     return (
       <div style={{ width: 500, margin: "20px auto" }}>
@@ -60,7 +64,7 @@ class LoginPage extends React.Component {
           >
             <Input
               disabled={this.state.loading}
-              prefix={<UserOutlined className="site-form-item-icon" />}
+              prefix={<MailOutlined className="site-form-item-icon" />}
               placeholder="Email: email@example.com"
             />
           </Form.Item>
@@ -75,11 +79,12 @@ class LoginPage extends React.Component {
           >
             <Input.Password
               disabled={this.state.loading}
+              prefix={<KeyOutlined className="site-form-item-icon" />}
               placeholder="Password"
             />
           </Form.Item>
         </Form>
-        <Space>
+        <Space style={{ display: "flex", justifyContent: "center" }}>
           <Button
             onClick={this.handleLogin}
             disabled={this.state.loading}
@@ -92,23 +97,25 @@ class LoginPage extends React.Component {
             disabled={this.state.loading}
             checked={this.state.asManager}
             onChange={this.handleCheckboxOnChange}
-            style={{ marginLeft: "24px" }}
+            style={{ marginLeft: "18px" }}
           >
             As Manager
           </Checkbox>
-          <RegiterButton />
         </Space>
+        <Divider style={{ margin: "24 0px" }}></Divider>
+        <RegisterButton />
       </div>
     );
   }
 }
 
-class RegiterButton extends React.Component {
+class RegisterButton extends React.Component {
   formRef = React.createRef();
   state = {
     asManager: false,
     loading: false,
     modalVisible: false,
+    registered: false,
   }
   onFinish = () => {
     console.log("finish form");
@@ -117,6 +124,7 @@ class RegiterButton extends React.Component {
   handleCancel = () => {
     this.setState({
       modalVisible: false,
+      registered: false
     });
   };
 
@@ -140,10 +148,12 @@ class RegiterButton extends React.Component {
 
     try {
       await register(formInstance.getFieldsValue(true), this.state.asManager);
-      message.success("Thanks for signing up!");
-      this.handleCancel();
+      // message.success("Thanks for signing up!");
+      this.setState({
+        registered: true,
+      })
     } catch (error) {
-      message.error(error.message);
+      message.error(error.message + ". The user may already exist.");
     } finally {
       this.setState({
         loading: false,
@@ -157,19 +167,16 @@ class RegiterButton extends React.Component {
     });
   };
 
-  render() {
-    return (
-      <>
-        <Button onClick={this.handleLoginPageRegister} shape="round" type="link" >
-          New here? Create your account
-        </Button>
-        <Modal
-          destroyOnClose={true}
-          title="Create Your Account"
-          visible={this.state.modalVisible}
-          footer={null}
-          onCancel={this.handleCancel}
+  renderContent() {
+    if (!this.state.registered) {
+      return (
+        <Content
+          loading={this.state.loading}
         >
+          <Title level={3} style={{ display: "flex", justifyContent: "center" }}>
+            Create your account
+          </Title>
+          <Divider style={{ display: "flex", justifyContent: "center" }}></Divider>
           <Form
             preserve={false}
             labelCol={{ span: 8 }}
@@ -244,10 +251,57 @@ class RegiterButton extends React.Component {
               </Button>
             </Space>
           </Form>
+        </Content>
+      )
+    } else {
+      return (
+        <Content
+          style={{
+            display: "flex",
+            flexDirection: "column",
+            justifyContent: "space-evenly ",
+            alignContent: "center",
+            height: 360
+          }}
+        >
+          <Space style={{ display: "flex", justifyContent: "center", height: "64" }}>
+            <Title level={2} style={{ textAlign: "center" }}>
+              Thanks for signing up!
+            </Title>
+          </Space>
+          <CheckCircleOutlined style={{ display: "flex", justifyContent: "center", fontSize: "100px", margin: "32px", color: "green" }} />
+          <Button
+            shape="round"
+            style={{ display: "flex", justifyContent: "center", margin: "0 auto" }}
+            onClick={this.handleCancel}
+          >
+            Start your SweetHome experience
+          </Button>
+        </Content>
+      )
+    }
+  }
+
+  render() {
+    return (
+      <>
+        <Button onClick={this.handleLoginPageRegister} type="link" style={{ margin: "0 auto", display: "flex", justifyContent: "center" }}>
+          New here? Create your account
+        </Button>
+        <Modal
+          destroyOnClose={true}
+          // title="Create Your Account"
+          visible={this.state.modalVisible}
+          closable={!this.state.registered}
+          footer={null}
+          onCancel={this.handleCancel}
+          bodyStyle={{ height: 440 }}
+        >
+          {this.renderContent()}
         </Modal>
       </>
     );
   }
 }
 
-export default LoginPage;
+export default LoginPageAlter;
