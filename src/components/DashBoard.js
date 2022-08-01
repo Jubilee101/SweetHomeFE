@@ -8,7 +8,6 @@ import {
     List,
     message,
     Space,
-    Calendar,
     Card,
     Drawer,
   } from "antd";
@@ -73,14 +72,7 @@ const PublicInvoice = () =>{
                 > 
             {`clear ${countPublic} unread`}
             </Button>
-            <div
-                style={{
-                  overflow: 'auto',
-                  height: '500px',
-                  padding: '0 16px',
-                  border: '1px solid rgba(140, 140, 140, 0.35)',
-                }}
-            >
+            <div className="public-invoice-list">
                 <List
                     loading={loading}
                     dataSource={publicInvoice}

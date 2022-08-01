@@ -25,6 +25,7 @@ import {
 import Dashboard from "./DashBoard";
 import Reservation from "./Reservation";
 import Discussion from "./Discussion";
+import "../styles/ResidentHomePage.css";
 
 const { TabPane } = Tabs;
 
@@ -69,7 +70,8 @@ const ResidentHomePage = () => {
 
     return (
     <>
-        <Tabs defaultActiveKey="1" destroyInactiveTabPane={true}>
+        <div className="HomePagetabs">
+        <Tabs defaultActiveKey="1" destroyInactiveTabPane={true} >
             <TabPane tab="DashBoard" key="1">
                 <Dashboard />
             </TabPane>
@@ -80,10 +82,11 @@ const ResidentHomePage = () => {
                 <Discussion />
             </TabPane>
         </Tabs>
-
+        </div>
+{/* 
         <Button type="primary" onClick={showCalendar}>
         calendar
-        </Button>
+        </Button> */}
         <Modal 
         title="calendar" 
         visible={calendarVisitable} 

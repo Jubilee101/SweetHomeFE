@@ -108,12 +108,10 @@ const PublicMessage = () => {
 
 const PersonalMessage = () => {
     const [loading, setLoading] = useState(false);
-    const [otherNum, setOtherNum] = useState(getUnreadNum("other")); 
-    const [mailNum, setMailNum] = useState(getUnreadNum("mail")); 
 
     const onPersonalSubmit = async (data) => {
         const formData = new FormData();
-    
+        console.log(data);
         formData.append("type", data.type);
         formData.append("room", data.room);
         formData.append("name", data.name);
@@ -127,10 +125,6 @@ const PersonalMessage = () => {
           message.error(error.message);
         } finally {
             setLoading(false);
-            {
-                data.type="mail"? setMailNum(mailNum+1)
-                    : setOtherNum(otherNum+1)
-            }
         }
       };
 
@@ -154,8 +148,8 @@ const PersonalMessage = () => {
                 placeholder="Select type"
                 allowClear
                 >
-                    <Select.Option value="mail">mail</Select.Option>
-                    <Select.Option value="other">other</Select.Option>
+                    <Select.Option value="MAIL">mail</Select.Option>
+                    <Select.Option value="OTHER">other</Select.Option>
                 </Select>
             </Form.Item>
             <Form.Item

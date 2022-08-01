@@ -69,7 +69,7 @@ export const getPublicInvoice = () => {
 
 export const sendPersonalInvoice = (data) => {
   const authToken = localStorage.getItem("authToken");
-  const listPersonalInvoiceUrl = `${domain}/unread_nums/personal_invoice`;
+  const listPersonalInvoiceUrl = `${domain}/personal_invoice`;
 
   return fetch(listPersonalInvoiceUrl, {
     method: "POST",
