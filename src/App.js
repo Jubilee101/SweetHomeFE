@@ -41,14 +41,14 @@ class App extends Component {
   }
 
   renderContent = () => {
-    // if (!this.state.authed) {
-      // return <LoginPage handleLoginSuccess={this.handleLoginSuccess} />;
-    // }
+    if (!this.state.authed) {
+      return <LoginPageAlter handleLoginSuccess={this.handleLoginSuccess}/>
+    }
 
-    // if (this.state.asManager) {
-      // return <ManagerHomePage />;
-    // }
-
+    if (this.state.asManager) {
+      return <ManagerHomePage />;
+    }
+    
     return <ResidentHomePage />;
   };
 
