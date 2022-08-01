@@ -50,19 +50,21 @@ export const sendPublicInvoice = (data) => {
   });
 };
 
-export const getPublicInvoice = async () => {
+export const getPublicInvoice = () => {
   const authToken = localStorage.getItem("authToken");
   const getPublicInvoiceUrl = `${domain}/public_invoice`;
 
-  const response = await fetch(getPublicInvoiceUrl, {
+  return fetch(getPublicInvoiceUrl, {
     headers: {
       Authorization: `Bearer ${authToken}`,
     },
+  }).then((response) => {
+    if (response.status !== 200) {
+      throw Error("Fail to fetch public invoice");
+    }
+ 
+    return response.json();
   });
-  if (response.status !== 200) {
-    throw Error("Fail to get public invoice");
-  }
-  return await response.json();
 };
 
 export const sendPersonalInvoice = (data) => {
@@ -82,39 +84,41 @@ export const sendPersonalInvoice = (data) => {
   });
 };
 
-export const getPersonalInvoice = async (type) => {
+export const getPersonalInvoice = (type) => {
   const authToken = localStorage.getItem("authToken");
-  const getPersonalnvoiceUrl = `${domain}/personal_invoice/type=${type}`;
+  const getPersonalnvoiceUrl = `${domain}/personal_invoice?type=${type}`;
 
-  const response = await fetch(getPersonalnvoiceUrl, {
+  return fetch(getPersonalnvoiceUrl, {
     headers: {
       Authorization: `Bearer ${authToken}`,
     },
+  }).then((response) => {
+    if (response.status !== 200) {
+      throw Error("Fail to get personal invoice");
+    }
+    return response.json();
   });
-  if (response.status !== 200) {
-    throw Error("Fail to get personal invoice");
-  }
-  return await response.json();
 };
 
-export const getUnreadNum = async (type) => {
+export const getUnreadNum = (type) => {
   const authToken = localStorage.getItem("authToken");
   const getPublicInvoiceUrl = `${domain}/unread_nums?type=${type}`;
 
-  const response = await fetch(getPublicInvoiceUrl, {
+  return fetch(getPublicInvoiceUrl, {
     headers: {
       Authorization: `Bearer ${authToken}`,
     },
+  }).then((response) => {
+    if (response.status !== 200) {
+      throw Error("Fail to get unread nums");
+    }
+    return response.json();
   });
-  if (response.status !== 200) {
-    throw Error("Fail to get unread message number");
-  }
-  return await response.json();
 };
 
 export const clearPublicInvoice = () => {
   const authToken = localStorage.getItem("authToken");
-  const clearPublicInvoiceUrl = `${domain}/clear_public`;
+  const clearPublicInvoiceUrl = `${domain}/unread_nums/clear_public`;
 
   return fetch(clearPublicInvoiceUrl, {
     method: "PUT",
@@ -130,7 +134,7 @@ export const clearPublicInvoice = () => {
 
 export const clearPersonalInvoice = (type) => {
   const authToken = localStorage.getItem("authToken");
-  const clearPersonalInvoiceUrl = `${domain}/clear_personal?type=${type}`;
+  const clearPersonalInvoiceUrl = `${domain}/unread_nums/clear_personal?type=${type}`;
 
   return fetch(clearPersonalInvoiceUrl, {
     method: "PUT",
@@ -144,7 +148,7 @@ export const clearPersonalInvoice = (type) => {
   });
 };
 
-export const checkDue = (data) => {
+export const checkDue = () => {
   const authToken = localStorage.getItem("authToken");
   const checkDueUrl = `${domain}/due`;
 

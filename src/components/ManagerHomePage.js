@@ -14,7 +14,7 @@ import {
     Select,
     DatePicker,
 } from "antd";
-import {sendPublicInvoice, sendPersonalInvoice, getUnreadNum} from "../utils";
+import {sendPublicInvoice, sendPersonalInvoice} from "../utils";
 import Discussion from "./Discussion";
 
 const { TabPane } = Tabs;
@@ -58,22 +58,19 @@ class DashBoard extends React.Component {
 
 const PublicMessage = () => {
     const [loading, setLoading] = useState(false);
-    const [num, setNum] = useState(getUnreadNum("public")); 
 
-    const onPubilcSubmit = async (data) => {
+    const onPublicSubmit = async (data) => {
         const formData = new FormData();
-    
         formData.append("text", data.text);
-    
+        console.log(data);
         setLoading(true);
         try {
-            sendPublicInvoice(formData);
+            await sendPublicInvoice(formData);
             message.success("send successfully");
         } catch (error) {
             message.error(error.message);
         } finally {
             setLoading(false);
-            setNum(num+1);
         }
     };
 
@@ -82,12 +79,13 @@ const PublicMessage = () => {
                 className="public-sending"
                 labelCol={{ span: 8 }}
                 wrapperCol={{ span: 16 }}
-                onFinish={onPubilcSubmit}
+                onFinish={onPublicSubmit}
                 >
                 <Form.Item
-                    label="Text"
-                    rules={[{ required: true, message: 'Text' }]}
-                >
+                name="text"
+                label="Text"
+                rules={[{ required: true, message: 'Please input your Text' }]}
+            >
                     <TextArea
                         showCount
                         allowClear
@@ -108,12 +106,9 @@ const PublicMessage = () => {
 
 const PersonalMessage = () => {
     const [loading, setLoading] = useState(false);
-    const [otherNum, setOtherNum] = useState(getUnreadNum("other")); 
-    const [mailNum, setMailNum] = useState(getUnreadNum("mail")); 
 
     const onPersonalSubmit = async (data) => {
         const formData = new FormData();
-    
         formData.append("type", data.type);
         formData.append("room", data.room);
         formData.append("name", data.name);
@@ -127,10 +122,6 @@ const PersonalMessage = () => {
           message.error(error.message);
         } finally {
             setLoading(false);
-            {
-                data.type="mail"? setMailNum(mailNum+1)
-                    : setOtherNum(otherNum+1)
-            }
         }
       };
 
@@ -154,8 +145,8 @@ const PersonalMessage = () => {
                 placeholder="Select type"
                 allowClear
                 >
-                    <Select.Option value="mail">mail</Select.Option>
-                    <Select.Option value="other">other</Select.Option>
+                    <Select.Option value="MAIL">mail</Select.Option>
+                    <Select.Option value="OTHER">other</Select.Option>
                 </Select>
             </Form.Item>
             <Form.Item

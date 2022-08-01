@@ -1,0 +1,22 @@
+.public-invoice{
+    padding: 10px;
+    height: 500px;
+    border: 2px solid #ccc;
+    margin-top: 10px;
+}
+.personal-invoice{
+    padding: 10px;
+    height: 500px;
+    margin-left: 10px;
+    border: 2px solid #ccc;
+    margin-top: 10px;
+    top: 0;
+}
+
+.public-invoice-list {
+    overflow: auto;
+    height: 440px;
+    padding: 0 16px;
+    border: 1px solid rgba(140, 140, 140, 0.35);
+    margin-top: 5px;
+}
