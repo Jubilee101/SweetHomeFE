@@ -5,7 +5,6 @@ import LoginPage from "./components/LoginPage";
 
 import ResidentHomePage from "./components/ResidentHomePage"
 import ManagerHomePage from "./components/ManagerHomePage"
-import LoginPageAlter from "./components/LoginPageAlter";
 
 const { Component } = React;
 const { Header, Content } = Layout;
@@ -42,50 +41,61 @@ class App extends Component {
 
   renderContent = () => {
     if (!this.state.authed) {
-      return <LoginPageAlter handleLoginSuccess={this.handleLoginSuccess}/>
+      return <LoginPage handleLoginSuccess={this.handleLoginSuccess}/>
     }
-
     if (this.state.asManager) {
-      return <ManagerHomePage />;
+      return (<Layout style={{ height: "100vh" }}>
+      <Header style={{ display: "flex", justifyContent: "space-between", backgroundColor: "#6667AB", height: "96px"}}>
+        <div style={{ fontSize: 30, fontWeight: 600, color: "white", lineHeight: "96px" }}>
+          SweetHome
+        </div>
+        <div >
+              <Dropdown trigger="click" overlay={this.userMenu}>
+                <Button icon={<UserOutlined />} shape="circle" />
+              </Dropdown>
+            </div>
+      </Header>
+        <Content>
+        <ManagerHomePage />
+        </Content>
+      </Layout>
+      )
     }
-    
-    return <ResidentHomePage />;
+    return (
+    <Layout style={{ height: "100vh" }}>
+      <Header style={{ display: "flex", justifyContent: "space-between", backgroundColor: "#6667AB", height: "96px"}}>
+        <div style={{ fontSize: 30, fontWeight: 600, color: "white", lineHeight: "96px" }}>
+          SweetHome
+        </div>
+        <div >
+              <Dropdown trigger="click" overlay={this.userMenu}>
+                <Button icon={<UserOutlined />} shape="circle" />
+              </Dropdown>
+            </div>
+      </Header>
+        <Content>
+        <ResidentHomePage />
+        </Content>
+      </Layout>
+    )
   };
 
   userMenu = (
-    <Menu>
+      <Menu>
       <Menu.Item key="logout" onClick={this.handleLogOut}>
         Log Out
       </Menu.Item>
     </Menu>
   );
 
-  logoutClick = () => {};
-  renderContent() {
-    if (!this.state.authed) {
-      return <LoginPageAlter handleLoginSuccess={this.handleLoginSuccess}/>
-    }
-  }
   
   render() {
     return (
-      <Layout style={{ height: "100vh" }}>
-        <Header style={{ display: "flex", justifyContent: "space-between", backgroundColor: "#6667AB", height: "96px"}}>
-          <div style={{ fontSize: 30, fontWeight: 600, color: "white", lineHeight: "96px" }}>
-            SweetHome
-          </div>
-          {this.state.authed && (
-            <div>
-              <Dropdown trigger="click" overlay={this.userMenu}>
-                <Button icon={<UserOutlined />} shape="circle" />
-              </Dropdown>
-            </div>
-          )}
-        </Header>
-        <Content>
-          {this.renderContent()}
-        </Content>
-      </Layout>
+      <>
+      
+      {this.renderContent()}
+          
+      </>
     )
   }
 }
