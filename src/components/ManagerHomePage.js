@@ -14,7 +14,7 @@ import {
     Select,
     DatePicker,
 } from "antd";
-import {sendPublicInvoice, sendPersonalInvoice, getUnreadNum} from "../utils";
+import {sendPublicInvoice, sendPersonalInvoice} from "../utils";
 import Discussion from "./Discussion";
 
 const { TabPane } = Tabs;
@@ -58,22 +58,19 @@ class DashBoard extends React.Component {
 
 const PublicMessage = () => {
     const [loading, setLoading] = useState(false);
-    const [num, setNum] = useState(getUnreadNum("public")); 
 
-    const onPubilcSubmit = async (data) => {
+    const onPublicSubmit = async (data) => {
         const formData = new FormData();
-    
         formData.append("text", data.text);
-    
+        console.log(data);
         setLoading(true);
         try {
-            sendPublicInvoice(formData);
+            await sendPublicInvoice(formData);
             message.success("send successfully");
         } catch (error) {
             message.error(error.message);
         } finally {
             setLoading(false);
-            setNum(num+1);
         }
     };
 
@@ -82,12 +79,13 @@ const PublicMessage = () => {
                 className="public-sending"
                 labelCol={{ span: 8 }}
                 wrapperCol={{ span: 16 }}
-                onFinish={onPubilcSubmit}
+                onFinish={onPublicSubmit}
                 >
                 <Form.Item
-                    label="Text"
-                    rules={[{ required: true, message: 'Text' }]}
-                >
+                name="text"
+                label="Text"
+                rules={[{ required: true, message: 'Please input your Text' }]}
+            >
                     <TextArea
                         showCount
                         allowClear
@@ -111,7 +109,6 @@ const PersonalMessage = () => {
 
     const onPersonalSubmit = async (data) => {
         const formData = new FormData();
-        console.log(data);
         formData.append("type", data.type);
         formData.append("room", data.room);
         formData.append("name", data.name);

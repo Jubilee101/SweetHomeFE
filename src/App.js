@@ -81,11 +81,6 @@ class App extends Component {
               </Dropdown>
             </div>
           )}
-          <Button 
-            shape="round"
-            onClick={this.logoutClick}
-            >logout
-          </Button>
         </Header>
         <Content>
           {this.renderContent()}
