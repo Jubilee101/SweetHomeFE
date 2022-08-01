@@ -1,6 +1,7 @@
 import React from "react";
 import { Form, Button, Input, Space, Checkbox, message, Modal, Typography, Divider, Layout } from "antd";
 import { CheckCircleOutlined, CloseCircleOutlined, KeyOutlined, MailOutlined, LockOutlined } from "@ant-design/icons";
+import { CheckCircleOutlined,  KeyOutlined, MailOutlined } from "@ant-design/icons";
 import { login, register } from "../utils";
 const { Content, Sider, Menu } = Layout;
 const { Title } = Typography;
