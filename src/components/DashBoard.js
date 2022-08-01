@@ -8,11 +8,13 @@ import {
     List,
     message,
     Space,
+    Calendar,
+    Card,
     Drawer,
   } from "antd";
 import { getPublicInvoice, getPersonalInvoice, getUnreadNum, 
     clearPersonalInvoice, clearPublicInvoice, checkDue  } from "../utils";
-
+import "../styles/DashBoard.css"
 const { Text } = Typography;
 
 class Dashboard extends React.Component {
@@ -22,8 +24,10 @@ class Dashboard extends React.Component {
                 <Col span={8} className="public-invoice">
                    <PublicInvoice />
                 </Col>
-                <Col span={12} className="personal-invoice">
+                <Col span={8} >
+                    <div className="personal-invoice">
                     <PersonalInvoice />
+                    </div>
                 </Col>
             </Row>  
         );
@@ -63,19 +67,20 @@ const PublicInvoice = () =>{
     
     return (
         <>
+            <Button
+                    shape="round"
+                    onClick={clearNum}
+                > 
+            {`clear ${countPublic} unread`}
+            </Button>
             <div
-                id="public-invoice"
                 style={{
                   overflow: 'auto',
+                  height: '500px',
                   padding: '0 16px',
                   border: '1px solid rgba(140, 140, 140, 0.35)',
                 }}
             >
-                <Button
-                    shape="round"
-                    onClick={clearNum}
-                >clear unread</Button>
-                <Badge count={countPublic} />
                 <List
                     loading={loading}
                     dataSource={publicInvoice}
@@ -184,64 +189,73 @@ const PersonalInvoice = () => {
   }
 
     return (
-        <Row className="personal_invoice">
-        <Col>
-          <Space
-            align="center"
-            direction="vertical"
-          >
-            <div>
-                <Button 
-                type="primary" 
-                onClick={clickMailDrawer}
-                loading={mailLoading}>
-                Mail
-                </Button>
-                <Badge count={countMail} />
-            </div>
-            <div>
-                <Button 
-                type="primary" 
-                onClick={clickOtherDrawer}
-                loading={otherLoading}>
-                Other
-                </Button>
-                <Badge count={countOther}/>
-            </div>
-            <div>
-                <Button 
-                type="primary" 
-                onClick={clickReservationDrawer}
-                loading={reservationLoading}>
-                Reservation 
-                </Button>
-                <Badge count={countReservation}/>
-            </div>
-            <div>
-                <Button 
-                type="primary" 
-                onClick={clickPaymentDrawer}
-                loading={paymentLoading}>
-                Payment
-                </Button>
-                <Badge count={countPayment}/>
-            </div>
-          </Space>
-          </Col>
+        <>
+            <Row gutter={[8, 8]}>
+                <Col span={12}>
+                    <Card 
+                    title="MAIL"
+                    style={{ height: 240 }}
+                    extra={<DrawerButton onClick={clickMailDrawer} loading={mailLoading}/>}
+                    >
+                        {`${countMail} unread`}
+                    
+                    </Card>
+                </Col>
+                
+                <Col span={12}>
+                    <Card 
+                    title="OTHER"
+                    style={{ height: 240 }}
+                    extra={<DrawerButton onClick={clickOtherDrawer} loading={otherLoading}/>}
+                    >
+                        {`${countOther} unread`}
+                    
+                    </Card>
+                </Col>
+            </Row>
+
+            <Row gutter={[8,8]}>
+                <Col span={12}>
+                    <Card 
+                    title="PAYMENT"
+                    extra={<DrawerButton onClick={clickPaymentDrawer} loading={paymentLoading}/>}
+                    style={{ height: 240 }}>
+                        {`${countPayment} unread`}
+                    </Card>
+                </Col>
+                <Col span={12}>
+                    <Card 
+                    title="RESERVATION"
+                    extra={<DrawerButton onClick={clickReservationDrawer} loading={reservationLoading}/>}
+                    style={{ height: 240 }}>
+                        {`${countReservation} unread`}
+                    </Card>
+                </Col>
+            </Row>
           {visitMail && <PersonalInvoiceDrawer onClose={onMailDrawerClose} type="MAIL" invoiceList={mailList} visible={visitMail}/>}
           {visitOther && <PersonalInvoiceDrawer onClose={onOtherDrawerClose} type="OTHER" invoiceList={otherList} visible={visitOther}/>}
           {visitPayment && <PersonalInvoiceDrawer onClose={onPaymentDrawerClose} type="PAYMENT" invoiceList={paymentList} visible={visitPayment}/>}
           {visitReservation && <PersonalInvoiceDrawer onClose={onReservationDrawerClose} type="RESERVATION" invoiceList={reservationList} visible={visitReservation}/>}
-        </Row>
+        </>
       )
 };
+
+const DrawerButton = ({onClick, loading}) => {
+    return (
+        <Button 
+        onClick={onClick}
+        loading={loading}>
+            Details
+        </Button>
+    )
+}
 
 const PersonalInvoiceDrawer = ({onClose, type, invoiceList, visible}) => {
     return (
         <Drawer
             title={type}
             placement="right"
-            width={750}
+            width={500}
             visible={visible}
             onClose={onClose}
           >
@@ -264,5 +278,6 @@ const PersonalInvoiceDrawer = ({onClose, type, invoiceList, visible}) => {
           </Drawer>
     )
 }
+
 
 export default Dashboard;
