@@ -5,7 +5,6 @@ import LoginPage from "./components/LoginPage";
 
 import ResidentHomePage from "./components/ResidentHomePage"
 import ManagerHomePage from "./components/ManagerHomePage"
-import LoginPageAlter from "./components/LoginPageAlter";
 
 const { Component } = React;
 const { Header, Content } = Layout;
@@ -42,7 +41,7 @@ class App extends Component {
 
   renderContent = () => {
     if (!this.state.authed) {
-      return <LoginPageAlter handleLoginSuccess={this.handleLoginSuccess}/>
+      return <LoginPage handleLoginSuccess={this.handleLoginSuccess}/>
     }
     if (this.state.asManager) {
       return (<Layout style={{ height: "100vh" }}>
