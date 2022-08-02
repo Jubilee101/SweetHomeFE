@@ -58,12 +58,14 @@ class LoginPage extends React.Component {
           style={{
             margin: '8vh 10vh',
             display: "flex",
-            justifyContent: "center"
+            justifyContent: "center",
           }}>
-          <Layout hasSider>
+          <Layout 
+          hasSider
+          >
             <Content
               className="site-layout-background"
-              style={{display: "flex", justifyContent: "center", alignItems: "center"}}
+              style={{display: "flex", justifyContent: "center", alignItems: "center", borderTopLeftRadius: "2vh", borderBottomLeftRadius: "2vh"}}
             >
               <div style={{width: "100%"}}>
               <Title
@@ -149,7 +151,7 @@ class LoginPage extends React.Component {
             </Content>
             <Sider
               width={"33%"}
-              style={{ background: "#6667AB" }}>
+              style={{ background: "#6667AB", borderTopRightRadius: "2vh", borderBottomRightRadius: "2vh"}}>
                 <Title
               className="loginPage-title"
                 style={{
@@ -158,12 +160,12 @@ class LoginPage extends React.Component {
                   marginTop: "16vh",
                   fontWeight: "640",
                   fontSize: "42px",
-                  color: "#fff"
+                  color: "#fff",
                 }}>
                 New Here?
               </Title>
               <Title
-              className="loginPage-title"
+              className="loginPage-second-title"
                 style={{
                   display: "inline-block",
                   justifyContent: "center",
@@ -228,7 +230,6 @@ class RegisterButton extends React.Component {
 
     try {
       await register(formInstance.getFieldsValue(true), this.state.asManager);
-      // message.success("Thanks for signing up!");
       this.setState({
         registered: true,
       })
