@@ -2,7 +2,6 @@ import { Layout, Menu, Dropdown, Button } from "antd";
 import { UserOutlined } from "@ant-design/icons";
 import React from "react";
 import LoginPage from "./components/LoginPage";
-
 import ResidentHomePage from "./components/ResidentHomePage"
 import ManagerHomePage from "./components/ManagerHomePage"
 
@@ -48,33 +47,41 @@ class App extends Component {
     }
     if (this.state.asManager) {
       return (
-        <>
-          <div>
-            
-            <div >
-            <Dropdown trigger="click" overlay={this.userMenu}>
+        <Layout>
+
+          <Header style={{ backgroundColor: "#6667AB", height: "10vh", display: "flex", justifyContent:"space-between"}}>
+            <div style={{ fontSize: 36, fontWeight: 560, color: "white", lineHeight: "96px" }}>
+                            SweetHome
+                        </div>
+       <div>
+          <Dropdown trigger="click" overlay={this.userMenu}>
               <Button icon={<UserOutlined />} shape="circle" />
             </Dropdown>
-          </div>
-          <ManagerHomePage />
-          </div>          
-        </>
+            </div>  
+                </Header>
+                <Layout>
+                  <Content>
+                    <ManagerHomePage/>
+                  </Content>
+                </Layout>
+
+        </Layout>
 
       )
     }
     return (
-      <Layout style={{ minHeight: "100vh" }}>
-        <Header style={{ display: "flex", justifyContent: "space-between", backgroundColor: "#6667AB", height: "96px" }}>
-          <div style={{ fontSize: 30, fontWeight: 600, color: "white", lineHeight: "96px" }}>
-            SweetHome
-          </div>
-          <div >
-            <Dropdown trigger="click" overlay={this.userMenu}>
-              <Button icon={<UserOutlined />} shape="circle" />
-            </Dropdown>
-          </div>
-        </Header>
-        <Content>
+        <Layout style={{ minHeight: "100vh" }}>
+          <Header style={{ backgroundColor: "#6667AB", height: "10vh"}}>
+            <div style={{ fontSize: 30, fontWeight: 600, color: "white", lineHeight: "96px" }}>
+              SweetHome
+            </div>
+            <div >
+              <Dropdown trigger="click" overlay={this.userMenu}>
+                <Button icon={<UserOutlined />} shape="circle" />
+              </Dropdown>
+            </div>
+          </Header>
+        <Content style={{height: "90vh"}}>
           <ResidentHomePage />
         </Content>
       </Layout>

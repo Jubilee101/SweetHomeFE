@@ -7,20 +7,30 @@ import {
     Input,
     Form,
     Select,
+    Layout
 } from "antd";
-import {sendPublicInvoice, sendPersonalInvoice} from "../utils";
-
-const {TextArea} = Input;
+import { sendPublicInvoice, sendPersonalInvoice } from "../utils";
+import "../styles/DashBoardManager.css";
+const { Content } = Layout;
+const { TextArea } = Input;
 const DashBoardManager = () => {
     return (
-        <Row>
-            <Col span={10} className="public-message-manager">
-               <PublicMessage/>
-            </Col>
-            <Col span={14} className="personal-message-manager">
-                <PersonalMessage />
-            </Col>
-        </Row>  
+        <Layout className="manager-dashboard-layout">
+            <Row className="manager-dashboard-row-layout">
+                <Col className="public-message">
+                    <Content>
+                        <PublicMessage />
+                    </Content>
+                </Col>
+                <Col className="personal-message">
+                    <Content>
+                        <PersonalMessage />
+                    </Content>
+                </Col>
+            </Row>
+        </Layout>
+
+
     );
 }
 
@@ -43,33 +53,36 @@ const PublicMessage = () => {
     };
 
     return (
-            <Form
-                className="public-sending"
-                labelCol={{ span: 8 }}
-                wrapperCol={{ span: 16 }}
-                onFinish={onPublicSubmit}
-                >
-                <Form.Item
+        <Form
+            className="public-sending"
+            labelCol={{ span: 8 }}
+            wrapperCol={{ span: 16 }}
+            onFinish={onPublicSubmit}
+        >
+            <Form.Item
                 name="text"
                 label="Text"
                 rules={[{ required: true, message: 'Please input your Text' }]}
             >
-                    <TextArea
-                        showCount
-                        allowClear
-                        style={{
-                            height: 100,
-                        }}
-                    />
-                </Form.Item>
-                <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
-                    <Button type="primary" htmlType="submit">
-                        send
-                    </Button>
-                </Form.Item>
-            </Form>
+                <TextArea
+                    showCount
+                    allowClear
+                    style={{
+                        height: 100,
+                    }}
+                />
+            </Form.Item>
+            <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
+                <Button type="primary" htmlType="submit"
+                    size={"large"}
+                    shape="round"
+                    background="#6667AB">
+                    send
+                </Button>
+            </Form.Item>
+        </Form>
     );
-   
+
 };
 
 const PersonalMessage = () => {
@@ -81,17 +94,17 @@ const PersonalMessage = () => {
         formData.append("room", data.room);
         formData.append("name", data.name);
         formData.append("text", data.text);
-    
+
         setLoading(true);
         try {
-          await sendPersonalInvoice(formData);
-          message.success("send successfully");
+            await sendPersonalInvoice(formData);
+            message.success("send successfully");
         } catch (error) {
-          message.error(error.message);
+            message.error(error.message);
         } finally {
             setLoading(false);
         }
-      };
+    };
 
     return (
         <Form
@@ -99,19 +112,19 @@ const PersonalMessage = () => {
             labelCol={{ span: 8 }}
             wrapperCol={{ span: 16 }}
             onFinish={onPersonalSubmit}
-            >
+        >
             <Form.Item
                 name="type"
                 label="Type"
                 rules={[
-                {
-                    required: true,
-                },
+                    {
+                        required: true,
+                    },
                 ]}
             >
                 <Select
-                placeholder="Select type"
-                allowClear
+                    placeholder="Select type"
+                    allowClear
                 >
                     <Select.Option value="MAIL">mail</Select.Option>
                     <Select.Option value="OTHER">other</Select.Option>
@@ -145,12 +158,15 @@ const PersonalMessage = () => {
                 />
             </Form.Item>
             <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
-                <Button type="primary" htmlType="submit">
-                 send
+                <Button type="primary" htmlType="submit"
+                    size={"large"}
+                    shape="round"
+                    background="#6667AB">
+                    send
                 </Button>
             </Form.Item>
         </Form>
-      )
+    )
 };
 
 export default DashBoardManager;

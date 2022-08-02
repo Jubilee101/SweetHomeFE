@@ -1,0 +1,47 @@
+.nav-tabs {
+  color: #615991;
+}
+
+.ant-tabs-tab {
+  height: 33%;
+  display: flex;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  align-items: center;
+  justify-content: center;
+}
+
+.ant-tabs-nav-list {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+}
+
+.ant-tabs-tab.ant-tabs-tab-active {
+  /* background: #888AC2; */
+  background: #9193CF;
+}
+
+.ant-tabs-tab.ant-tabs-tab-active .ant-tabs-tab-btn {
+  /* color: #9b76e6; */
+  color: white;
+  text-shadow: 0 0 0.25px currentcolor;
+}
+
+.ant-tabs-tab .anticon {
+  font-size: 42px;
+  margin-left: 13px;
+}
+
+.ant-tabs-content-holder {
+  background: #6667ab05;
+}
+
+.ant-tabs-content.ant-tabs-content-left {
+  height: 100%;
+  background: #FBFAFF;
+}
+
+.ant-tabs-left > .ant-tabs-content-holder > .ant-tabs-content > .ant-tabs-tabpane {
+   margin-left: 5vh;
+}

@@ -1,0 +1,33 @@
+.public-message {
+  min-width: 40%;
+  display: flex;
+  align-items: center;
+}
+
+.personal-message {
+  min-width: 40%;
+  display: flex;
+  align-items: center;
+}
+
+.ant-tabs-content-holder {
+  height: 100%
+}
+
+.ant-col.public-message {
+  margin-right: 5vh;
+  background: white;
+}
+
+.ant-col.personal-message {
+  margin-left: 5vh;
+  background: white;
+}
+
+.ant-row.managerdash-board-row-layout {
+  background-color: #6667ab05;
+}
+
+.ant-layout.manager-dashboard-layout {
+  background: #FBFAFF;
+}
