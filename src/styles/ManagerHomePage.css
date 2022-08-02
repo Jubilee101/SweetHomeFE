@@ -18,7 +18,6 @@
 }
 
 .ant-tabs-tab.ant-tabs-tab-active {
-  /* background: #888AC2; */
   background: #9193CF;
 }
 
@@ -39,9 +38,20 @@
 
 .ant-tabs-content.ant-tabs-content-left {
   height: 100%;
-  background: #FBFAFF;
+  background: #e9edf9;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  align-items: center;
 }
 
 .ant-tabs-left > .ant-tabs-content-holder > .ant-tabs-content > .ant-tabs-tabpane {
-   margin-left: 5vh;
+   padding-left: 0%;
+}
+
+.ant-typography.manager-dashboard-title {
+  margin-left: 7%;
+  margin-bottom: 3%;
+  font-size: 2em;
+  font-weight: 400;
 }

@@ -1,33 +1,100 @@
-.public-message {
+.public-message-col {
   min-width: 40%;
   display: flex;
   align-items: center;
+  border-radius: 2%;
 }
 
-.personal-message {
+.public-message-title-col {
   min-width: 40%;
   display: flex;
   align-items: center;
+  border-radius: 14px;
+  margin-bottom: 2vh;
 }
+
+.personal-message-col {
+  min-width: 40%;
+  display: flex;
+  align-items: center;
+  border-radius: 2%;
+}
+
+.personal-message-title-col {
+  min-width: 40%;
+  display: flex;
+  align-items: center;
+  border-radius: 14px;
+  margin-bottom: 2vh;
+}
+
+.public-message-col-content {
+height: 60vh;
+}
+
+.public-message-title-col-content {
+  font-size: 26px;
+  margin-left: 37%;
+  margin-top: 1.5vh;
+  height: 6vh;
+  font-weight: 500;
+}
+
+.personal-message-col-content {
+  height: 60vh;
+}
+
+.personal-message-title-col-content {
+  font-size: 26px;
+  margin-left: 37%;
+  margin-top: 1.5vh;
+  height: 6vh;
+  font-weight: 500;
+  }
+
 
 .ant-tabs-content-holder {
   height: 100%
 }
 
-.ant-col.public-message {
-  margin-right: 5vh;
+.ant-col.public-message-col {
+  margin-right: 3%;
+  margin-left: 7%;
   background: white;
 }
 
-.ant-col.personal-message {
-  margin-left: 5vh;
+.ant-col.public-message-title-col {
+  margin-right: 3%;
+  margin-left: 7%;
   background: white;
 }
 
-.ant-row.managerdash-board-row-layout {
-  background-color: #6667ab05;
+.ant-col.personal-message-col {
+  margin-left: 3%;
+  margin-right: 7%;
+  background: white;
+}
+
+.ant-col.personal-message-title-col {
+  margin-left: 3%;
+  margin-right: 7%;
+  background: white;
 }
 
 .ant-layout.manager-dashboard-layout {
-  background: #FBFAFF;
+  background: #e9edf9;
+}
+
+.public-sending {
+  margin-left: 0%;
+  height: 50%
+}
+
+.public-invoice-form {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  justify-content: space-evenly;
+  align-items: center;
 }
