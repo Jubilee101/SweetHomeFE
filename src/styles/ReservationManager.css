@@ -1,0 +1,26 @@
+.manager-reservation-layout {
+  background: #e9edf9;
+  height: 100%;
+}
+
+.manager-reservation-content {
+  height: 74vh;
+  margin: 8vh 6vw;
+  display: flex;
+}
+
+.manager-reservation-form-content {
+  width: 72%;
+}
+
+.manager-reservation-form-layout {
+  background: white;
+  border-radius: 2vh;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.ant-btn.ant-btn-primary {
+  background: #6667AB;
+}

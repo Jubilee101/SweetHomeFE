@@ -1,0 +1,16 @@
+.ant-layout.discussion-layout {
+  height: 74vh;
+  margin: 8vh 6vw;
+  display: flex;
+  background: #ffffff;
+  border-radius: 2vh;
+}
+
+.discussion-form {
+  display: flex;
+  height: 100%;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  justify-content: center;
+  align-items: center;
+}

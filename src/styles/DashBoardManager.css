@@ -98,3 +98,11 @@ height: 60vh;
   justify-content: space-evenly;
   align-items: center;
 }
+
+.ant-col.ant-col-8.ant-col-offset-16.ant-form-item-control {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  align-items: flex-end;
+}

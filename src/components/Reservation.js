@@ -22,7 +22,7 @@ import {
     Select,
     DatePicker,
 } from "antd";
-
+import "../styles/Discussion.css"
 const { TabPane } = Tabs;
 
 class Reservation extends React.Component {

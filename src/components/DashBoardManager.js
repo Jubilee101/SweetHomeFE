@@ -78,7 +78,7 @@ const PublicMessage = () => {
                 >
                     <Form
                         className="public-sending"
-                        labelCol={{ span: 6 }}
+                        labelCol={{ span: 8 }}
                         wrapperCol={{ span: 16 }}
                         onFinish={onPublicSubmit}
                     >
@@ -96,13 +96,13 @@ const PublicMessage = () => {
                                 placeholder="Type in public invoice here"
                             />
                         </Form.Item>
-                        <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
+                        <Form.Item wrapperCol={{offset: 16, span: 8 }}>
                             <Button
                                 type="primary" htmlType="submit"
                                 size={"large"}
                                 shape="round"
                                 background="#6667AB"
-                                style={{ marginLeft: "11.5vw" }}>
+                                >
                                 send
                             </Button>
                         </Form.Item>
@@ -144,7 +144,7 @@ const PersonalMessage = () => {
                 >
                     <Form
                         className="personal-sending"
-                        labelCol={{ span: 6 }}
+                        labelCol={{ span: 8 }}
                         wrapperCol={{ span: 16 }}
                         onFinish={onPersonalSubmit}
                     >
@@ -189,13 +189,13 @@ const PersonalMessage = () => {
                  />
              </Form.Item>
 
-                        <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
+                        <Form.Item wrapperCol={{ offset: 16, span: 8 }}>
                             <Button
                                 type="primary" htmlType="submit"
                                 size={"large"}
                                 shape="round"
                                 background="#6667AB"
-                                style={{ marginLeft: "11.5vw" }}>
+                                >
                                 send
                             </Button>
                         </Form.Item>
