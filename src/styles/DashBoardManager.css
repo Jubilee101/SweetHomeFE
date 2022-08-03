@@ -9,7 +9,7 @@
   min-width: 40%;
   display: flex;
   align-items: center;
-  border-radius: 14px;
+  border-radius: 1vh;
   margin-bottom: 2vh;
 }
 
@@ -24,7 +24,7 @@
   min-width: 40%;
   display: flex;
   align-items: center;
-  border-radius: 14px;
+  border-radius: 1vh;
   margin-bottom: 2vh;
 }
 
@@ -33,11 +33,12 @@ height: 60vh;
 }
 
 .public-message-title-col-content {
-  font-size: 26px;
-  margin-left: 37%;
-  margin-top: 1.5vh;
+  font-size: 1.5em;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   height: 6vh;
-  font-weight: 500;
+  font-weight: 600;
 }
 
 .personal-message-col-content {
@@ -45,11 +46,12 @@ height: 60vh;
 }
 
 .personal-message-title-col-content {
-  font-size: 26px;
-  margin-left: 37%;
-  margin-top: 1.5vh;
+  font-size: 1.5em;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   height: 6vh;
-  font-weight: 500;
+  font-weight: 600;
   }
 
 
@@ -99,7 +101,7 @@ height: 60vh;
   align-items: center;
 }
 
-.ant-col.ant-col-8.ant-col-offset-16.ant-form-item-control {
+.ant-col.ant-col-8.ant-col-offset-14.ant-form-item-control {
   display: flex;
   justify-content: center;
   flex-direction: column;

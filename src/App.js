@@ -4,6 +4,7 @@ import React from "react";
 import LoginPage from "./components/LoginPage";
 import ResidentHomePage from "./components/ResidentHomePage"
 import ManagerHomePage from "./components/ManagerHomePage"
+import { FlatTree } from "framer-motion";
 
 const { Component } = React;
 const { Header, Content, Sider } = Layout;
@@ -47,10 +48,9 @@ class App extends Component {
     }
     if (this.state.asManager) {
       return (
-        <Layout>
-
-          <Header style={{ backgroundColor: "#6667AB", height: "10vh", display: "flex", justifyContent: "space-between" }}>
-            <div style={{ fontSize: 36, fontWeight: 560, color: "white", lineHeight: "96px" }}>
+        <Layout >
+          <Header style={{ backgroundColor: "#6667AB", height: "10vh", display: "flex", flexDirection: "row", alignItems: "center", justifyContent: "space-between"}}>
+            <div style={{ fontSize: 34, fontWeight: 560, color: "white", lineHeight: "96px", display: "flex", alignItems: "center"}}>
               SweetHome
             </div>
             <div>
@@ -64,14 +64,14 @@ class App extends Component {
               <ManagerHomePage />
             </Content>
           </Layout>
-
         </Layout>
 
       )
     }
     return (
       <Layout style={{ minHeight: "100vh" }}>
-        <Header style={{ backgroundColor: "#6667AB", height: "10vh" }}>
+        <Header
+        style={{ backgroundColor: "#6667AB", height: "13vh"}}>
           <div style={{ fontSize: 30, fontWeight: 600, color: "white", lineHeight: "96px" }}>
             SweetHome
           </div>
@@ -81,7 +81,7 @@ class App extends Component {
             </Dropdown>
           </div>
         </Header>
-        <Content style={{ height: "90vh" }}>
+        <Content style={{ height: "87vh" }}>
           <ResidentHomePage />
         </Content>
       </Layout>

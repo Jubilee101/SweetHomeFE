@@ -38,8 +38,7 @@ class ManagerHomePage extends React.Component {
                 className="site-layout">
                 <Content className="site-layout-background">
                     <Tabs
-                        className="nav-tabs" style={{ height: "90vh" }} size={"large"} tabPosition={"left"} defaultActiveKey="1" destroyInactiveTabPane={true}>
-
+                        className="nav-tabs" style={{ height: "90vh"}} size={"middle"} tabPosition={"left"} defaultActiveKey="1" destroyInactiveTabPane={true}>
                         <TabPane
                             className="dashboard-content"
                             tab={
@@ -47,7 +46,7 @@ class ManagerHomePage extends React.Component {
                                     <div >
                                         <PieChartOutlined />
                                     </div>
-                                    <div style={{ fontSize: "18px", fontWeight: "600" }}>
+                                    <div style={{ fontSize: "12px", fontWeight: "700" }}>
                                         Dashboard
                                     </div>
                                 </span>
@@ -65,7 +64,7 @@ class ManagerHomePage extends React.Component {
                                 <div>
                                     <CarryOutOutlined />
                                 </div>
-                                <div style={{ fontSize: "18px", fontWeight: "600" }}>
+                                <div style={{ fontSize: "12px", fontWeight: "700" }}>
                                     Reservation
                                 </div>
                             </span>}
@@ -77,7 +76,7 @@ class ManagerHomePage extends React.Component {
                                 <div>
                                     <CommentOutlined />
                                 </div>
-                                <div style={{ fontSize: "18px", fontWeight: "600" }}>
+                                <div style={{ fontSize: "12px", fontWeight: "700" }}>
                                     Discussion
                                 </div>
                             </span>} key="3">

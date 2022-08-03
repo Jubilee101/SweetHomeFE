@@ -28,7 +28,7 @@
 }
 
 .ant-tabs-tab .anticon {
-  font-size: 42px;
+  font-size: 38px;
   margin-left: 13px;
 }
 
@@ -54,4 +54,8 @@
   margin-bottom: 3%;
   font-size: 2em;
   font-weight: 400;
+}
+
+.ant-tabs-left > .ant-tabs-nav .ant-tabs-tab {
+  padding: 10px 10px
 }

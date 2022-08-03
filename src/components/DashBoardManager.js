@@ -29,6 +29,7 @@ const DashBoardManager = () => {
                     <Content className="personal-message-title-col-content">
                         Personal Invoice
                     </Content>
+
                 </Col>
             </Row>
             <Row className="manager-dashboard-row-layout">
@@ -78,7 +79,7 @@ const PublicMessage = () => {
                 >
                     <Form
                         className="public-sending"
-                        labelCol={{ span: 8 }}
+                        labelCol={{ span: 6 }}
                         wrapperCol={{ span: 16 }}
                         onFinish={onPublicSubmit}
                     >
@@ -93,16 +94,16 @@ const PublicMessage = () => {
                                 style={{
                                     height: 100,
                                 }}
-                                placeholder="Type in public invoice here"
+                                placeholder="Enter public invoice content here"
                             />
                         </Form.Item>
-                        <Form.Item wrapperCol={{offset: 16, span: 8 }}>
+                        <Form.Item wrapperCol={{ offset: 14, span: 8 }}>
                             <Button
                                 type="primary" htmlType="submit"
                                 size={"large"}
                                 shape="round"
                                 background="#6667AB"
-                                >
+                            >
                                 send
                             </Button>
                         </Form.Item>
@@ -144,7 +145,7 @@ const PersonalMessage = () => {
                 >
                     <Form
                         className="personal-sending"
-                        labelCol={{ span: 8 }}
+                        labelCol={{ span: 6 }}
                         wrapperCol={{ span: 16 }}
                         onFinish={onPersonalSubmit}
                     >
@@ -168,34 +169,34 @@ const PersonalMessage = () => {
                         >
                             <Input />
                         </Form.Item>
-             <Form.Item
-                 name="name"
-                 label="Name"
-                 rules={[{ required: true, message: 'Please input your Name' }]}
-             >
-                 <Input />
-             </Form.Item>
-                  <Form.Item
-                 name="text"
-                 label="Text"
-                 rules={[{ required: true, message: 'Please input your Text' }]}
-             >
-                 <TextArea
-                     showCount
-                     allowClear
-                     style={{
-                         height: 120,
-                     }}
-                 />
-             </Form.Item>
+                        <Form.Item
+                            name="name"
+                            label="Name"
+                            rules={[{ required: true, message: 'Please input your Name' }]}
+                        >
+                            <Input />
+                        </Form.Item>
+                        <Form.Item
+                            name="text"
+                            label="Text"
+                            rules={[{ required: true, message: 'Please input your Text' }]}
+                        >
+                            <TextArea
+                                showCount
+                                allowClear
+                                style={{
+                                    height: 120,
+                                }}
+                            />
+                        </Form.Item>
 
-                        <Form.Item wrapperCol={{ offset: 16, span: 8 }}>
+                        <Form.Item wrapperCol={{ offset: 14, span: 8 }}>
                             <Button
                                 type="primary" htmlType="submit"
                                 size={"large"}
                                 shape="round"
                                 background="#6667AB"
-                                >
+                            >
                                 send
                             </Button>
                         </Form.Item>
@@ -206,7 +207,7 @@ const PersonalMessage = () => {
 
         </Content>
 
-    
+
     )
 };
 
