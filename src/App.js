@@ -65,26 +65,26 @@ class App extends Component {
             </Content>
           </Layout>
         </Layout>
-
       )
     }
     return (
-      <Layout style={{ minHeight: "100vh" }}>
-        <Header
-        style={{ backgroundColor: "#6667AB", height: "13vh"}}>
-          <div style={{ fontSize: 30, fontWeight: 600, color: "white", lineHeight: "96px" }}>
-            SweetHome
-          </div>
-          <div >
-            <Dropdown trigger="click" overlay={this.userMenu}>
-              <Button icon={<UserOutlined />} shape="circle" />
-            </Dropdown>
-          </div>
-        </Header>
-        <Content style={{ height: "87vh" }}>
-          <ResidentHomePage />
-        </Content>
-      </Layout>
+<Layout >
+          <Header style={{ backgroundColor: "#6667AB", height: "10vh", display: "flex", flexDirection: "row", alignItems: "center", justifyContent: "space-between"}}>
+            <div style={{ fontSize: 34, fontWeight: 560, color: "white", lineHeight: "96px", display: "flex", alignItems: "center"}}>
+              SweetHome
+            </div>
+            <div>
+              <Dropdown trigger="click" overlay={this.userMenu}>
+                <Button icon={<UserOutlined />} shape="circle" />
+              </Dropdown>
+            </div>
+          </Header>
+          <Layout>
+            <Content>
+              <ResidentHomePage />
+            </Content>
+          </Layout>
+        </Layout>
     )
   };
 

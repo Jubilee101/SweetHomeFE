@@ -4,6 +4,17 @@
     border: 2px solid #ccc;
     margin-top: 10px;
 }
+.public-invoice-col {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.personal-invoice-col {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
 .personal-invoice{
     padding: 10px;
     height: 500px;
@@ -14,9 +25,29 @@
 }
 
 .public-invoice-list {
-    overflow: auto;
-    height: 440px;
-    padding: 0 16px;
-    border: 1px solid rgba(140, 140, 140, 0.35);
-    margin-top: 5px;
+    /* overflow: auto; */
+    margin: 2% 8%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center
 }
+
+.public-invoice-form-col {
+    border-radius: 2vh;
+    background: #fff;
+    display: flex;
+    flex-direction: column;
+    justify-content: center
+}
+
+.ant-card.ant-card-bordered {
+    height: 100%;
+    border-radius: 2vh;
+}
+
+.ant-typography.resident-dashboard-title {
+    margin-top: 4%;
+    margin-bottom: 0%;
+    font-size: 26px;
+    font-weight: 500;
+  }

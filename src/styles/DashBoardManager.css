@@ -74,7 +74,7 @@ height: 60vh;
 .ant-col.personal-message-col {
   margin-left: 3%;
   margin-right: 7%;
-  background: white;
+  background: rgb(255, 255, 255);
 }
 
 .ant-col.personal-message-title-col {
@@ -84,7 +84,7 @@ height: 60vh;
 }
 
 .ant-layout.manager-dashboard-layout {
-  background: #e9edf9;
+  background:  #f0f2f5;
 }
 
 .public-sending {
