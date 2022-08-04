@@ -10,7 +10,8 @@ import {
     Space,
     Card,
     Drawer,
-    Layout
+    Layout,
+    Spin
 } from "antd";
 import {
     getPublicInvoice, getPersonalInvoice, getUnreadNum,
@@ -30,6 +31,7 @@ class Dashboard extends React.Component {
                 <Row>
                     <Col
                         offset={1}
+                        style={{height: "10%"}}
                     // style={{background: "rgba(255, 255, 255, 0.3)"}}
                     >
                         <Title
@@ -43,7 +45,7 @@ class Dashboard extends React.Component {
 
                 <Row
                     justify="start"
-                    style={{ height: "100%" }}
+                    style={{ height: "90%" }}
                 >
                     <Col span={12}
                         offset={0}
@@ -98,14 +100,17 @@ const PublicInvoice = () => {
     };
 
     return (
-        <div style={{ minHeight: "95%" }}>
+
+        <div className="33333"
+        style={{ height: "95%" }}>
             <Row
 
                 justify="start"
                 style={{ height: "10%", paddingTop: "1vh" }}
             >
                 <Col
-                    // span={8}
+                    
+                    style={{height: "100%"}}
                     offset={2}
                 >
                     <Button
@@ -120,15 +125,21 @@ const PublicInvoice = () => {
             </Row>
             <Row
                 justify="start"
-                style={{ height: "90%" }}
+                style={{ height: "90%", maxHeight: "90%" }}
             >
                 <Col
                     className="public-invoice-form-col"
                     span={20}
                     offset={2}
                 >
-                    <div className="public-invoice-list">
-                        <List
+                    {
+                        loading ?
+                    <div className="spin-box">
+                        <Spin tip="Loading..." size="large" />
+                    </div>
+                    :
+                    
+                        <List className="public-invoice-list"
                             style={{ height: "100%" }}
                             loading={loading}
                             dataSource={publicInvoice}
@@ -151,7 +162,8 @@ const PublicInvoice = () => {
                                 </List.Item>
                             )}
                         />
-                    </div>
+                    }
+
                 </Col>
 
             </Row>
@@ -253,7 +265,8 @@ const PersonalInvoice = () => {
                 gutter={[16, 28]}
                 style={{ height: "35%" }}
             >
-                <Col span={12}>
+                <Col
+                span={12}>
                     <Card
                         title="MAIL"
 
@@ -412,11 +425,11 @@ const PersonalInvoiceDrawer = ({ onClose, type, invoiceList, visible }) => {
                             description={
                                 <div>
                                     <Text
-                                    style={{fontSize: "16px"}}
+                                        style={{ fontSize: "16px" }}
                                     >{item.text}</Text>
                                     <br />
                                     <Text
-                                    style={{fontSize: "12px", fontWeight: "600"}}
+                                        style={{ fontSize: "12px", fontWeight: "600" }}
                                     >{item.date}</Text>
                                 </div>
                             }
