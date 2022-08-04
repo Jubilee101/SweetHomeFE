@@ -21,13 +21,18 @@ import {
     Cascader,
     Select,
     DatePicker,
+    Layout,
+    Typography
   } from "antd";
-import Dashboard from "./DashBoard";
+import DashBoard from "./DashBoard";
 import Reservation from "./Reservation";
 import Discussion from "./Discussion";
 import "../styles/ResidentHomePage.css";
+import { PieChartOutlined, CarryOutOutlined, CommentOutlined } from "@ant-design/icons"
 
 const { TabPane } = Tabs;
+const { Content } = Layout;
+const { Title } = Typography;
 
 const ResidentHomePage = () => {
     const [calendarVisitable, setCalendarVisitable] = useState(false);
@@ -69,21 +74,53 @@ const ResidentHomePage = () => {
     };
 
     return (
-    <>
-        <div className="HomePagetabs">
-        <Tabs defaultActiveKey="1" destroyInactiveTabPane={true} >
-            <TabPane tab="DashBoard" key="1">
-                <Dashboard />
-            </TabPane>
-            <TabPane tab="Reservation" key="2">
-                <Reservation />
-            </TabPane>
-            <TabPane tab="Discussion" key="3">
-                <Discussion />
-            </TabPane>
-        </Tabs>
-        </div>
-{/* 
+        <Layout
+                className="site-layout"
+                >
+                <Content className="site-layout-background">
+                    <Tabs
+                        className="nav-tabs" style={{ height: "90vh"}} size={"middle"} tabPosition={"left"} defaultActiveKey="1" destroyInactiveTabPane={true}>
+                        <TabPane
+                            className="dashboard-content"
+                            style={{height: "100%"}}
+                            tab={
+                                <span>
+                                    <div >
+                                        <PieChartOutlined />
+                                    </div>
+                                    <div style={{ fontSize: "12px", fontWeight: "700" }}>
+                                        Dashboard
+                                    </div>
+                                </span>
+                            } key="1">
+                            <DashBoard />
+                        </TabPane>
+                        <TabPane tab={
+                            <span>
+                                <div>
+                                    <CarryOutOutlined />
+                                </div>
+                                <div style={{ fontSize: "12px", fontWeight: "700" }}>
+                                    Reservation
+                                </div>
+                            </span>}
+                            key="2">
+                                
+                                  <Reservation />  
+                        </TabPane>
+                        <TabPane tab={
+                            <span>
+                                <div>
+                                    <CommentOutlined />
+                                </div>
+                                <div style={{ fontSize: "12px", fontWeight: "700" }}>
+                                    Discussion
+                                </div>
+                            </span>} key="3">
+                            <Discussion />
+                        </TabPane>
+                    </Tabs>
+                    {/* 
         <Button type="primary" onClick={showCalendar}>
         calendar
         </Button> */}
@@ -98,7 +135,8 @@ const ResidentHomePage = () => {
             monthCellRender={monthCellRender} 
             />;
         </Modal>
-    </>
+                </Content>
+            </Layout>
     );   
 }
 

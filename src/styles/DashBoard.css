@@ -1,22 +1,103 @@
-.public-invoice{
-    padding: 10px;
-    height: 500px;
-    border: 2px solid #ccc;
-    margin-top: 10px;
+.public-invoice {
+  padding: 10px;
+  height: 500px;
+  border: 2px solid #ccc;
+  margin-top: 10px;
 }
-.personal-invoice{
-    padding: 10px;
-    height: 500px;
-    margin-left: 10px;
-    border: 2px solid #ccc;
-    margin-top: 10px;
-    top: 0;
+
+.public-invoice-col {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.personal-invoice-col {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.personal-invoice {
+  padding: 10px;
+  height: 500px;
+  margin-left: 10px;
+  border: 2px solid #ccc;
+  margin-top: 10px;
+  top: 0;
+}
+
+.spin-box {
+  overflow: auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+
+}
+
+.ant-spin-nested-loading {
+  height: 100%;
 }
 
 .public-invoice-list {
-    overflow: auto;
-    height: 440px;
-    padding: 0 16px;
-    border: 1px solid rgba(140, 140, 140, 0.35);
-    margin-top: 5px;
+  height: 90%;
+  overflow: scroll;
+  overflow-x: hidden;
+  margin: 2% 8%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center
+}
+
+.public-invoice-form-col {
+  height: 100%;
+  border-radius: 2vh;
+  background: #fff;
+  display: flex;
+  flex-direction: column;
+  justify-content: center
+}
+
+.ant-card.ant-card-bordered {
+  height: 100%;
+  border-radius: 2vh;
+}
+
+.ant-typography.resident-dashboard-title {
+  margin-top: 4%;
+  margin-bottom: 0%;
+  font-size: 26px;
+  font-weight: 500;
+}
+
+
+/* .nav-tabs {
+    color: #615991;
+  } */
+
+.ant-tabs-tab.ant-tabs-tab-active {
+  background: #9193CF;
+}
+
+.ant-tabs-tab.ant-tabs-tab-active .ant-tabs-tab-btn {
+  color: white;
+  text-shadow: 0 0 0.25px currentcolor;
+}
+
+.ant-tabs-content-holder {
+  background: #f0f2f5;
+}
+
+.ant-tabs-content.ant-tabs-content-left {
+  height: 100%;
+  background: #f0f2f5;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  align-items: center;
+}
+
+.ant-tabs-left>.ant-tabs-content-holder>.ant-tabs-content>.ant-tabs-tabpane {
+  padding-left: 0%;
 }

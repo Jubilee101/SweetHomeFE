@@ -1,0 +1,110 @@
+.public-message-col {
+  min-width: 40%;
+  display: flex;
+  align-items: center;
+  border-radius: 2%;
+}
+
+.public-message-title-col {
+  min-width: 40%;
+  display: flex;
+  align-items: center;
+  border-radius: 1vh;
+  margin-bottom: 2vh;
+}
+
+.personal-message-col {
+  min-width: 40%;
+  display: flex;
+  align-items: center;
+  border-radius: 2%;
+}
+
+.personal-message-title-col {
+  min-width: 40%;
+  display: flex;
+  align-items: center;
+  border-radius: 1vh;
+  margin-bottom: 2vh;
+}
+
+.public-message-col-content {
+height: 60vh;
+}
+
+.public-message-title-col-content {
+  font-size: 1.5em;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 6vh;
+  font-weight: 600;
+}
+
+.personal-message-col-content {
+  height: 60vh;
+}
+
+.personal-message-title-col-content {
+  font-size: 1.5em;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 6vh;
+  font-weight: 600;
+  }
+
+
+.ant-tabs-content-holder {
+  height: 100%
+}
+
+.ant-col.public-message-col {
+  margin-right: 3%;
+  margin-left: 7%;
+  background: white;
+}
+
+.ant-col.public-message-title-col {
+  margin-right: 3%;
+  margin-left: 7%;
+  background: white;
+}
+
+.ant-col.personal-message-col {
+  margin-left: 3%;
+  margin-right: 7%;
+  background: rgb(255, 255, 255);
+}
+
+.ant-col.personal-message-title-col {
+  margin-left: 3%;
+  margin-right: 7%;
+  background: white;
+}
+
+.ant-layout.manager-dashboard-layout {
+  background:  #f0f2f5;
+}
+
+.public-sending {
+  margin-left: 0%;
+  height: 50%
+}
+
+.public-invoice-form {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  justify-content: space-evenly;
+  align-items: center;
+}
+
+.ant-col.ant-col-8.ant-col-offset-14.ant-form-item-control {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  align-items: flex-end;
+}
