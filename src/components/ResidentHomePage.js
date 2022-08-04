@@ -107,8 +107,6 @@ const ResidentHomePage = () => {
                             key="2">
                                 
                                   <Reservation />  
-                                
-                            
                         </TabPane>
                         <TabPane tab={
                             <span>

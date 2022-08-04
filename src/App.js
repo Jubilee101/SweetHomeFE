@@ -69,7 +69,7 @@ class App extends Component {
     }
     return (
 <Layout >
-          <Header style={{ backgroundColor: "#6667AB", height: "10vh", display: "flex", flexDirection: "row", alignItems: "center", justifyContent: "space-between"}}>
+          <Header style={{ backgroundColor: "#6667AB", height: "10vh", display: "flex", flexDirection: "row", alignItems: "center", justifyContent: "space-between", padding:"0% 3%"}}>
             <div style={{ fontSize: 34, fontWeight: 560, color: "white", lineHeight: "96px", display: "flex", alignItems: "center"}}>
               SweetHome
             </div>

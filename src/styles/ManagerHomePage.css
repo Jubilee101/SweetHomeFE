@@ -1,29 +1,28 @@
-.nav-tabs {
+/* .nav-tabs {
   color: #615991;
-}
+} */
 
-.ant-tabs-tab {
+/* .nav-tabs > .ant-tabs-tab {
   height: 33%;
   display: flex;
   flex-direction: column;
   flex-wrap: nowrap;
   align-items: center;
   justify-content: center;
-}
+} */
 
-.ant-tabs-nav-list {
+/* .ant-tabs-nav-list {
   display: flex;
   flex-direction: column;
   justify-content: space-evenly;
   background: white;
-}
+} */
 
 .ant-tabs-tab.ant-tabs-tab-active {
   background: #9193CF;
 }
 
 .ant-tabs-tab.ant-tabs-tab-active .ant-tabs-tab-btn {
-  /* color: #9b76e6; */
   color: white;
   text-shadow: 0 0 0.25px currentcolor;
 }
