@@ -200,8 +200,7 @@ const PersonalInvoice = () => {
                     style={{ height: 240 }}
                     extra={<DrawerButton onClick={clickOtherDrawer} loading={otherLoading}/>}
                     >
-                        {`${countOther} unread`}
-                    
+                        {`${countOther} unread`}  
                     </Card>
                 </Col>
             </Row>
