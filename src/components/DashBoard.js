@@ -140,7 +140,8 @@ const PublicInvoice = () => {
                     :
                     
                         <List className="public-invoice-list"
-                            style={{ height: "100%" }}
+                        size="middle"
+                            // style={{ height: "100%" }}
                             loading={loading}
                             dataSource={publicInvoice}
                             renderItem={(item) => (

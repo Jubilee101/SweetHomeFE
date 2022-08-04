@@ -32,11 +32,16 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  height: 90%;
+  height: 100%;
+
+}
+
+.ant-spin-nested-loading {
+  height: 100%;
 }
 
 .public-invoice-list {
-  height: 100%ß;
+  height: 90%;
   overflow: scroll;
   overflow-x: hidden;
   margin: 2% 8%;
@@ -46,7 +51,7 @@
 }
 
 .public-invoice-form-col {
-  max-height: 100%;
+  height: 100%;
   border-radius: 2vh;
   background: #fff;
   display: flex;
