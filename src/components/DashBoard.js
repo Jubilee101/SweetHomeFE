@@ -138,9 +138,13 @@ const PublicInvoice = () => {
                                         avatar={<MessageOutlined />}
                                         description={
                                             <div>
-                                                <Text>{item.text}</Text>
+                                                <Text
+                                                style={{fontSize: "16px"}}
+                                                >{item.text}</Text>
                                                 <br />
-                                                <Text>{item.date}</Text>
+                                                <Text
+                                                style={{fontSize: "12px", fontWeight: "600"}}
+                                                >{item.date}</Text>
                                             </div>
                                         }
                                     />
@@ -407,11 +411,16 @@ const PersonalInvoiceDrawer = ({ onClose, type, invoiceList, visible }) => {
                         <List.Item.Meta
                             description={
                                 <div>
-                                    <Text>{item.text}</Text>
+                                    <Text
+                                    style={{fontSize: "16px"}}
+                                    >{item.text}</Text>
                                     <br />
-                                    <Text>{item.date}</Text>
+                                    <Text
+                                    style={{fontSize: "12px", fontWeight: "600"}}
+                                    >{item.date}</Text>
                                 </div>
                             }
+                            avatar={<MessageOutlined />}
                         />
                     </List.Item>
                 )}

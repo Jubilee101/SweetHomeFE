@@ -150,8 +150,8 @@ const PersonalMessage = () => {
                         onFinish={onPersonalSubmit}
                     >
                         <Form.Item
-                            name="text"
-                            label="Content"
+                            name="type"
+                            label="Type"
                             rules={[{ required: true, message: 'Please select one type' }]}
                         >
                             <Select
