@@ -2,6 +2,8 @@ import React from "react";
 import { Form, Button, Input, Space, Checkbox, message, Modal, Typography, Divider, Layout } from "antd";
 import { CheckCircleOutlined, CloseCircleOutlined, KeyOutlined, MailOutlined, LockOutlined } from "@ant-design/icons";
 import { login, register } from "../utils";
+import "../styles/LoginPage.css"
+
 const { Content, Sider, Menu } = Layout;
 const { Title } = Typography;
 
@@ -49,136 +51,158 @@ class LoginPage extends React.Component {
 
   render() {
     return (
-      <Layout 
-      className="site-layout"
-      style={{height: "100vh"}}
+      <Layout
+        className="site-layout"
+        style={{ height: "100vh" }}
       >
         <Content
           className="site-layout-background"
           style={{
-            margin: '8vh 10vh',
+            margin: '6vh 4vw',
             display: "flex",
-            justifyContent: "center"
+            justifyContent: "center",
           }}>
-          <Layout hasSider>
+          <Layout
+            hasSider
+          >
             <Content
               className="site-layout-background"
-              style={{display: "flex", justifyContent: "center", alignItems: "center"}}
+              style={{ display: "flex", justifyContent: "center", alignItems: "center", borderTopLeftRadius: "2vh", borderBottomLeftRadius: "2vh" }}
             >
-              <div style={{width: "100%"}}>
-              <Title
-              className="loginPage-title"
-                style={{
-                  display: "flex",
-                  justifyContent: "center",
-                  fontWeight: "640",
-                  fontSize: "42px",
-                  color: "#6667AB"
-                }}>
-                SweetHome
-              </Title>
-              <Title
-              className="loginPage-title"
-                style={{
-                  display: "flex",
-                  justifyContent: "center",
-                  fontWeight: "640",
-                  fontSize: "42px",
-                  color: "#6667AB"
-                }}>
-                Login to Your Account
-              </Title>
-              <div style={{ width: "33%", margin: "2vh auto" }}>
-                <Form ref={this.formRef} onFinish={this.onFinish} style={{marginTop: "10vh"}}>
-                  <Form.Item
-                    className="antd-input"
-                    name="email"
-                    rules={[
-                      {
-                        required: true,
-                        message: "Please input your Email!",
-                      },
-                    ]}
-                  >
-                    <Input
+              <div style={{ width: "100%" }}>
+                <Title
+                  className="loginPage-title"
+                  style={{
+                    display: "flex",
+                    justifyContent: "center",
+                    fontWeight: "640",
+                    fontSize: "44px",
+                    color: "#6667AB"
+                  }}>
+                  SweetHome
+                </Title>
+                <Title
+                  className="loginPage-title"
+                  style={{
+                    display: "flex",
+                    justifyContent: "center",
+                    fontWeight: "500",
+                    fontSize: "34px",
+                    color: "#6667AB"
+                  }}>
+                  Login to Your Account
+                </Title>
+                <div style={{ width: "33%", margin: "2vh auto" }}>
+                  <Form ref={this.formRef} onFinish={this.onFinish} style={{ marginTop: "10vh" }}>
+                    <Form.Item
+                      className="antd-input"
+                      name="email"
+                      rules={[
+                        {
+                          required: true,
+                          message: "Please input your Email!",
+                        },
+                      ]}
+                    >
+                      <Input
+                        disabled={this.state.loading}
+                        prefix={<MailOutlined className="site-form-item-icon" />}
+                        placeholder="Email"
+                      />
+                    </Form.Item>
+                    <Form.Item
+                      className="antd-input"
+                      name="password"
+                      rules={[
+                        {
+                          required: true,
+                          message: "Please input your Password!",
+                        },
+                      ]}
+                    >
+                      <Input.Password
+                        disabled={this.state.loading}
+                        prefix={<KeyOutlined className="site-form-item-icon" />}
+                        placeholder="Password"
+                      />
+                    </Form.Item>
+                  </Form>
+                  <Space style={{ display: "flex", justifyContent: "center" }}>
+                    <Button
+                      onClick={this.handleLogin}
                       disabled={this.state.loading}
-                      prefix={<MailOutlined className="site-form-item-icon" />}
-                      placeholder="Email: email@example.com"
-                    />
-                  </Form.Item>
-                  <Form.Item
-                    className="antd-input"
-                    name="password"
-                    rules={[
-                      {
-                        required: true,
-                        message: "Please input your Password!",
-                      },
-                    ]}
-                  >
-                    <Input.Password
-
+                      size={"large"}
+                      shape="round"
+                      type="primary"
+                      background="#6667AB"
+                    >
+                      Login
+                    </Button>
+                    <Checkbox
                       disabled={this.state.loading}
-                      prefix={<KeyOutlined className="site-form-item-icon" />}
-                      placeholder="Password"
-                    />
-                  </Form.Item>
-                </Form>
-                <Space style={{ display: "flex", justifyContent: "center" }}>
-                  <Button
-                    onClick={this.handleLogin}
-                    disabled={this.state.loading}
-                    size={"large"}
-                    shape="round"
-                    type="primary"
-                    background="#6667AB"
-                  >
-                    Login
-                  </Button>
-                  <Checkbox
-                    disabled={this.state.loading}
-                    checked={this.state.asManager}
-                    onChange={this.handleCheckboxOnChange}
-                    style={{ marginLeft: "3vw", fontSize: "16px" }}
-                  >
-                    As Manager
-                  </Checkbox>
-                </Space>
+                      checked={this.state.asManager}
+                      onChange={this.handleCheckboxOnChange}
+                      style={{ marginLeft: "3vw", fontSize: "16px" }}
+                    >
+                      As Manager
+                    </Checkbox>
+                  </Space>
+                </div>
               </div>
-              </div>
-            </Content>
+            </Content >
             <Sider
               width={"33%"}
-              style={{ background: "#6667AB" }}>
-                <Title
-              className="loginPage-title"
+              style={{ background: "#6667AB", borderTopRightRadius: "2vh", borderBottomRightRadius: "2vh", display: "flex", justifyContent: "center", alignItems: "center", }}>
+              <Title
+                className="loginPage-title"
                 style={{
                   display: "flex",
                   justifyContent: "center",
-                  marginTop: "16vh",
+                  // marginTop: "20vh",
                   fontWeight: "640",
                   fontSize: "42px",
-                  color: "#fff"
+                  color: "#fff",
                 }}>
                 New Here?
               </Title>
-              <Title
-              className="loginPage-title"
-                style={{
-                  display: "inline-block",
-                  justifyContent: "center",
-                  fontWeight: "280",
-                  fontSize: "28px",
-                  color: "#fff",
-                  margin: "5vh 8vw",
-                  textAlign: "center"
-                }}
+              <div style={{ marginTop: "4vh", display: "flex", flexDirection: "column"}}>
+                <Title
+                  className="loginPage-second-title"
+                  style={{
+                    display: "inline-block",
+                    justifyContent: "center",
+                    fontWeight: "280",
+                    fontSize: "24px",
+                    color: "#fff",
+                    marginRight: "2vw",
+                    marginLeft: "2vw",
+                    marginBottom: "0",
+                    textAlign: "center"
+                  }}
                 >
-                Create your account and start your journey to SweetHome
-              </Title>
-              <div style={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
-                <div>
-                  <RegisterButton />
+                  Create your account
+                </Title>
+                <Title
+                  className="loginPage-second-title"
+                  style={{
+                    display: "inline-block",
+                    justifyContent: "center",
+                    fontWeight: "280",
+                    fontSize: "24px",
+                    color: "#fff",
+                    marginRight: "4vw",
+                    marginLeft: "4vw",
+                    marginTop: "0",
+                    marginBottom: "4vh",
+                    textAlign: "center"
+                  }}
+                >
+                and start your SweetHome journey
+                </Title>
+                <div style={{ display: "flex", justifyContent: "center", alignItems: "center", marginTop: "1vh", marginBottom: "10vh" }}>
+                  <div>
+                    <RegisterButton />
+                  </div>
                 </div>
               </div>
             </Sider>
@@ -228,7 +252,6 @@ class RegisterButton extends React.Component {
 
     try {
       await register(formInstance.getFieldsValue(true), this.state.asManager);
-      // message.success("Thanks for signing up!");
       this.setState({
         registered: true,
       })
@@ -252,6 +275,8 @@ class RegisterButton extends React.Component {
       return (
         <Content
           loading={this.state.loading}
+          style={{minWidth: "75%"}}
+          
         >
           <Title level={3} style={{ display: "flex", justifyContent: "center" }}>
             Create your account
@@ -265,9 +290,10 @@ class RegisterButton extends React.Component {
             onFinish={this.onFinish}
           >
             <Form.Item name="account_type"
-              labelCol={{ span: 8 }}
-              wrapperCol={{ span: 20 }}
-              style={{ marginLeft: "7vw", marginBottom: "2vw" }}
+              // labelCol={{ span: 8 }}
+              
+              wrapperCol={{ offset: 8, span: 24 }}
+              style={{ marginBottom: "1vh" }}
             >
               <Checkbox
                 disabled={this.state.loading}
@@ -310,7 +336,7 @@ class RegisterButton extends React.Component {
             </Form.Item>
 
             <Form.Item
-              label="Room Number(optional)"
+              label="Room Number"
               name="room"
             >
               <Input
@@ -383,9 +409,14 @@ class RegisterButton extends React.Component {
           closable={!this.state.registered}
           footer={null}
           onCancel={this.handleCancel}
-          bodyStyle={{ height: "50vh" }}
+          style={{minHeight: "55vh", minWidth: "30vw"}}
+          
         >
-          {this.renderContent()}
+          <div
+          style={{display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center"}}>
+           {this.renderContent()} 
+          </div>
+          
         </Modal>
       </>
     );

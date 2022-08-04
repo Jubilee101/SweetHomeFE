@@ -1,0 +1,61 @@
+/* .nav-tabs {
+  color: #615991;
+} */
+
+/* .nav-tabs > .ant-tabs-tab {
+  height: 33%;
+  display: flex;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  align-items: center;
+  justify-content: center;
+} */
+
+/* .ant-tabs-nav-list {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  background: white;
+} */
+
+.ant-tabs-tab.ant-tabs-tab-active {
+  background: #9193CF;
+}
+
+.ant-tabs-tab.ant-tabs-tab-active .ant-tabs-tab-btn {
+  color: white;
+  text-shadow: 0 0 0.25px currentcolor;
+}
+
+.ant-tabs-tab .anticon {
+  font-size: 38px;
+  margin-left: 13px;
+}
+
+.ant-tabs-content-holder {
+  background: #f0f2f5;
+}
+
+.ant-tabs-content.ant-tabs-content-left {
+  height: 100%;
+  background:  #f0f2f5;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  align-items: center;
+}
+
+.ant-tabs-left > .ant-tabs-content-holder > .ant-tabs-content > .ant-tabs-tabpane {
+   padding-left: 0%;
+}
+
+.ant-typography.manager-dashboard-title {
+  margin-left: 7%;
+  margin-bottom: 3%;
+  font-size: 2em;
+  font-weight: 400;
+}
+
+.ant-tabs-left > .ant-tabs-nav .ant-tabs-tab {
+  padding: 10px 10px
+}

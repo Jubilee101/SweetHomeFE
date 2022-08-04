@@ -7,20 +7,48 @@ import {
     Input,
     Form,
     Select,
+    Layout,
+    Typography
 } from "antd";
-import {sendPublicInvoice, sendPersonalInvoice} from "../utils";
-
-const {TextArea} = Input;
+import { sendPublicInvoice, sendPersonalInvoice } from "../utils";
+import "../styles/DashBoardManager.css";
+const { Content, } = Layout;
+const { TextArea } = Input;
+const { Title } = Typography;
 const DashBoardManager = () => {
     return (
-        <Row>
-            <Col span={10} className="public-message-manager">
-               <PublicMessage/>
-            </Col>
-            <Col span={14} className="personal-message-manager">
-                <PersonalMessage />
-            </Col>
-        </Row>  
+
+        <Layout className="manager-dashboard-layout">
+            <Row className="manager-dashboard-title-row-layout">
+                <Col className="public-message-title-col">
+                    <Content className="public-message-title-col-content">
+                        Public Invoice
+                    </Content>
+                </Col>
+                <Col className="personal-message-title-col">
+                    <Content className="personal-message-title-col-content">
+                        Personal Invoice
+                    </Content>
+
+                </Col>
+            </Row>
+            <Row className="manager-dashboard-row-layout">
+                <Col className="public-message-col">
+                    <Content className="public-message-col-content">
+                        <div style={{ height: "100%" }}>
+                            <PublicMessage />
+                        </div>
+                    </Content>
+                </Col>
+                <Col className="personal-message-col">
+                    <Content className="personal-message-col-content">
+                        <PersonalMessage />
+                    </Content>
+                </Col>
+            </Row>
+        </Layout>
+
+
     );
 }
 
@@ -43,33 +71,49 @@ const PublicMessage = () => {
     };
 
     return (
-            <Form
-                className="public-sending"
-                labelCol={{ span: 8 }}
-                wrapperCol={{ span: 16 }}
-                onFinish={onPublicSubmit}
+
+        <Content style={{ height: "100%" }}>
+            <div className="public-invoice-form" style={{ height: "100%" }}>
+                <div
+                    style={{ width: "72%" }}
                 >
-                <Form.Item
-                name="text"
-                label="Text"
-                rules={[{ required: true, message: 'Please input your Text' }]}
-            >
-                    <TextArea
-                        showCount
-                        allowClear
-                        style={{
-                            height: 100,
-                        }}
-                    />
-                </Form.Item>
-                <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
-                    <Button type="primary" htmlType="submit">
-                        send
-                    </Button>
-                </Form.Item>
-            </Form>
+                    <Form
+                        className="public-sending"
+                        labelCol={{ span: 6 }}
+                        wrapperCol={{ span: 16 }}
+                        onFinish={onPublicSubmit}
+                    >
+                        <Form.Item
+                            name="text"
+                            label="Content"
+                            rules={[{ required: true, message: 'Please input your Text' }]}
+                        >
+                            <TextArea
+                                showCount
+                                allowClear
+                                style={{
+                                    height: 100,
+                                }}
+                                placeholder="Enter public invoice content here"
+                            />
+                        </Form.Item>
+                        <Form.Item wrapperCol={{ offset: 14, span: 8 }}>
+                            <Button
+                                type="primary" htmlType="submit"
+                                size={"large"}
+                                shape="round"
+                                background="#6667AB"
+                            >
+                                send
+                            </Button>
+                        </Form.Item>
+                    </Form>
+
+                </div>
+            </div>
+        </Content>
     );
-   
+
 };
 
 const PersonalMessage = () => {
@@ -81,76 +125,90 @@ const PersonalMessage = () => {
         formData.append("room", data.room);
         formData.append("name", data.name);
         formData.append("text", data.text);
-    
+
         setLoading(true);
         try {
-          await sendPersonalInvoice(formData);
-          message.success("send successfully");
+            await sendPersonalInvoice(formData);
+            message.success("send successfully");
         } catch (error) {
-          message.error(error.message);
+            message.error(error.message);
         } finally {
             setLoading(false);
         }
-      };
+    };
 
     return (
-        <Form
-            className="personal-sending"
-            labelCol={{ span: 8 }}
-            wrapperCol={{ span: 16 }}
-            onFinish={onPersonalSubmit}
-            >
-            <Form.Item
-                name="type"
-                label="Type"
-                rules={[
-                {
-                    required: true,
-                },
-                ]}
-            >
-                <Select
-                placeholder="Select type"
-                allowClear
+        <Content style={{ height: "100%" }}>
+            <div className="public-invoice-form" style={{ height: "100%" }}>
+                <div
+                    style={{ width: "72%" }}
                 >
-                    <Select.Option value="MAIL">mail</Select.Option>
-                    <Select.Option value="OTHER">other</Select.Option>
-                </Select>
-            </Form.Item>
-            <Form.Item
-                name="room"
-                label="Room"
-                rules={[{ required: true, message: 'Please input your Room' }]}
-            >
-                <Input />
-            </Form.Item>
-            <Form.Item
-                name="name"
-                label="Name"
-                rules={[{ required: true, message: 'Please input your Name' }]}
-            >
-                <Input />
-            </Form.Item>
-            <Form.Item
-                name="text"
-                label="Text"
-                rules={[{ required: true, message: 'Please input your Text' }]}
-            >
-                <TextArea
-                    showCount
-                    allowClear
-                    style={{
-                        height: 120,
-                    }}
-                />
-            </Form.Item>
-            <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
-                <Button type="primary" htmlType="submit">
-                 send
-                </Button>
-            </Form.Item>
-        </Form>
-      )
+                    <Form
+                        className="personal-sending"
+                        labelCol={{ span: 6 }}
+                        wrapperCol={{ span: 16 }}
+                        onFinish={onPersonalSubmit}
+                    >
+                        <Form.Item
+                            name="type"
+                            label="Type"
+                            rules={[{ required: true, message: 'Please select one type' }]}
+                        >
+                            <Select
+                                placeholder="Select type"
+                                allowClear
+                            >
+                                <Select.Option value="MAIL">mail</Select.Option>
+                                <Select.Option value="OTHER">other</Select.Option>
+                            </Select>
+                        </Form.Item>
+                        <Form.Item
+                            name="room"
+                            label="Room"
+                            rules={[{ required: true, message: 'Please input your Room' }]}
+                        >
+                            <Input />
+                        </Form.Item>
+                        <Form.Item
+                            name="name"
+                            label="Name"
+                            rules={[{ required: true, message: 'Please input your Name' }]}
+                        >
+                            <Input />
+                        </Form.Item>
+                        <Form.Item
+                            name="text"
+                            label="Text"
+                            rules={[{ required: true, message: 'Please input your Text' }]}
+                        >
+                            <TextArea
+                                showCount
+                                allowClear
+                                style={{
+                                    height: 120,
+                                }}
+                            />
+                        </Form.Item>
+
+                        <Form.Item wrapperCol={{ offset: 14, span: 8 }}>
+                            <Button
+                                type="primary" htmlType="submit"
+                                size={"large"}
+                                shape="round"
+                                background="#6667AB"
+                            >
+                                send
+                            </Button>
+                        </Form.Item>
+                    </Form>
+                </div>
+            </div>
+
+
+        </Content>
+
+
+    )
 };
 
 export default DashBoardManager;
