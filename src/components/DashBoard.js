@@ -220,7 +220,7 @@ const PersonalInvoice = () => {
 
         setUnreadNum("PAYMENT", setCountPayment);
         const pollPayment = setInterval(() => {
-            const res = unreadPolling("PAYMENT", setUnreadNum, setCountPayment);
+            unreadPolling("PAYMENT", setUnreadNum, setCountPayment);
         }, 2000)
         checkDue();
 
