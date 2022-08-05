@@ -15,7 +15,7 @@ import {
 } from "antd";
 import {
     getPublicInvoice, getPersonalInvoice, getUnreadNum,
-    clearPersonalInvoice, clearPublicInvoice, checkDue
+    clearPersonalInvoice, clearPublicInvoice, checkDue, unreadPolling, unreadPollingPublic
 } from "../utils";
 import "../styles/DashBoard.css"
 
@@ -80,6 +80,12 @@ const PublicInvoice = () => {
     useEffect(() => {
         loadData();
         setUnreadNum("PUBLIC", setCountPublic);
+        const pollPublic = setInterval(() => {
+            unreadPollingPublic("PUBLIC", setUnreadNum, setCountPublic, loadData)
+        }, 2000)
+        return function cleanUp(){
+            clearInterval(pollPublic);
+        }
     }, []);
 
     const clearNum = () => {
@@ -198,10 +204,32 @@ const PersonalInvoice = () => {
     }
     useEffect(() => {
         setUnreadNum("MAIL", setCountMail);
+        const pollMail = setInterval(() => {
+                unreadPolling("MAIL", setUnreadNum, setCountMail)
+            }, 2000)
+        
         setUnreadNum("OTHER", setCountOther);
+        const pollOther = setInterval(() => {
+             unreadPolling("OTHER", setUnreadNum, setCountOther)
+            }, 2000)
+        
         setUnreadNum("RESERVATION", setCountReservation);
+        const pollReservation = setInterval(() => {
+                unreadPolling("RESERVATION", setUnreadNum, setCountReservation);
+            }, 2000)
+
         setUnreadNum("PAYMENT", setCountPayment);
+        const pollPayment = setInterval(() => {
+            const res = unreadPolling("PAYMENT", setUnreadNum, setCountPayment);
+        }, 2000)
         checkDue();
+
+        return function cleanUp() {
+            clearInterval(pollMail);
+            clearInterval(pollOther);
+            clearInterval(pollPayment);
+            clearInterval(pollReservation);
+        }
     }, []);
 
     const clickMailDrawer = () => {

@@ -162,6 +162,45 @@ export const checkDue = () => {
       throw Error("Fail to send public invoice");
     }
   });
-};
+}
+
+export const unreadPolling = (type, setUnreadNum, setCount) => {
+  const authToken = localStorage.getItem("authToken");
+  const pollUrl = `${domain}/watch?type=${type}`;
+  return fetch(pollUrl, {
+    method: "GET",
+    headers: {
+      Authorization: `Bearer ${authToken}`,
+    },
+  }).then((response) => {
+    if (response.status !== 200) {
+      console.log("time out" + response.status)
+    }
+    else {
+      console.log("200!")
+      setUnreadNum(type, setCount)
+    }
+  });
+}
+
+export const unreadPollingPublic = (type, setUnreadNum, setCount, loadData) => {
+  const authToken = localStorage.getItem("authToken");
+  const pollUrl = `${domain}/watch?type=${type}`;
+  return fetch(pollUrl, {
+    method: "GET",
+    headers: {
+      Authorization: `Bearer ${authToken}`,
+    },
+  }).then((response) => {
+    if (response.status !== 200) {
+      console.log("time out" + response.status)
+    }
+    else {
+      console.log("200!")
+      setUnreadNum(type, setCount)
+      loadData();
+    }
+  });
+}
 
 
