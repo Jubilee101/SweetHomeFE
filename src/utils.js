@@ -203,4 +203,163 @@ export const unreadPollingPublic = (type, setUnreadNum, setCount, loadData) => {
   });
 }
 
+const sendMaintenanceRequest = (data) => {
+  const authToken = localStorage.getItem("authToken");
+  const requestUrl = `${domain}/maintenance`;
 
+  return fetch(requestUrl, {
+    method: "POST",
+    headers: {
+      Authorization: `Bearer ${authToken}`,
+    },
+    body: data,
+  }).then((response) => {
+    throw Error("Fail to send request");
+  });
+}
+
+const getAllMaintenanceRequest = () => {
+  const authToken = localStorage.getItem("authToken");
+  const requestUrl = `${domain}/maintenance`;
+
+  return fetch(requestUrl, {
+    method: "GET",
+    headers: {
+      Authorization: `Bearer ${authToken}`,
+    },
+  }).then((response) => {
+    if (response.status !== 200) {
+      throw Error("Fail to get all maintenance requests");
+    }
+    return response.json();
+  });
+}
+
+const getAllMaintenanceRequestById = () => {
+  const authToken = localStorage.getItem("authToken");
+  const requestUrl = `${domain}/maintenance/resident`;
+
+  return fetch(requestUrl, {
+    method: "GET",
+    headers: {
+      Authorization: `Bearer ${authToken}`,
+    },
+  }).then((response) => {
+    if (response.status !== 200) {
+      throw Error("Fail to get your maintenance requests");
+    }
+    return response.json();
+  });
+}
+
+const updateMaintenanceRequest = (id, data) => {
+  const authToken = localStorage.getItem("authToken");
+  const updateUrl = `${domain}/maintenance?id=${id}`;
+
+  return fetch(updateUrl, {
+    method: "PUT",
+    headers: {
+      Authorization: `Bearer ${authToken}`,
+    },
+    body: data
+  }).then((response) => {
+    if (response.status !== 200) {
+      throw Error("Fail to update request");
+    }
+  });
+}
+
+const getAllPublicUtils = () => {
+  const authToken = localStorage.getItem("authToken");
+  const publicUtilsUrl = `${domain}/public_utils`;
+
+  return fetch(publicUtilsUrl, {
+    method: "GET",
+    headers: {
+      Authorization: `Bearer ${authToken}`,
+    },
+  }).then((response) => {
+    if (response.status !== 200) {
+      throw Error("Fail to get all public utils");
+    }
+  });
+}
+
+const addPublicUtil = (data) => {
+  const authToken = localStorage.getItem("authToken");
+  const addUrl = `${domain}/public_utils`;
+
+  return fetch(addUrl, {
+    method: "POST",
+    headers: {
+      Authorization: `Bearer ${authToken}`,
+    },
+    body: data
+  }).then((response) => {
+    if (response.status !== 200) {
+      throw Error("Fail to add public utils");
+    }
+  });
+}
+
+const reservePublicUtil = (category, date, timeFrame) => {
+  const authToken = localStorage.getItem("authToken");
+  const reserveUrl = new URL(`${domain}/public_utils/reserve/`);
+  reserveUrl.searchParams.append("category", category);
+  reserveUrl.searchParams.append("date", date);
+  reserveUrl.searchParams.append("time_frame", timeFrame);
+
+  return fetch(searchStaysUrl, {
+    headers: {
+      method: "POST",
+      Authorization: `Bearer ${authToken}`,
+    },
+  }).then((response) => {
+    if (response.status !== 200) {
+      throw Error("Fail to search stays");
+    }
+  });
+}
+
+const getAvailableTimeFrame = (category) => {
+  const authToken = localStorage.getItem("authToken");
+  const url = `${domain}/public_utils/available?category=${encodeURI(category)}`;
+  return fetch(url, {
+    method: "GET",
+    Authorization: `Bearer ${authToken}`,
+  }).then((response) => {
+    if (response.status !== 200) {
+      throw Error("Fail to get available time slots")
+    }
+    return response.json();
+  })
+}
+
+const listAllReservations = () => {
+  const authToken = localStorage.getItem("authToken");
+  const url = `${domain}/public_utils/list`;
+
+  return fetch(url, {
+    method: "GET",
+    Authorization: `Bearer ${authToken}`,
+  }).then((response) => {
+    if (response.status !== 200) {
+      throw Error("Fail to get reservations")
+    }
+    return response.json();
+  })
+}
+
+const cancelReservation = () => {
+  const authToken = localStorage.getItem("authToken");
+  const url = `${domain}/public_utils`;
+
+  return fetch(url, {
+    method: "DELETE",
+    Authorization: `Bearer ${authToken}`,
+  }).then((response) => {
+    if (response.status !== 200) {
+      throw Error("Fail to cancel reservation")
+    }
+  })
+}
