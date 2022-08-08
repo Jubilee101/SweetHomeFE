@@ -1,14 +1,18 @@
 .manager-reservation-layout {
   background:  #f0f2f5;
-  height: 100%;
 }
 
 .manager-reservation-content {
-  height: 73vh;
+  height: 60vh;
   margin: 7vh 6vw;
   display: flex;
 }
 
+.public-utils-content {
+  height: 60vh;
+  margin: 7vh 6vw;
+  display: flex;
+}
 .manager-reservation-form-content {
   width: 72%;
 }
@@ -23,4 +27,86 @@
 
 .ant-btn.ant-btn-primary {
   background: #6667AB;
+}
+
+.maintenance-title-col {
+  min-width: 40%;
+  display: flex;
+  align-items: center;
+  border-radius: 1vh;
+  margin-bottom: 2vh;
+}
+.ant-col.maintenance-title-col {
+  margin-right: 3%;
+  margin-left: 7%;
+  background: white;
+}
+
+.public-utils-title-col {
+  min-width: 40%;
+  display: flex;
+  align-items: center;
+  border-radius: 1vh;
+  margin-bottom: 2vh;
+}
+.ant-col.public-utils-title-col {
+  margin-left: 3%;
+  margin-right: 7%;
+  background: white;
+}
+
+.maintenance-title-col-content {
+  font-size: 1.5em;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 6vh;
+  font-weight: 600;
+  }
+
+.public-utils-title-col-content {
+  font-size: 1.5em;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 6vh;
+  font-weight: 600;
+  }
+
+.manager-reservation-layout {
+  background:  #f0f2f5;
+}
+
+.maintenance-col {
+  min-width: 40%;
+  display: flex;
+  align-items: center;
+  border-radius: 2%;
+}
+
+.ant-col.maintenance-col {
+  margin-right: 3%;
+  margin-left: 7%;
+  background: white;
+}
+
+.public-utils-col {
+  min-width: 40%;
+  display: flex;
+  align-items: center;
+  border-radius: 2%;
+}
+
+.ant-col.public-utils-col {
+  margin-left: 3%;
+  margin-right: 7%;
+  background: white;
+}
+
+.manager-reservation-content {
+  background: white;
+}
+
+.public-utils-content {
+  background: white;
 }

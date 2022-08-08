@@ -309,7 +309,7 @@ const reservePublicUtil = (category, date, timeFrame) => {
   reserveUrl.searchParams.append("date", date);
   reserveUrl.searchParams.append("time_frame", timeFrame);
 
-  return fetch(searchStaysUrl, {
+  return fetch(reserveUrl, {
     headers: {
       method: "POST",
       Authorization: `Bearer ${authToken}`,
