@@ -59,13 +59,13 @@ const Reservation = () => {
             </Col>
         </Row>
         <Row className="reservation-row-layout">
-            <Col className="maintenance-col" >
+            <Col className="maintenance-col" span={7}>
                 <Content
                 className="manager-reservation-content">
                     <ReserveSomething/>
                 </Content>
             </Col>
-            <Col className="public-utils-col">
+            <Col className="public-utils-col" span={7}>
                 <Content className="public-utils-content">
                     <ReservationList/>
                 </Content>
@@ -127,6 +127,7 @@ const MaintenanceList = () => {
         <div>
             <List
                 className="manager-maintenance-list"
+                grid={{ gutter: 0, column: 1 }}
                 size="middle"
                 loading={loading}
                 dataSource={maintenanceList}
@@ -135,7 +136,7 @@ const MaintenanceList = () => {
                         <Card
                             key={item.id}
                             title={
-                                <div style={{ display: "flex", alignItems: "center" }}>
+                                <div className="card-content">
                                     <Text ellipsis={true} 
                                     style={item.start_time !== null ? {} : { color : "red"}}>
                                         {item.user.name + ' ' + item.user.room}
@@ -177,37 +178,40 @@ const UtilsList = () => {
         <div>
             <List
                 className="manager-maintenance-list"
+                grid={{ gutter: 0, column: 1 }}
                 size="middle"
                 loading={loading}
                 dataSource={utils}
                 renderItem={(item) => (
                     <List.Item>
                         <Card
-                            
                             key={item.id}
                             title={
-                                <div style={{ alignItems: "center" }}>
+                                <div sclassName="card-content">
                                     <Text ellipsis={true}>
                                         {item.category}
                                     </Text>
                                 </div>
+                                
                             }
                         >
                             {
                                 <div>
                                     <p>
-                                        Name: {item.user.name + ' ' + item.user.room}
-                                    </p>
-                                    <p>
+                                        <Text ellipsis={true} >
                                         Date: {item.date}
-                                        
-                                    </p>
-                                    <p>
+                                        </Text>
+                                        <br/>
+                                        <br/>
+                                        <Text ellipsis={true} >
                                         Time Slot: {item.time_frame}
+                                        
+                                        </Text>
                                     </p>     
         
                                 </div>
                             }
+                            
                         </Card>
                     </List.Item>
                 )} 

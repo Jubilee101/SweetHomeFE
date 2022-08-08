@@ -58,14 +58,14 @@ const ReservationManager = () => {
                 </Col>
             </Row>
             <Row className="reservation-row-layout">
-                <Col className="maintenance-col" >
+                <Col className="maintenance-col" span={7}>
                     <Content
-                    className="manager-reservation-content">
+                    className="manager-reservation-content" >
                         <MaintenancePanel/>
                     </Content>
                 </Col>
-                <Col className="public-utils-col">
-                    <Content className="public-utils-content">
+                <Col className="public-utils-col"span={7}>
+                    <Content className="public-utils-content" >
                         <PublicUtilsPanel/>
                     </Content>
                 </Col>
@@ -250,6 +250,7 @@ const MaintenancePanel = () => {
         <Content>
         <div>
             <List
+                grid={{ gutter: 8, column: 1 }}
                 className="manager-maintenance-list"
                 size="middle"
                 dataSource={maintenanceList}
