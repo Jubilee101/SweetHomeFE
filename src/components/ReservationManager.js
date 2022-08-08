@@ -31,6 +31,7 @@ import {
     listAllReservations,
     cancelReservation,
     updateMaintenanceRequest,
+    getAllMaintenanceRequest,
 } from "../utils"
 
 import "../styles/ReservationManager.css"
@@ -235,8 +236,8 @@ const MaintenancePanel = () => {
     const [maintenanceList, setMaintenanceList] = useState([])
     const getAllRequests = async () => {
         try {
-            const resp = await listAllReservations();
-            setMaintenanceList(resp);
+            const resp = await getAllMaintenanceRequest();
+            setMaintenanceList(oldData => [...resp]);
         } catch (error) {
             message.error(error.message);
         }
@@ -249,8 +250,8 @@ const MaintenancePanel = () => {
         <Content>
         <div>
             <List
-                className="manager-maintenance"
-                itemLayout="horizontal"
+                className="manager-maintenance-list"
+                size="middle"
                 dataSource={maintenanceList}
                 renderItem={(item) => (
                     <List.Item>
@@ -259,37 +260,25 @@ const MaintenancePanel = () => {
                             title={
                                 <div style={{ display: "flex", alignItems: "center" }}>
                                     <Text ellipsis={true} 
-                                    style={item.time === null ? { maxWidth: 150 } : {maxWidth: 150, color : "red"}}>
+                                    style={item.start_time !== null ? {} : { color : "red"}}>
                                         {item.user.name + ' ' + item.user.room}
                                     </Text>
                                     < RequestDetailButton item={item} />
                                 </div>
                             }
-                            extra={<UpdateTimeButton id={item.id}/>}
+                            extra={<UpdateTimeButton id={item.id} getAllRequests={getAllRequests}/>}
                         >
-                            <Carousel
-                                dots={false}
-                                arrows={true}
-                                prevArrow={<LeftCircleFilled />}
-                                nextArrow={<RightCircleFilled/>}
-                            >
-                                {item.maintenanceImages.map((image, index) => (
-                                <div key={index}>
-                                    <Image src={image.url} width="100%" />
-                                </div>
-                                ))}
-                            </Carousel>
+                            {item.description}
                         </Card>
                     </List.Item>
-                )}
-            > 
-            </List>
-            </div>
-            </Content>
+                )} 
+            />
+        </div>
+        </Content>
     )
 }
 
-const UpdateTimeButton = ({id}) => {
+const UpdateTimeButton = ({id, getAllRequests}) => {
     const [modalVisible, setModalVisible] = useState(false);
     const [loading, setLoading] = useState(false);
     const handleUpdate = () => {
@@ -300,12 +289,14 @@ const UpdateTimeButton = ({id}) => {
     }
     const onUpdateSubmit = async (values) => {
         const formData = new FormData();
-        formData.append("date", values.date);
-        formData.append("time", values.time);
+        console.log(values.time.format("HH:MM:SS"))
+        formData.append("date", values.date.format("YYYY-MM-DD"));
+        formData.append("time", values.time.format("HH:mm:ss"));
         setLoading(true);
         try {
             await updateMaintenanceRequest(id, formData);
             message.success("Successfully update time")
+            getAllRequests();
         } catch (error) {
             message.error(error.message)
         } finally {
@@ -320,17 +311,18 @@ const UpdateTimeButton = ({id}) => {
         <Button 
         type="primary"
         shape="round"
-        size="large"
+        size="medium"
         onClick={handleUpdate}>
             Update time
         </Button>
         <Modal
             destroyOnClose={true}
             title="maintenance-update"
+
             visible={modalVisible}
             onCancel={handleCancel}
+            footer={null}
         >
-            <div>details</div>
             <Form
                 preserve={false}
                 labelCol={{ span: 8 }}
@@ -376,15 +368,16 @@ const RequestDetailButton = ({item}) => {
     const handleCancel = () => {
         setModalVisible(false);
     }
-    const {user, date, start_time, description} = item;
+    const {user, date, start_time, description, maintenanceImages} = item;
     return (
         <>
         <Tooltip title="View maintenance request detail">
-            <Button>
-                onClick={openModal}
-                style={{ border: "none" }}
-                size="large"
-                icon={<InfoCircleOutlined />}
+            <Button
+            onClick={openModal}
+            style={{ border: "none" }}
+            size="large"
+            icon={<InfoCircleOutlined/>}
+            >
             </Button>
         </Tooltip>
         {
@@ -404,6 +397,19 @@ const RequestDetailButton = ({item}) => {
                         <Text strong={true}>Time</Text>
                         <Text type="secondary">{start_time === null ? "pending" : start_time}</Text>
                     </Space>
+                    <Carousel
+                        className="myCarousel"
+                        dots={false}
+                        arrows={true}
+                        prevArrow={<LeftCircleFilled />}
+                        nextArrow={<RightCircleFilled/>}
+                        >
+                        {maintenanceImages.map((image, index) => (
+                        <div key={index}>
+                            <Image src={image.url} />
+                        </div>
+                        ))}
+                    </Carousel>
                 </Modal>
             )
         }
