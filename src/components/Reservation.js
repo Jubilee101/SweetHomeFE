@@ -98,7 +98,7 @@ const ReservationList = () => {
                     <MaintenanceList/>
                 </TabPane>
                 <TabPane tab="Utils" key="2">
-                    <>utils list</>
+                    <UtilsList/>
                 </TabPane>
             </Tabs>
         </div>
@@ -122,7 +122,6 @@ const MaintenanceList = () => {
     useEffect(() => {
         getAllRequests();
     }, [])
-
     return (
         <Content>
         <div>
@@ -156,7 +155,66 @@ const MaintenanceList = () => {
 }
 
 const UtilsList = () => {
-    
+    const [loading, setLoading] = useState(false)
+    const [utils, setUtils] = useState([])
+    const getAllUtils = async () => {
+        try {
+            setLoading(true);
+            const resp = await listAllPublicUtilsReservations();
+            setUtils(oldData => [...resp]);
+        } catch (error) {
+            message.error(error.message);
+        } finally {
+            setLoading(false)
+        }
+    }
+    useEffect(() => {
+        getAllUtils();
+    }, [])
+    console.log(utils)
+    return (
+        <Content>
+        <div>
+            <List
+                className="manager-maintenance-list"
+                size="middle"
+                loading={loading}
+                dataSource={utils}
+                renderItem={(item) => (
+                    <List.Item>
+                        <Card
+                            
+                            key={item.id}
+                            title={
+                                <div style={{ alignItems: "center" }}>
+                                    <Text ellipsis={true}>
+                                        {item.category}
+                                    </Text>
+                                </div>
+                            }
+                        >
+                            {
+                                <div>
+                                    <p>
+                                        Name: {item.user.name + ' ' + item.user.room}
+                                    </p>
+                                    <p>
+                                        Date: {item.date}
+                                        
+                                    </p>
+                                    <p>
+                                        Time Slot: {item.time_frame}
+                                    </p>     
+        
+                                </div>
+                            }
+                        </Card>
+                    </List.Item>
+                )} 
+            />
+        </div>
+        </Content>
+    )
 }
 
 // const Maintenance = () => {
