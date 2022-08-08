@@ -92,6 +92,7 @@
 }
 
 .public-utils-col {
+  overflow: auto;
   min-width: 40%;
   display: flex;
   align-items: center;
@@ -113,8 +114,3 @@
   flex-direction: column;
   justify-content: center
 }
-/* .myCarousel {
-  height: auto;
-  width: 90%;
-  overflow: auto;
-} */

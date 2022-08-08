@@ -339,7 +339,7 @@ export const getAvailableTimeFrame = (category) => {
   })
 }
 
-export const listAllReservations = () => {
+export const listAllPublicUtilsReservations = () => {
   const authToken = localStorage.getItem("authToken");
   const url = `${domain}/public_utils/list`;
 

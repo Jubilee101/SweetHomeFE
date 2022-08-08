@@ -360,7 +360,7 @@ const UpdateTimeButton = ({id, getAllRequests}) => {
     )
 }
 
-const RequestDetailButton = ({item}) => {
+export const RequestDetailButton = ({item}) => {
     const [modalVisible, setModalVisible] = useState(false);
     const openModal = () => {
         setModalVisible(true);
