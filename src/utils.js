@@ -203,7 +203,7 @@ export const unreadPollingPublic = (type, setUnreadNum, setCount, loadData) => {
   });
 }
 
-const sendMaintenanceRequest = (data) => {
+export const sendMaintenanceRequest = (data) => {
   const authToken = localStorage.getItem("authToken");
   const requestUrl = `${domain}/maintenance`;
 
@@ -218,7 +218,7 @@ const sendMaintenanceRequest = (data) => {
   });
 }
 
-const getAllMaintenanceRequest = () => {
+export const getAllMaintenanceRequest = () => {
   const authToken = localStorage.getItem("authToken");
   const requestUrl = `${domain}/maintenance`;
 
@@ -235,7 +235,7 @@ const getAllMaintenanceRequest = () => {
   });
 }
 
-const getAllMaintenanceRequestById = () => {
+export const getAllMaintenanceRequestById = () => {
   const authToken = localStorage.getItem("authToken");
   const requestUrl = `${domain}/maintenance/resident`;
 
@@ -252,7 +252,7 @@ const getAllMaintenanceRequestById = () => {
   });
 }
 
-const updateMaintenanceRequest = (id, data) => {
+export const updateMaintenanceRequest = (id, data) => {
   const authToken = localStorage.getItem("authToken");
   const updateUrl = `${domain}/maintenance?id=${id}`;
 
@@ -269,7 +269,7 @@ const updateMaintenanceRequest = (id, data) => {
   });
 }
 
-const getAllPublicUtils = () => {
+export const getAllPublicUtils = () => {
   const authToken = localStorage.getItem("authToken");
   const publicUtilsUrl = `${domain}/public_utils`;
 
@@ -282,10 +282,11 @@ const getAllPublicUtils = () => {
     if (response.status !== 200) {
       throw Error("Fail to get all public utils");
     }
+    return response.json();
   });
 }
 
-const addPublicUtil = (data) => {
+export const addPublicUtil = (data) => {
   const authToken = localStorage.getItem("authToken");
   const addUrl = `${domain}/public_utils`;
 
@@ -302,7 +303,7 @@ const addPublicUtil = (data) => {
   });
 }
 
-const reservePublicUtil = (category, date, timeFrame) => {
+export const reservePublicUtil = (category, date, timeFrame) => {
   const authToken = localStorage.getItem("authToken");
   const reserveUrl = new URL(`${domain}/public_utils/reserve/`);
   reserveUrl.searchParams.append("category", category);
@@ -310,8 +311,8 @@ const reservePublicUtil = (category, date, timeFrame) => {
   reserveUrl.searchParams.append("time_frame", timeFrame);
 
   return fetch(reserveUrl, {
+    method: "POST",
     headers: {
-      method: "POST",
       Authorization: `Bearer ${authToken}`,
     },
   }).then((response) => {
@@ -321,12 +322,15 @@ const reservePublicUtil = (category, date, timeFrame) => {
   });
 }
 
-const getAvailableTimeFrame = (category) => {
+export const getAvailableTimeFrame = (category) => {
   const authToken = localStorage.getItem("authToken");
   const url = `${domain}/public_utils/available?category=${encodeURI(category)}`;
   return fetch(url, {
     method: "GET",
-    Authorization: `Bearer ${authToken}`,
+    headers: {
+      Authorization: `Bearer ${authToken}`,
+    }
+    
   }).then((response) => {
     if (response.status !== 200) {
       throw Error("Fail to get available time slots")
@@ -335,13 +339,15 @@ const getAvailableTimeFrame = (category) => {
   })
 }
 
-const listAllReservations = () => {
+export const listAllReservations = () => {
   const authToken = localStorage.getItem("authToken");
   const url = `${domain}/public_utils/list`;
 
   return fetch(url, {
     method: "GET",
-    Authorization: `Bearer ${authToken}`,
+    headers: {
+      Authorization: `Bearer ${authToken}`,
+    }
   }).then((response) => {
     if (response.status !== 200) {
       throw Error("Fail to get reservations")
@@ -350,13 +356,15 @@ const listAllReservations = () => {
   })
 }
 
-const cancelReservation = () => {
+export const cancelReservation = (data) => {
   const authToken = localStorage.getItem("authToken");
-  const url = `${domain}/public_utils`;
-
-  return fetch(url, {
+  const deleteUrl = `${domain}/public_utils`;
+  return fetch(deleteUrl, {
     method: "DELETE",
-    Authorization: `Bearer ${authToken}`,
+    headers: {
+      Authorization: `Bearer ${authToken}`,
+    },
+    body: data
   }).then((response) => {
     if (response.status !== 200) {
       throw Error("Fail to cancel reservation")

@@ -11,15 +11,35 @@ import {
     Input,
     Form,
     Select,
-    Layout
+    Layout,
+    TimePicker,
+    Card,
+    Carousel,
+    Tooltip,
+    Space,
+    Typography,
+    Image,
 } from "antd";
+import {
+    LeftCircleFilled,
+    RightCircleFilled,
+    InfoCircleOutlined,
+  } from "@ant-design/icons";
+import {
+    addPublicUtil,
+    getAllPublicUtils,
+    listAllReservations,
+    cancelReservation,
+    updateMaintenanceRequest,
+} from "../utils"
 
 import "../styles/ReservationManager.css"
 const { Content } = Layout;
+const { TextArea } = Input;
+const {Option} = Select;
 const {TabPane} = Tabs;
+const { Text } = Typography;
 const ReservationManager = () => {
-    const [maintenanceList] = useState([]);
-
     return (
         <Layout
             className="manager-reservation-layout"
@@ -56,7 +76,8 @@ const ReservationManager = () => {
 const PublicUtilsPanel = () => {
     return (
     <Content className="manager-reservation-form-content">
-            <Tabs defaultActiveKey="1" >
+        <div className="card-container">
+            <Tabs defaultActiveKey="1" type="card">
                 <TabPane tab="Add Utils" key="1">
                     <AddPublicUtilForm/>
                 </TabPane>
@@ -64,11 +85,46 @@ const PublicUtilsPanel = () => {
                     <CancelReservationForm/>
                 </TabPane>
             </Tabs>
+        </div>
 </Content>)
 }
 
 const CancelReservationForm = () => {
-    const onCancelSubmit = () => { };
+    const [categories, setCategories] = useState([]);
+    const [loading, setLoading] = useState(false);
+    const loadData = async () => {
+        try {
+            const resp = await getAllPublicUtils();
+            setCategories(oldData => [...resp]);
+        } catch (error) {
+            message.error(error.message);
+        }
+    }
+    useEffect(() => {
+        loadData();
+    }, []);
+
+    const list = [].slice.call(categories)
+    const selectList = list.map((item) => (
+            <Option value={item.category}>{item.category}</Option>
+        ))
+
+    const onCancelSubmit = async(data) => { 
+        const formData = new FormData();
+        formData.append("category", data.category);
+        formData.append("date", data.date.format("YYYY-MM-DD"));
+        formData.append("time_frame", data.time_frame);
+        setLoading(true);
+        console.log(formData)
+        try {
+            await cancelReservation(formData);
+            message.success("successfully cancel reservation");
+        } catch(error) {
+            message.error(error.message);
+        } finally{
+            setLoading(false);
+        }
+    };
     return (
         <>
             <Form
@@ -79,21 +135,38 @@ const CancelReservationForm = () => {
             >
                 <Form.Item
                     label="Category"
+                    name="category"
                     rules={[{ required: true, message: 'Category' }]}
                 >
-                    <Select></Select>
+                    <Select>
+                        {selectList}
+                    </Select>
                 </Form.Item>
                 <Form.Item
                     label="Date"
+                    name="date"
+                    rules={[{required: true, message: "pick the date to cancel!"}]}
                 >
                     <DatePicker />
+                </Form.Item>
+                <Form.Item
+                    label="Time Slot"
+                    name="time_frame"
+                    rules={[{required: true, message: "pick the time slot to cancel!"}]}
+                >
+                    <Select>
+                        <Option value='8:00 -- 12:00 AM'>8:00 -- 12:00 AM</Option>
+                        <Option value='12:00 -- 6:00 PM'>12:00 -- 6:00 PM</Option>
+                        <Option value='6:00 -- 11:50 PM'>6:00 -- 11:50 PM</Option>
+                    </Select>
                 </Form.Item>
                 <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
                     <Button
                         type="primary"
                         htmlType="submit"
                         shape="round"
-                        size="large"
+                        size="medium"
+                        loading={loading}
                     >
                         cancel
                     </Button>
@@ -104,7 +177,21 @@ const CancelReservationForm = () => {
 }
 
 const AddPublicUtilForm = () => {
-    const onAddSubmit = () => { };
+    const [loading, setLoading] = useState(false);
+    const onAddSubmit = async (data) => {
+        const formData = new FormData();
+        formData.append("category", data.category);
+        formData.append("description", data.description);
+        setLoading(true);
+        try {
+            await addPublicUtil(formData);
+            message.success("successfully added public util");
+        } catch(error) {
+            message.error(error.message);
+        } finally{
+            setLoading(false);
+        }
+    }
     return (
     <>
         <Form
@@ -115,35 +202,49 @@ const AddPublicUtilForm = () => {
         >
             <Form.Item
                 label="Category"
-                rules={[{ required: true, message: 'Category' }]}
+                name="category"
+                rules={[{ required: true, message: 'category name required' }]}
             >
                 <Input />
             </Form.Item>
+            <Form.Item
+            label="Description"
+            name = "description"
+            rules={[{ required: true, message: 'Say something about this util!' }]}
+            >
+                <TextArea showCount maxLength={150} />
+            </Form.Item>
+
             <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
                 <Button
                     type="primary"
                     htmlType="submit"
                     shape="round"
-                    size="large"
+                    size="medium"
+                    loading={loading}
                 >
-                    add
+                    Add Utility
                 </Button>
             </Form.Item>
         </Form>
     </>
-    )
+    );
 }
 
 const MaintenancePanel = () => {
     const [maintenanceList, setMaintenanceList] = useState([])
-    const onUpdateSubmit = () => { };
-    const [modalVisible, setModalVisible] = useState(false);
-    const showModal = () => {
-        setModalVisible(true);
-    };
-    const handleCancel = () => {
-        setModalVisible(false);
-    };
+    const getAllRequests = async () => {
+        try {
+            const resp = await listAllReservations();
+            setMaintenanceList(resp);
+        } catch (error) {
+            message.error(error.message);
+        }
+    }
+    useEffect(() => {
+        getAllRequests();
+    }, [])
+
     return (
         <Content>
         <div>
@@ -151,52 +252,162 @@ const MaintenancePanel = () => {
                 className="manager-maintenance"
                 itemLayout="horizontal"
                 dataSource={maintenanceList}
-            >
-                {(item) => (
+                renderItem={(item) => (
                     <List.Item>
-                        <p>{item.date}</p>
-                        <Button 
-                        type="primary"
-                        shape="round"
-                        size="large"
-                        onClick={showModal}>
-                            update
-                        </Button>
-                        <Modal
-                            title="maintenance-update"
-                            visible={modalVisible}
-                            onCancel={handleCancel}
+                        <Card
+                            key={item.id}
+                            title={
+                                <div style={{ display: "flex", alignItems: "center" }}>
+                                    <Text ellipsis={true} 
+                                    style={item.time === null ? { maxWidth: 150 } : {maxWidth: 150, color : "red"}}>
+                                        {item.user.name + ' ' + item.user.room}
+                                    </Text>
+                                    < RequestDetailButton item={item} />
+                                </div>
+                            }
+                            extra={<UpdateTimeButton id={item.id}/>}
                         >
-                            <div>details</div>
-                            <Form
-                                className="maintenance-time"
-                                labelCol={{ span: 8 }}
-                                wrapperCol={{ span: 16 }}
-                                onFinish={onUpdateSubmit}
+                            <Carousel
+                                dots={false}
+                                arrows={true}
+                                prevArrow={<LeftCircleFilled />}
+                                nextArrow={<RightCircleFilled/>}
                             >
-                                <Form.Item
-                                    label="Time"
-                                    rules={[{ required: true, message: 'Time' }]}
-                                >
-                                    <Input />
-                                </Form.Item>
-                                <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
-                                    <Button
-                                        type="primary"
-                                        htmlType="submit"
-                                        shape="round"
-                                        size="large"
-                                    >
-                                        update
-                                    </Button>
-                                </Form.Item>
-                            </Form>
-                        </Modal>
+                                {item.maintenanceImages.map((image, index) => (
+                                <div key={index}>
+                                    <Image src={image.url} width="100%" />
+                                </div>
+                                ))}
+                            </Carousel>
+                        </Card>
                     </List.Item>
-                    )}
-                </List>
+                )}
+            > 
+            </List>
             </div>
             </Content>
+    )
+}
+
+const UpdateTimeButton = ({id}) => {
+    const [modalVisible, setModalVisible] = useState(false);
+    const [loading, setLoading] = useState(false);
+    const handleUpdate = () => {
+        setModalVisible(true);
+    };
+    const handleCancel = () => {
+        setModalVisible(false);
+    }
+    const onUpdateSubmit = async (values) => {
+        const formData = new FormData();
+        formData.append("date", values.date);
+        formData.append("time", values.time);
+        setLoading(true);
+        try {
+            await updateMaintenanceRequest(id, formData);
+            message.success("Successfully update time")
+        } catch (error) {
+            message.error(error.message)
+        } finally {
+            setLoading(false)
+        }
+    };
+
+    const dateFormat = "YYYY-MM-DD";
+    const timeFormat = 'HH:mm'
+    return (
+        <>
+        <Button 
+        type="primary"
+        shape="round"
+        size="large"
+        onClick={handleUpdate}>
+            Update time
+        </Button>
+        <Modal
+            destroyOnClose={true}
+            title="maintenance-update"
+            visible={modalVisible}
+            onCancel={handleCancel}
+        >
+            <div>details</div>
+            <Form
+                preserve={false}
+                labelCol={{ span: 8 }}
+                wrapperCol={{ span: 16 }}
+                onFinish={onUpdateSubmit}
+            >
+                <Form.Item
+                    label="Date"
+                    name= "date"
+                    rules={[{ required: true, message: 'Please select date' }]}
+                >
+                    <DatePicker format={dateFormat}/>
+                </Form.Item>
+                <Form.Item
+                    label = "Time"
+                    name="time"
+                    rules={[{ required: true, message: 'Please select time' }]}
+                >
+                    <TimePicker format={timeFormat}/>
+                </Form.Item>
+                <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
+                    <Button
+                        loading={loading}
+                        type="primary"
+                        htmlType="submit"
+                        shape="round"
+                        size="medium"
+                    >
+                        Update
+                    </Button>
+                </Form.Item>
+            </Form>
+        </Modal>
+        </>
+    )
+}
+
+const RequestDetailButton = ({item}) => {
+    const [modalVisible, setModalVisible] = useState(false);
+    const openModal = () => {
+        setModalVisible(true);
+    }
+    const handleCancel = () => {
+        setModalVisible(false);
+    }
+    const {user, date, start_time, description} = item;
+    return (
+        <>
+        <Tooltip title="View maintenance request detail">
+            <Button>
+                onClick={openModal}
+                style={{ border: "none" }}
+                size="large"
+                icon={<InfoCircleOutlined />}
+            </Button>
+        </Tooltip>
+        {
+            modalVisible && (
+                <Modal
+                    title={user.name + ' ' + user.room}
+                    visible={modalVisible}
+                    closable={false}
+                    footer={null}
+                    onCancel={handleCancel}
+                >
+                    <Space direction="vertical">
+                        <Text strong={true}>Description</Text>
+                        <Text type="secondary">{description}</Text>
+                        <Text strong={true}>Date</Text>
+                        <Text type="secondary">{date === null ? "pending" : date}</Text>
+                        <Text strong={true}>Time</Text>
+                        <Text type="secondary">{start_time === null ? "pending" : start_time}</Text>
+                    </Space>
+                </Modal>
+            )
+        }
+        </>
     )
 }
 
