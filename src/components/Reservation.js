@@ -407,6 +407,7 @@ const ReserveUtilButton = ({category, getAllUtils}) => {
             visible={modalVisible}
             onCancel={handleCancel}
             footer={null}
+            className="util-modal"
         >
         <List
             grid={{ gutter: 8, column: 3 }}
@@ -448,6 +449,7 @@ const TimeSlotButton = ({category, timeSlot, getAvailableTime, getAllUtils}) => 
     }
     return (
         <Button
+        className="util-button"
         type="primary"
         size="large"
         loading={loading}

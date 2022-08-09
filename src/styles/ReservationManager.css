@@ -114,3 +114,12 @@
   flex-direction: column;
   justify-content: center
 }
+
+.ant-btn.ant-btn-primary.util-button{
+  height: 100px;
+}
+
+.util-modal{
+  height: 600px;
+  overflow: auto;
+}
