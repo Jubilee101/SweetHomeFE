@@ -33,7 +33,6 @@
   align-items: center;
   justify-content: center;
   height: 100%;
-
 }
 
 .ant-spin-nested-loading {
@@ -101,3 +100,4 @@
 .ant-tabs-left>.ant-tabs-content-holder>.ant-tabs-content>.ant-tabs-tabpane {
   padding-left: 0%;
 }
+

@@ -37,6 +37,11 @@ const { Title } = Typography;
 const ResidentHomePage = () => {
     const [calendarVisitable, setCalendarVisitable] = useState(false);
 
+    const [activeTab, setActiveTab] = useState("1");
+    const changeTab = (activeKey) => {
+        setActiveTab(activeKey);
+    }
+
     const showCalendar = () => {
         setCalendarVisitable(true);
     };
@@ -79,6 +84,8 @@ const ResidentHomePage = () => {
                 >
                 <Content className="site-layout-background">
                     <Tabs
+                        activeKey={activeTab}
+                        onChange={changeTab}
                         className="nav-tabs" 
                         style={{ height: "90vh"}} 
                         size={"middle"} 
@@ -111,7 +118,7 @@ const ResidentHomePage = () => {
                             </span>}
                             key="2">
                                 
-                                  <Reservation />  
+                                  {activeTab == 2 ? <Reservation /> : <></>} 
                         </TabPane>
                         <TabPane tab={
                             <span>

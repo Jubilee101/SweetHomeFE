@@ -29,7 +29,6 @@ const DashBoardManager = () => {
                     <Content className="personal-message-title-col-content">
                         Personal Invoice
                     </Content>
-
                 </Col>
             </Row>
             <Row className="manager-dashboard-row-layout">

@@ -177,8 +177,10 @@ export const unreadPolling = (type, setUnreadNum, setCount) => {
       console.log("time out" + response.status)
     }
     else {
-      console.log("200!")
+      // console.log("200!")
+      // console.log("begin set")
       setUnreadNum(type, setCount)
+      console.log("end set")
     }
   });
 }
@@ -196,11 +198,182 @@ export const unreadPollingPublic = (type, setUnreadNum, setCount, loadData) => {
       console.log("time out" + response.status)
     }
     else {
-      console.log("200!")
+      // console.log("200!")
+      // console.log("begin set")
       setUnreadNum(type, setCount)
+      console.log("end set")
       loadData();
     }
   });
 }
 
+export const sendMaintenanceRequest = (data) => {
+  const authToken = localStorage.getItem("authToken");
+  const requestUrl = `${domain}/maintenance`;
 
+  return fetch(requestUrl, {
+    method: "POST",
+    headers: {
+      Authorization: `Bearer ${authToken}`,
+    },
+    body: data,
+  }).then((response) => {
+    if (response.status !== 200) {
+      throw Error("Fail to send request");
+    }
+  });
+}
+
+export const getAllMaintenanceRequest = () => {
+  const authToken = localStorage.getItem("authToken");
+  const requestUrl = `${domain}/maintenance`;
+
+  return fetch(requestUrl, {
+    method: "GET",
+    headers: {
+      Authorization: `Bearer ${authToken}`,
+    },
+  }).then((response) => {
+    if (response.status !== 200) {
+      throw Error("Fail to get all maintenance requests");
+    }
+    return response.json();
+  });
+}
+
+export const getAllMaintenanceRequestById = () => {
+  const authToken = localStorage.getItem("authToken");
+  const requestUrl = `${domain}/maintenance/resident`;
+
+  return fetch(requestUrl, {
+    method: "GET",
+    headers: {
+      Authorization: `Bearer ${authToken}`,
+    },
+  }).then((response) => {
+    if (response.status !== 200) {
+      throw Error("Fail to get your maintenance requests");
+    }
+    return response.json();
+  });
+}
+
+export const updateMaintenanceRequest = (id, data) => {
+  const authToken = localStorage.getItem("authToken");
+  const updateUrl = `${domain}/maintenance?id=${id}`;
+
+  return fetch(updateUrl, {
+    method: "PUT",
+    headers: {
+      Authorization: `Bearer ${authToken}`,
+    },
+    body: data
+  }).then((response) => {
+    if (response.status !== 200) {
+      throw Error("Fail to update request");
+    }
+  });
+}
+
+export const getAllPublicUtils = () => {
+  const authToken = localStorage.getItem("authToken");
+  const publicUtilsUrl = `${domain}/public_utils`;
+
+  return fetch(publicUtilsUrl, {
+    method: "GET",
+    headers: {
+      Authorization: `Bearer ${authToken}`,
+    },
+  }).then((response) => {
+    if (response.status !== 200) {
+      throw Error("Fail to get all public utils");
+    }
+    return response.json();
+  });
+}
+
+export const addPublicUtil = (data) => {
+  const authToken = localStorage.getItem("authToken");
+  const addUrl = `${domain}/public_utils`;
+
+  return fetch(addUrl, {
+    method: "POST",
+    headers: {
+      Authorization: `Bearer ${authToken}`,
+    },
+    body: data
+  }).then((response) => {
+    if (response.status !== 200) {
+      throw Error("Fail to add public utils");
+    }
+  });
+}
+
+export const reservePublicUtil = (category, date, timeFrame) => {
+  const authToken = localStorage.getItem("authToken");
+  const reserveUrl = new URL(`${domain}/public_utils/reserve/`);
+  reserveUrl.searchParams.append("category", category);
+  reserveUrl.searchParams.append("date", date);
+  reserveUrl.searchParams.append("time_frame", timeFrame);
+
+  return fetch(reserveUrl, {
+    method: "POST",
+    headers: {
+      Authorization: `Bearer ${authToken}`,
+    },
+  }).then((response) => {
+    if (response.status !== 200) {
+      throw Error("Fail to search stays");
+    }
+  });
+}
+
+export const getAvailableTimeFrame = (category) => {
+  const authToken = localStorage.getItem("authToken");
+  const url = `${domain}/public_utils/available?category=${encodeURI(category)}`;
+  return fetch(url, {
+    method: "GET",
+    headers: {
+      Authorization: `Bearer ${authToken}`,
+    }
+    
+  }).then((response) => {
+    if (response.status !== 200) {
+      throw Error("Fail to get available time slots")
+    }
+    return response.json();
+  })
+}
+
+export const listAllPublicUtilsReservations = () => {
+  const authToken = localStorage.getItem("authToken");
+  const url = `${domain}/public_utils/list`;
+
+  return fetch(url, {
+    method: "GET",
+    headers: {
+      Authorization: `Bearer ${authToken}`,
+    }
+  }).then((response) => {
+    if (response.status !== 200) {
+      throw Error("Fail to get reservations")
+    }
+    return response.json();
+  })
+}
+
+export const cancelReservation = (data) => {
+  const authToken = localStorage.getItem("authToken");
+  const deleteUrl = `${domain}/public_utils`;
+  return fetch(deleteUrl, {
+    method: "DELETE",
+    headers: {
+      Authorization: `Bearer ${authToken}`,
+    },
+    body: data
+  }).then((response) => {
+    if (response.status !== 200) {
+      throw Error("Fail to cancel reservation")
+    }
+  })
+}
