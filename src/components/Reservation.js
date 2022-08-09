@@ -42,6 +42,8 @@ const { TabPane } = Tabs;
 const { Text } = Typography;
 
 const Reservation = () => {
+    const [maintenanceList, setMaintenanceList] = useState([])
+    const [utils, setUtils] = useState([])
         return (
             <Layout
             className="reservation-layout"
@@ -67,7 +69,12 @@ const Reservation = () => {
             </Col>
             <Col className="public-utils-col" span={7}>
                 <Content className="public-utils-content">
-                    <ReservationList/>
+                    <ReservationList 
+                    setMaintenanceList={setMaintenanceList}
+                    maintenanceList={maintenanceList}
+                    setUtils={setUtils}
+                    utils={utils}
+                    />
                 </Content>
             </Col>
         </Row>
@@ -90,24 +97,29 @@ const ReserveSomething = () => {
     );
 }
 
-const ReservationList = () => {
+const ReservationList = ({setMaintenanceList, maintenanceList, setUtils, utils}) => {
     return (
         <div className="card-container">
             <Tabs defaultActiveKey="1" type="card">
                 <TabPane tab="Maintenance" key="1">
-                    <MaintenanceList/>
+                    <MaintenanceList 
+                    setMaintenanceList={setMaintenanceList}
+                    maintenanceList={maintenanceList}
+                    />
                 </TabPane>
                 <TabPane tab="Utils" key="2">
-                    <UtilsList/>
+                    <UtilsList 
+                    setUtils={setUtils}
+                    utils={utils}
+                    />
                 </TabPane>
             </Tabs>
         </div>
     );
 }
 
-const MaintenanceList = () => {
+const MaintenanceList = ({setMaintenanceList, maintenanceList}) => {
     const [loading, setLoading] = useState(false);
-    const [maintenanceList, setMaintenanceList] = useState([])
     const getAllRequests = async () => {
         try {
             setLoading(true);
@@ -155,9 +167,8 @@ const MaintenanceList = () => {
     )
 }
 
-const UtilsList = () => {
+const UtilsList = ({setUtils, utils}) => {
     const [loading, setLoading] = useState(false)
-    const [utils, setUtils] = useState([])
     const getAllUtils = async () => {
         try {
             setLoading(true);
