@@ -32,6 +32,7 @@ import {
     reservePublicUtil,
     getAvailableTimeFrame,
     listAllPublicUtilsReservations,
+    sendMaintenanceRequest,
 } from "../utils"
 
 import "../styles/ReservationManager.css"
@@ -44,6 +45,34 @@ const { Text } = Typography;
 const Reservation = () => {
     const [maintenanceList, setMaintenanceList] = useState([])
     const [utils, setUtils] = useState([])
+    const [loadingMaintenance, setLoadingMaintenance] = useState(false);
+    const [loadingUtils, setLoadingUtils] = useState(false);
+    const getAllRequests = async () => {
+        try {
+            setLoadingMaintenance(true)
+            const resp = await getAllMaintenanceRequestById();
+            setMaintenanceList(oldData => [...resp]);
+        } catch (error) {
+            message.error(error.message);
+        } finally {
+            setLoadingMaintenance(false);
+        }
+    }
+    const getAllUtils = async () => {
+        try {
+            setLoadingUtils(true);
+            const resp = await listAllPublicUtilsReservations();
+            setUtils(oldData => [...resp]);
+        } catch (error) {
+            message.error(error.message);
+        } finally {
+            setLoadingUtils(false);
+        }
+    }
+    useEffect(() => {
+        getAllRequests();
+        getAllUtils()
+    }, []);
         return (
             <Layout
             className="reservation-layout"
@@ -64,16 +93,19 @@ const Reservation = () => {
             <Col className="maintenance-col" span={7}>
                 <Content
                 className="manager-reservation-content">
-                    <ReserveSomething/>
+                    <ReserveSomething 
+                    getAllRequests={getAllRequests}
+                    getAllUtils={getAllUtils}
+                    />
                 </Content>
             </Col>
             <Col className="public-utils-col" span={7}>
                 <Content className="public-utils-content">
                     <ReservationList 
-                    setMaintenanceList={setMaintenanceList}
                     maintenanceList={maintenanceList}
-                    setUtils={setUtils}
                     utils={utils}
+                    loadingMaintenance={loadingMaintenance}
+                    loadingUtils={loadingUtils}
                     />
                 </Content>
             </Col>
@@ -82,12 +114,12 @@ const Reservation = () => {
     );
 }
 
-const ReserveSomething = () => {
+const ReserveSomething = ({getAllRequests, getAllUtils}) => {
     return (
         <div className="card-container">
             <Tabs defaultActiveKey="1" type="card">
                 <TabPane tab="Maintenance" key="1">
-                    <>maintenance</>
+                    <SendMaintenanceRequest getAllRequests={getAllRequests}/>
                 </TabPane>
                 <TabPane tab="Utils" key="2">
                     <>utils</>
@@ -97,20 +129,20 @@ const ReserveSomething = () => {
     );
 }
 
-const ReservationList = ({setMaintenanceList, maintenanceList, setUtils, utils}) => {
+const ReservationList = ({maintenanceList, utils, loadingMaintenance, loadingUtils}) => {
     return (
         <div className="card-container">
             <Tabs defaultActiveKey="1" type="card">
                 <TabPane tab="Maintenance" key="1">
                     <MaintenanceList 
-                    setMaintenanceList={setMaintenanceList}
                     maintenanceList={maintenanceList}
+                    loadingMaintenance={loadingMaintenance}
                     />
                 </TabPane>
                 <TabPane tab="Utils" key="2">
                     <UtilsList 
-                    setUtils={setUtils}
                     utils={utils}
+                    loadingUtils={loadingUtils}
                     />
                 </TabPane>
             </Tabs>
@@ -118,22 +150,7 @@ const ReservationList = ({setMaintenanceList, maintenanceList, setUtils, utils})
     );
 }
 
-const MaintenanceList = ({setMaintenanceList, maintenanceList}) => {
-    const [loading, setLoading] = useState(false);
-    const getAllRequests = async () => {
-        try {
-            setLoading(true);
-            const resp = await getAllMaintenanceRequestById();
-            setMaintenanceList(oldData => [...resp]);
-        } catch (error) {
-            message.error(error.message);
-        } finally {
-            setLoading(false)
-        }
-    }
-    useEffect(() => {
-        getAllRequests();
-    }, [])
+const MaintenanceList = ({maintenanceList, loadingMaintenance}) => {
     return (
         <Content>
         <div>
@@ -141,7 +158,7 @@ const MaintenanceList = ({setMaintenanceList, maintenanceList}) => {
                 className="manager-maintenance-list"
                 grid={{ gutter: 0, column: 1 }}
                 size="middle"
-                loading={loading}
+                loading={loadingMaintenance}
                 dataSource={maintenanceList}
                 renderItem={(item) => (
                     <List.Item>
@@ -167,23 +184,7 @@ const MaintenanceList = ({setMaintenanceList, maintenanceList}) => {
     )
 }
 
-const UtilsList = ({setUtils, utils}) => {
-    const [loading, setLoading] = useState(false)
-    const getAllUtils = async () => {
-        try {
-            setLoading(true);
-            const resp = await listAllPublicUtilsReservations();
-            setUtils(oldData => [...resp]);
-        } catch (error) {
-            message.error(error.message);
-        } finally {
-            setLoading(false)
-        }
-    }
-    useEffect(() => {
-        getAllUtils();
-    }, [])
-    console.log(utils)
+const UtilsList = ({utils, loadingUtils}) => {
     return (
         <Content>
         <div>
@@ -191,7 +192,7 @@ const UtilsList = ({setUtils, utils}) => {
                 className="manager-maintenance-list"
                 grid={{ gutter: 0, column: 1 }}
                 size="middle"
-                loading={loading}
+                loading={loadingUtils}
                 dataSource={utils}
                 renderItem={(item) => (
                     <List.Item>
@@ -230,6 +231,75 @@ const UtilsList = ({setUtils, utils}) => {
         </div>
         </Content>
     )
+}
+
+const SendMaintenanceRequest = ({setMaintenanceList}) => {
+    const [loading, setLoading] = useState(false);
+    const fileInputRef = React.createRef();
+    const onMaintenanceSubmit = async (values) => {
+        const formData = new FormData();
+        const { files } = fileInputRef.current;
+        
+        if (files.length > 5) {
+            message.error("You can at most upload 5 pictures.");
+            return;
+        }
+
+        for (let i = 0; i < files.length; i++) {
+            formData.append("images", files[i]);
+        }
+
+        formData.append("description", values.description);
+        setLoading(true);
+        try {
+            await sendMaintenanceRequest(formData);
+            message.success("upload successfully");
+            setMaintenanceList();
+        } catch (error) {
+            message.error(error.message);
+        } finally {
+            setLoading(false);
+        }
+    }
+    return (
+    <div>
+        <Form
+            className="problem-submit"
+            labelCol={{ span: 8 }}
+            wrapperCol={{ span: 16 }}
+            onFinish={onMaintenanceSubmit}
+        >
+            <Form.Item
+                name="description"
+                label="Description"
+                rules={[{ required: true, message: 'Input your Description' }]}
+            >
+                <TextArea showCount maxLength={150}/>
+            </Form.Item>
+            <Form.Item
+                name="picture"
+                label="Picture"
+                rules={[{ required: true, message: "Upload images for demostration" }]}
+            >
+                <Input
+                    type="file"
+                    accept="image/png, image/jpeg"
+                    ref={fileInputRef}
+                    multiple={true}
+                />
+            </Form.Item>
+            <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
+                <Button 
+                type="primary" 
+                htmlType="submit"
+                loading={loading}
+                >
+                    Submit
+                </Button>
+            </Form.Item>
+        </Form>
+    </div>
+);
 }
 
 // const Maintenance = () => {
