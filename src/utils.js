@@ -214,7 +214,9 @@ export const sendMaintenanceRequest = (data) => {
     },
     body: data,
   }).then((response) => {
-    throw Error("Fail to send request");
+    if (response.status !== 200) {
+      throw Error("Fail to send request");
+    }
   });
 }
 

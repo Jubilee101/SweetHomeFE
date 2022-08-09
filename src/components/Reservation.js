@@ -233,12 +233,14 @@ const UtilsList = ({utils, loadingUtils}) => {
     )
 }
 
-const SendMaintenanceRequest = ({setMaintenanceList}) => {
-    const [loading, setLoading] = useState(false);
-    const fileInputRef = React.createRef();
-    const onMaintenanceSubmit = async (values) => {
+class SendMaintenanceRequest extends React.Component {
+    state = {
+        loading: false,
+      }; 
+    fileInputRef = React.createRef();
+    onMaintenanceSubmit = async (values) => {
         const formData = new FormData();
-        const { files } = fileInputRef.current;
+        const { files } = this.fileInputRef.current;
         
         if (files.length > 5) {
             message.error("You can at most upload 5 pictures.");
@@ -250,56 +252,63 @@ const SendMaintenanceRequest = ({setMaintenanceList}) => {
         }
 
         formData.append("description", values.description);
-        setLoading(true);
+        this.setState({
+            loading: true,
+          });
         try {
             await sendMaintenanceRequest(formData);
             message.success("upload successfully");
-            setMaintenanceList();
+            const {getAllRequests} = this.props;
+            getAllRequests();
         } catch (error) {
             message.error(error.message);
         } finally {
-            setLoading(false);
+            this.setState({
+                loading: false,
+            });
         }
     }
-    return (
-    <div>
-        <Form
-            className="problem-submit"
-            labelCol={{ span: 8 }}
-            wrapperCol={{ span: 16 }}
-            onFinish={onMaintenanceSubmit}
-        >
-            <Form.Item
-                name="description"
-                label="Description"
-                rules={[{ required: true, message: 'Input your Description' }]}
-            >
-                <TextArea showCount maxLength={150}/>
-            </Form.Item>
-            <Form.Item
-                name="picture"
-                label="Picture"
-                rules={[{ required: true, message: "Upload images for demostration" }]}
-            >
-                <Input
-                    type="file"
-                    accept="image/png, image/jpeg"
-                    ref={fileInputRef}
-                    multiple={true}
-                />
-            </Form.Item>
-            <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
-                <Button 
-                type="primary" 
-                htmlType="submit"
-                loading={loading}
+    render() {
+        return (
+            <div>
+                <Form
+                    className="problem-submit"
+                    labelCol={{ span: 8 }}
+                    wrapperCol={{ span: 16 }}
+                    onFinish={this.onMaintenanceSubmit}
                 >
-                    Submit
-                </Button>
-            </Form.Item>
-        </Form>
-    </div>
-);
+                    <Form.Item
+                        name="description"
+                        label="Description"
+                        rules={[{ required: true, message: 'Input your Description' }]}
+                    >
+                        <TextArea showCount maxLength={150}/>
+                    </Form.Item>
+                    <Form.Item
+                        name="picture"
+                        label="Picture"
+                        rules={[{ required: true, message: "Upload images for demostration" }]}
+                    >
+                        <input
+                            type="file"
+                            accept="image/png, image/jpeg"
+                            ref={this.fileInputRef}
+                            multiple={true}
+                        />
+                    </Form.Item>
+                    <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
+                        <Button 
+                        type="primary" 
+                        htmlType="submit"
+                        loading={this.state.loading}
+                        >
+                            Submit
+                        </Button>
+                    </Form.Item>
+                </Form>
+            </div>
+        )
+    }
 }
 
 // const Maintenance = () => {
