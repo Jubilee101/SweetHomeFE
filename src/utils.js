@@ -177,8 +177,10 @@ export const unreadPolling = (type, setUnreadNum, setCount) => {
       console.log("time out" + response.status)
     }
     else {
-      console.log("200!")
+      // console.log("200!")
+      // console.log("begin set")
       setUnreadNum(type, setCount)
+      console.log("end set")
     }
   });
 }
@@ -196,8 +198,10 @@ export const unreadPollingPublic = (type, setUnreadNum, setCount, loadData) => {
       console.log("time out" + response.status)
     }
     else {
-      console.log("200!")
+      // console.log("200!")
+      // console.log("begin set")
       setUnreadNum(type, setCount)
+      console.log("end set")
       loadData();
     }
   });

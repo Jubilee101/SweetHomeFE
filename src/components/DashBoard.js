@@ -80,8 +80,8 @@ const PublicInvoice = () => {
     useEffect(() => {
         loadData();
         setUnreadNum("PUBLIC", setCountPublic);
-        const pollPublic = setInterval(() => {
-            unreadPollingPublic("PUBLIC", setUnreadNum, setCountPublic, loadData)
+        const pollPublic = setInterval(async () => {
+            await unreadPollingPublic("PUBLIC", setUnreadNum, setCountPublic, loadData)
         }, 2000)
         return function cleanUp(){
             clearInterval(pollPublic);

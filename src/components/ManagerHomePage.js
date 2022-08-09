@@ -38,7 +38,13 @@ class ManagerHomePage extends React.Component {
                 className="site-layout">
                 <Content className="site-layout-background">
                     <Tabs
-                        className="nav-tabs" style={{ height: "90vh"}} size={"middle"} tabPosition={"left"} defaultActiveKey="1">
+                        className="nav-tabs" 
+                        style={{ height: "90vh"}} 
+                        size={"middle"} 
+                        tabPosition={"left"} 
+                        defaultActiveKey="1"
+                        destroyInactiveTabPane={true}
+                        >
                         <TabPane
                             className="dashboard-content"
                             tab={
