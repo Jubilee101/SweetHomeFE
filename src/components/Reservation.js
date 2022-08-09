@@ -403,7 +403,7 @@ const ReserveUtilButton = ({category, getAllUtils}) => {
         <Modal
             destroyOnClose={true}
             loading={loading}
-            title="maintenance-update"
+            title="Reserve public utility"
             visible={modalVisible}
             onCancel={handleCancel}
             footer={null}
