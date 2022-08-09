@@ -117,12 +117,14 @@ const Reservation = () => {
 const ReserveSomething = ({getAllRequests, getAllUtils}) => {
     return (
         <div className="card-container">
-            <Tabs defaultActiveKey="1" type="card">
+            <Tabs 
+            defaultActiveKey="1" 
+            type="card">
                 <TabPane tab="Maintenance" key="1">
                     <SendMaintenanceRequest getAllRequests={getAllRequests}/>
                 </TabPane>
                 <TabPane tab="Utils" key="2">
-                    <>utils</>
+                    <ReservePublicUtil getAllUtils={getAllUtils}/>
                 </TabPane>
             </Tabs>
         </div>
@@ -132,7 +134,11 @@ const ReserveSomething = ({getAllRequests, getAllUtils}) => {
 const ReservationList = ({maintenanceList, utils, loadingMaintenance, loadingUtils}) => {
     return (
         <div className="card-container">
-            <Tabs defaultActiveKey="1" type="card">
+            <Tabs 
+            defaultActiveKey="1" 
+            type="card"
+            destroyInactiveTabPane={true}
+            >
                 <TabPane tab="Maintenance" key="1">
                     <MaintenanceList 
                     maintenanceList={maintenanceList}
@@ -311,165 +317,154 @@ class SendMaintenanceRequest extends React.Component {
     }
 }
 
-// const Maintenance = () => {
-//     const [maintenanceList] = useState([]);
+const ReservePublicUtil = ({getAllUtils}) => {
+    const [categories, setCategories] = useState([]);
+    const [loading, setLoading] = useState(false);
+    const loadCategories = async () => {
+        try {
+            const resp = await getAllPublicUtils();
+            setCategories(oldData => [...resp]);
+        } catch (error) {
+            message.error(error.message);
+        }
+    }
+    useEffect(() => {
+        loadCategories();
+    }, []);
 
-//     const onMaintenanceSubmit = async (values) => {
-//         const formData = new FormData();
-//         const { files } = this.fileInputRef.current;
+    return (
+        <Content>
+        <div>
+            <List
+                className="manager-maintenance-list"
+                grid={{ gutter: 0, column: 1 }}
+                size="middle"
+                loading={loading}
+                dataSource={categories}
+                renderItem={(item) => (
+                    <List.Item>
+                        <Card
+                            key={item.id}
+                            title={
+                                <div className="card-content">
+                                    <Text ellipsis={true}>
+                                        {item.category}
+                                    </Text>
+                                </div>
+                            }
+                            extra={<ReserveUtilButton category={item.category}
+                            getAllUtils={getAllUtils}
+                            />}
+                        >
+                            {item.description}
+                        </Card>
+                    </List.Item>
+                )} 
+            />
+        </div>
+        </Content>
+    )
 
-//         if (files.length > 5) {
-//             message.error("You can at most upload 5 pictures.");
-//             return;
-//         }
+}
 
-//         for (let i = 0; i < files.length; i++) {
-//             formData.append("images", files[i]);
-//         }
+const ReserveUtilButton = ({category, getAllUtils}) => {
+    const [modalVisible, setModalVisible] = useState(false);
+    const [loading, setLoading] = useState(false);
+    const [timeslots, setTimeSlots] = useState([])
+    const getAvailableTime = async (category) => {
+        try {
+            setLoading(true);
+            const resp = await getAvailableTimeFrame(category);
+            setTimeSlots(oldData => [...resp])
+        } catch (error) {
+            message.error(error.message)
+        }  finally {
+            setLoading(false);
+        }
+    }
+    const handleCancel = () => {
+        setModalVisible(false);
+    }
+    const handleSelect = () => {
+        setModalVisible(true);
+        getAvailableTime(category);
+    }
+    
 
-//         formData.append("name", values.name);
-//         formData.append("room", values.room);
-//         formData.append("description", values.description);
+    return (
+        <>
+        <Button 
+        type="primary"
+        shape="round"
+        size="medium"
+        onClick={handleSelect}>
+            Reserve
+        </Button>
+        <Modal
+            destroyOnClose={true}
+            loading={loading}
+            title="maintenance-update"
+            visible={modalVisible}
+            onCancel={handleCancel}
+            footer={null}
+        >
+        <List
+            grid={{ gutter: 8, column: 3 }}
+            size="middle"
+            dataSource={timeslots}
+            renderItem={(slot) => (
+                <List.Item>
+                    <TimeSlotButton 
+                    category={category}
+                    timeSlot={slot}
+                    getAvailableTime={getAvailableTime}
+                     getAllUtils={getAllUtils}
+                    />
+                </List.Item>
+                )} 
+            />
+        </Modal>
+        </>
 
-//         try {
-//             //  await uploadStay(formData);
-//             message.success("upload successfully");
-//         } catch (error) {
-//             message.error(error.message);
-//         }
-//     }
+    )
 
-//     const fileInputRef = React.createRef();
+}
 
-//     return (
-//         <>
-//             <div
-
-//             >
-//                 <Form
-//                     className="problem-submit"
-//                     labelCol={{ span: 8 }}
-//                     wrapperCol={{ span: 16 }}
-//                     onFinish={onMaintenanceSubmit}
-//                 >
-//                     <Form.Item
-//                         name="room"
-//                         label="Room"
-//                         rules={[{ required: true, message: 'Please input your Room' }]}
-//                     >
-//                         <Input />
-//                     </Form.Item>
-//                     <Form.Item
-//                         name="name"
-//                         label="Name"
-//                         rules={[{ required: true, message: 'Please input your Name' }]}
-//                     >
-//                         <Input />
-//                     </Form.Item>
-//                     <Form.Item
-//                         name="description"
-//                         label="Description"
-//                         rules={[{ required: true, message: 'Please input your Description' }]}
-//                     >
-//                         <Input />
-//                     </Form.Item>
-//                     <Form.Item
-//                         name="picture"
-//                         label="Picture"
-//                         rules={[{ required: true, message: "upload" }]}
-//                     >
-//                         <Input
-//                             type="file"
-//                             accept="image/png, image/jpeg"
-//                             ref={fileInputRef}
-//                             multiple={true}
-//                         />
-//                     </Form.Item>
-//                     <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
-//                         <Button type="primary" htmlType="submit">
-//                             Submit
-//                         </Button>
-//                     </Form.Item>
-//                 </Form>
-//             </div>
-//             <div
-
-//             >
-//                 <List
-//                     className="maintenance-history"
-//                     itemLayout="horizontal"
-//                     dataSource={maintenanceList}
-//                     renderItem={item => (
-//                         <List.Item>{item}</List.Item>
-//                     )}
-//                 />
-//             </div>
-//         </>
-//     );
-// }
-
-// const PublicUtilities = () => {
-//     const [reservationList] = useState([]);
-//     //  const [utilitiesType] = useState([]);
-//     const onPublicSubmit = () => { }
-
-//     return (
-//         <>
-//             <div
-
-//             >
-//                 <Form
-//                     className="problem-submit"
-//                     labelCol={{ span: 8 }}
-//                     wrapperCol={{ span: 16 }}
-//                     onFinish={onPublicSubmit}
-//                 >
-//                     <Form.Item
-//                         name="type"
-//                         label="Type"
-//                         rules={[{ required: true }]}
-//                     >
-//                         {/* <Cascader 
-//                             options={} 
-//                          /> */}
-//                     </Form.Item>
-//                     <Form.Item
-//                         name="date"
-//                         label="Date"
-//                         rules={[{ required: true }]}
-//                     >
-//                         <DatePicker />
-//                     </Form.Item>
-//                     <Form.Item
-//                         name="time"
-//                         label="Time"
-//                         rules={[{ required: true }]}
-//                     >
-//                         <Select placeholder="Please select time">
-//                             <Select.Option value="morning">Morning</Select.Option>
-//                             <Select.Option value="afternoon">Afternoon</Select.Option>
-//                             <Select.Option value="evening">Evening</Select.Option>
-//                         </Select>
-//                     </Form.Item>
-//                     <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
-//                         <Button type="primary" htmlType="submit">
-//                             Submit
-//                         </Button>
-//                     </Form.Item>
-//                 </Form>
-//             </div>
-//             <div >
-//                 <List
-//                     className="reservation-history"
-//                     itemLayout="horizontal"
-//                     dataSource={reservationList}
-//                     renderItem={(item) => (
-//                         <List.Item>{item}</List.Item>
-//                     )}
-//                 />
-//             </div>
-//         </>
-//     );
-// }
+const TimeSlotButton = ({category, timeSlot, getAvailableTime, getAllUtils}) => {
+    const [loading, setLoading] = useState(false);
+    const onClick = async () => {
+        try {
+            setLoading(true);
+            console.log(category)
+            await reservePublicUtil(category, timeSlot.date, timeSlot.time_frame);
+            message.success(`successfully reserve ${category}`);
+            getAvailableTime(category);
+            getAllUtils();
+        } catch(error) {
+            message.error(error.message);
+        } finally{
+            setLoading(false);
+        }
+    }
+    return (
+        <Button
+        type="primary"
+        size="large"
+        loading={loading}
+        onClick={onClick}
+        >
+            {
+                <Space direction="vertical">
+                <Text type="secondary">
+                {timeSlot.date}
+                </Text>
+                <Text type="secondary">
+                {timeSlot.time_frame}
+                </Text>
+                </Space>
+            }
+        </Button>
+    )
+}
 
 export default Reservation;
