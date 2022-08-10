@@ -177,11 +177,10 @@ export const unreadPolling = (type, setUnreadNum, setCount) => {
       console.log("time out" + response.status)
     }
     else {
-      // console.log("200!")
-      // console.log("begin set")
       setUnreadNum(type, setCount)
       console.log("end set")
     }
+    unreadPolling(type, setUnreadNum, setCount)
   });
 }
 
@@ -198,12 +197,11 @@ export const unreadPollingPublic = (type, setUnreadNum, setCount, loadData) => {
       console.log("time out" + response.status)
     }
     else {
-      // console.log("200!")
-      // console.log("begin set")
       setUnreadNum(type, setCount)
       console.log("end set")
       loadData();
     }
+    unreadPollingPublic(type, setUnreadNum, setCount, loadData);
   });
 }
 
@@ -374,6 +372,69 @@ export const cancelReservation = (data) => {
   }).then((response) => {
     if (response.status !== 200) {
       throw Error("Fail to cancel reservation")
+    }
+  })
+}
+
+export const fetchMessages = () => {
+  const authToken = localStorage.getItem("authToken");
+  const msgUrl =  `${domain}/messages`;
+  return fetch(msgUrl, {
+    headers: {
+      Authorization: `Bearer ${authToken}`,
+    },
+  }).then((response) => {
+    if (response.status !== 200) {
+      throw Error("Fail to fetch messages")
+    }
+  })
+}
+
+export const sendMessage = (data) => {
+  const authToken = localStorage.getItem("authToken");
+  const msgUrl =  `${domain}/messages`;
+  return fetch(msgUrl, {
+    method: "POST",
+    headers: {
+      Authorization: `Bearer ${authToken}`,
+    },
+    body: data
+  }).then((response) => {
+    if (response.status !== 200) {
+      throw Error("Fail to send message")
+    }
+  })
+}
+
+export const pollMessage = (loadData) => {
+  const authToken = localStorage.getItem("authToken");
+  const pollUrl = `${domain}/watch?type=MESSAGE`;
+  return fetch(pollUrl, {
+    method: "GET",
+    headers: {
+      Authorization: `Bearer ${authToken}`,
+    },
+  }).then((response) => {
+    if (response.status !== 200) {
+      console.log("time out" + response.status)
+    }
+    else {
+      loadData();
+    }
+    pollMessage(loadData);
+  });
+}
+
+export const getUser = () => {
+  const authToken = localStorage.getItem("authToken");
+  const msgUrl =  `${domain}/user`;
+  return fetch(msgUrl, {
+    headers: {
+      Authorization: `Bearer ${authToken}`,
+    },
+  }).then((response) => {
+    if (response.status !== 200) {
+      throw Error("Fail to get user")
     }
   })
 }

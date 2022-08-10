@@ -2,23 +2,67 @@ import React, {
     useEffect,
     useState
 } from "react";
-import { Button, Typography, List, Input, Form, Avatar, Divider, Skeleton, Layout } from "antd";
-
+import { 
+    Button, 
+    Typography, 
+    List, Input, 
+    Form, 
+    Avatar, 
+    Divider, 
+    Skeleton, 
+    Layout,
+    message,
+ } from "antd";
+import CommentsBlock from 'simple-react-comments';
 import { Content } from "antd/lib/layout/layout";
-
+import "../styles/Discussion.css"
+import { 
+    pollMessage,
+    fetchMessages,
+    sendMessage,
+    getUser,
+ } from "../utils";
 const { Text } = Typography;
 const { TextArea } = Input;
 
 const Discussion = () => {
+    const [messageList, setMessageList] = useState([]);
     const [loading, setLoading] = useState(false);
-    const [discussionList, setDiscussionList] = useState([]);
-
+    const [user, setUser] = useState({})
     useEffect(() => {
         loadData();
-    });
-
-    const loadData = async () => { }
-    const onDiscussionSubmit = () => { };
+        loadUser();
+        // pollMessage(loadData);
+    }, []);
+    const loadUser = async() => {
+        try {
+            const resp = await getUser();
+            setUser(resp);
+        } catch(error) {
+            message.error(error.message);
+        }
+    }
+    const loadData = async() => { 
+        try {
+            const resp = await fetchMessages();
+            setMessageList(oldData => [...resp]);
+        } catch(error) {
+            message.error(error.message);
+        }
+    }
+    const onDiscussionSubmit = async(data) => { 
+        const formData = new FormData();
+        formData.append("text", data.text);
+        formData.append("name_and_room", user.name + " " + user.room);
+        setLoading(true);
+        try {
+            await sendMessage(formData);
+        } catch(error) {
+            message.error(error.message);
+        } finally{
+            setLoading(false);
+        }
+    };
 
     return (
         <Layout className="discussion-layout">
@@ -39,16 +83,15 @@ const Discussion = () => {
                                         }}
                                     >
                                         <List
-                                            loading={loading}
-                                            dataSource={discussionList}
+                                            dataSource={messageList}
                                             renderItem={(item) => (
-                                                <List.Item>
-                                                    <List.Item.Meta
-                                                        description={
-                                                            <Text>{item.text}</Text>
-                                                        }
-                                                    />
-                                                </List.Item>
+                                            <List.Item>
+                                                <List.Item.Meta
+                                                    description={
+                                                        <Text>{item.text}</Text>
+                                                    }
+                                                />
+                                            </List.Item>
                                             )}
                                         />
                                     </div>
@@ -62,6 +105,7 @@ const Discussion = () => {
                                         >
                                             <Form.Item
                                                 label="Text"
+                                                name="text"
                                                 rules={[{ required: true, message: 'Please input your Text' }]}
                                             >
                                                 <TextArea
@@ -73,8 +117,14 @@ const Discussion = () => {
                                                 />
                                             </Form.Item>
                                             <Form.Item wrapperCol={{ offset: 22, span: 4 }}>
-                                                <Button type="primary" shape="round" size="large" htmlType="submit">
-                                                    send
+                                                <Button 
+                                                type="primary" 
+                                                shape="round" 
+                                                size="large" 
+                                                htmlType="submit"
+                                                loading={loading}
+                                                >
+                                                    Send
                                                 </Button>
                                             </Form.Item>
                                         </Form>

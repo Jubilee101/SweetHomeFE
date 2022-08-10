@@ -80,12 +80,7 @@ const PublicInvoice = () => {
     useEffect(() => {
         loadData();
         setUnreadNum("PUBLIC", setCountPublic);
-        const pollPublic = setInterval(async () => {
-            await unreadPollingPublic("PUBLIC", setUnreadNum, setCountPublic, loadData)
-        }, 2000)
-        return function cleanUp(){
-            clearInterval(pollPublic);
-        }
+        unreadPollingPublic("PUBLIC", setUnreadNum, setCountPublic, loadData)
     }, []);
 
     const clearNum = () => {
@@ -204,32 +199,18 @@ const PersonalInvoice = () => {
     }
     useEffect(() => {
         setUnreadNum("MAIL", setCountMail);
-        const pollMail = setInterval(() => {
-                unreadPolling("MAIL", setUnreadNum, setCountMail)
-            }, 2000)
-        
+        unreadPolling("MAIL", setUnreadNum, setCountMail)
+
         setUnreadNum("OTHER", setCountOther);
-        const pollOther = setInterval(() => {
-             unreadPolling("OTHER", setUnreadNum, setCountOther)
-            }, 2000)
+        unreadPolling("OTHER", setUnreadNum, setCountOther)
         
         setUnreadNum("RESERVATION", setCountReservation);
-        const pollReservation = setInterval(() => {
-                unreadPolling("RESERVATION", setUnreadNum, setCountReservation);
-            }, 2000)
+        unreadPolling("RESERVATION", setUnreadNum, setCountReservation);
 
         setUnreadNum("PAYMENT", setCountPayment);
-        const pollPayment = setInterval(() => {
-            unreadPolling("PAYMENT", setUnreadNum, setCountPayment);
-        }, 2000)
-        checkDue();
+        unreadPolling("PAYMENT", setUnreadNum, setCountPayment);
 
-        return function cleanUp() {
-            clearInterval(pollMail);
-            clearInterval(pollOther);
-            clearInterval(pollPayment);
-            clearInterval(pollReservation);
-        }
+        checkDue();
     }, []);
 
     const clickMailDrawer = () => {
