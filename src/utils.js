@@ -436,5 +436,6 @@ export const getUser = () => {
     if (response.status !== 200) {
       throw Error("Fail to get user")
     }
+    return response.json();
   })
 }
