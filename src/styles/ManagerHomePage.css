@@ -50,8 +50,9 @@
 }
 
 .ant-typography.manager-dashboard-title {
-  margin-left: 7%;
-  margin-bottom: 3%;
+  margin-top: 5vh;
+  margin-left: 4vw;
+  margin-bottom: 3vh;
   font-size: 2em;
   font-weight: 400;
 }

@@ -56,7 +56,9 @@ class ManagerHomePage extends React.Component {
                                         Dashboard
                                     </div>
                                 </span>
-                            } key="1">
+                            } key="1"
+                            style={{height: "100%"}}
+                            >
                             <Title
                                 
                                 className="manager-dashboard-title"
