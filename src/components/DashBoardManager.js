@@ -44,7 +44,7 @@ const DashBoardManager = () => {
             <Col span={13} className="public-message-second-title">
             
             <EditOutlined style={{marginRight: "1vh"}}/>
-            Input Invoice content
+            Input invoice content
             </Col>
           </Row>
 
@@ -75,10 +75,10 @@ const DashBoardManager = () => {
               </Content>
             </Col>
             
-            <Col span={9} offset= {2} className="public-message-second-title">
+            <Col span={8} offset= {3} className="public-message-second-title">
             
             <EditOutlined style={{marginRight: "1vh"}}/>
-            Edit Invoice Form
+            Edit invoice form
             </Col>
           </Row>
           <Row>
@@ -121,7 +121,7 @@ const PublicMessage = () => {
     <Content style={{ height: "100%" }}>
       <div className="public-invoice-form" style={{ height: "100%" }}>
         <div
-          style={{ width: "91%" }}
+          style={{ width: "90%" }}
         >
           <Form
             className="public-sending"
@@ -135,7 +135,7 @@ const PublicMessage = () => {
               <TextArea
                 // showCount
                 allowClear
-                rows={9}
+                rows={12}
                 bordered={false}
                 style={{background: "#f0f2f5", borderRadius: "2vh"}}
                 placeholder="Enter public invoice content here"
@@ -227,16 +227,18 @@ const PersonalMessage = () => {
             <Form.Item
               name="text"
               label="Content"
-              rules={[{ required: true, message: 'Please input your Text' }]}
+              rules={[{ required: true, message: 'Please input invoice content' }]}
             >
               <TextArea
-                showCount
+                // showCount
                 allowClear
-                rows={4}
+                rows={6}
               />
             </Form.Item>
 
-            <Form.Item wrapperCol={{ offset: 14, span: 8 }}>
+            <Form.Item wrapperCol={{ offset: 14, span: 8 }}
+            style={{marginBottom: "0"}}
+            >
               <Button
                 type="primary" htmlType="submit"
                 size={"large"}

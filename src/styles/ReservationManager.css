@@ -25,33 +25,53 @@
   align-items: center;
 }
 
+.maintenance-requests-icon {
+  font-size: 2em;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 6vh;
+  color: rgb(0, 0, 0);
+  margin-bottom: 2vh;
+  background: #ffff;
+  border-radius: 2vh;
+}
+
+.public-utilities-icon {
+  font-size: 2em;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 6vh;
+  color: rgb(0, 0, 0);
+  margin-bottom: 2vh;
+  background: #ffff;
+  border-radius: 2vh;
+}
+
 .ant-btn.ant-btn-primary {
   background: #6667AB;
 }
 
 .maintenance-title-col {
-  min-width: 40%;
+  /* min-width: 40%; */
   display: flex;
   align-items: center;
-  border-radius: 1vh;
+  border-radius: 2vh;
   margin-bottom: 2vh;
-}
-.ant-col.maintenance-title-col {
-  margin-right: 3%;
-  margin-left: 7%;
   background: white;
 }
 
 .public-utils-title-col {
-  min-width: 40%;
+  /* min-width: 40%; */
   display: flex;
   align-items: center;
-  border-radius: 1vh;
+  border-radius: 2vh;
   margin-bottom: 2vh;
 }
 .ant-col.public-utils-title-col {
-  margin-left: 3%;
-  margin-right: 7%;
+  /* margin-left: 3%;
+  margin-right: 7%; */
   background: white;
 }
 
@@ -61,7 +81,7 @@
   justify-content: center;
   align-items: center;
   height: 6vh;
-  font-weight: 600;
+  font-weight: 500;
   }
 
 .public-utils-title-col-content {
@@ -70,8 +90,10 @@
   justify-content: center;
   align-items: center;
   height: 6vh;
-  font-weight: 600;
+  font-weight: 500;
   }
+
+
 
 .manager-reservation-layout {
   background:  #f0f2f5;
@@ -82,26 +104,21 @@
   min-width: 40%;
   display: flex;
   align-items: center;
-  border-radius: 2%;
-}
-
-.ant-col.maintenance-col {
-  margin-right: 3%;
-  margin-left: 7%;
+  border-radius: 2vh;
   background: white;
 }
 
 .public-utils-col {
   overflow: auto;
-  min-width: 40%;
+  /* min-width: 40%; */
   display: flex;
   align-items: center;
-  border-radius: 2%;
+  border-radius: 2vh;
 }
 
 .ant-col.public-utils-col {
-  margin-left: 3%;
-  margin-right: 7%;
+  /* margin-left: 3%;
+  margin-right: 7%; */
   background: white;
 }
 
@@ -109,10 +126,11 @@
   height: 90%;
   overflow: auto;
   overflow-x: hidden;
-  margin: 2% 8%;
   display: flex;
   flex-direction: column;
-  justify-content: center
+  justify-content: center;
+  width: 30vw;
+
 }
 
 .ant-btn.ant-btn-primary.util-button{
