@@ -19,7 +19,7 @@ import {
 } from "../utils";
 import "../styles/DashBoard.css"
 
-import { ClearOutlined, SmileOutlined, MessageOutlined, MailOutlined, MenuFoldOutlined, AppstoreAddOutlined, BankOutlined, CreditCardOutlined, ScheduleOutlined } from "@ant-design/icons"
+import { ClearOutlined, SmileOutlined, MessageOutlined, MailOutlined, MenuFoldOutlined, AppstoreAddOutlined, BankOutlined, CreditCardOutlined, ScheduleOutlined, SoundOutlined, BellOutlined } from "@ant-design/icons"
 const { Text, Title } = Typography;
 
 class Dashboard extends React.Component {
@@ -111,14 +111,20 @@ const PublicInvoice = () => {
         <div
         style={{ height: "95%" }}>
             <Row
-
                 justify="start"
                 align="bottom"
                 style={{ height: "10%", paddingTop: "1vh", marginBottom: "1vh"}}
             >
                 <Col
                 offset={2}
-                span={7}
+                span={3}
+                >
+                <SoundOutlined className="resident-public-invoice-icon"/>
+                </Col>
+                
+                <Col
+                offset={1}
+                span={6}
                 className="resident-public-invoice-title-col"
                 >
                 Public Invoice
@@ -130,7 +136,7 @@ const PublicInvoice = () => {
                     <Button
                         shape="round"
                         type="primary"
-                        size="large"
+                        size="middle"
                         onClick={clearNum}
                     >
                         <ClearOutlined />{`clear ${countPublic} unread`}
@@ -300,7 +306,13 @@ const PersonalInvoice = () => {
         <div style={{ height: "95%" }}>
             <Row style={{height: "10%",paddingTop: "1vh", marginBottom: "1vh"}} align="bottom">
                 <Col
-                span={8}
+                span={3}
+                >
+                <BellOutlined className="resident-personal-invoice-icon"/>
+                </Col>
+                <Col
+                offset={1}
+                span={7}
                 className="personal-invoice-title-col"
                 >
                 Personal Invoice

@@ -2,7 +2,7 @@
   background:  #f0f2f5;
 }
 
-.manager-reservation-content {
+.manager-maintenance-content {
   height: 60vh;
   margin: 7vh 6vw;
   display: flex;
@@ -13,6 +13,7 @@
   margin: 7vh 2vw;
   display: flex;
 }
+
 .manager-reservation-form-content {
   width: 72%;
 }
@@ -69,6 +70,7 @@
   border-radius: 2vh;
   margin-bottom: 2vh;
 }
+
 .ant-col.public-utils-title-col {
   /* margin-left: 3%;
   margin-right: 7%; */
@@ -82,7 +84,7 @@
   align-items: center;
   height: 6vh;
   font-weight: 500;
-  }
+}
 
 .public-utils-title-col-content {
   font-size: 1.5em;
@@ -91,12 +93,6 @@
   align-items: center;
   height: 6vh;
   font-weight: 500;
-  }
-
-
-
-.manager-reservation-layout {
-  background:  #f0f2f5;
 }
 
 .maintenance-col {
@@ -114,11 +110,6 @@
   display: flex;
   align-items: center;
   border-radius: 2vh;
-}
-
-.ant-col.public-utils-col {
-  /* margin-left: 3%;
-  margin-right: 7%; */
   background: white;
 }
 
@@ -130,7 +121,6 @@
   flex-direction: column;
   justify-content: center;
   width: 30vw;
-
 }
 
 .ant-btn.ant-btn-primary.util-button{

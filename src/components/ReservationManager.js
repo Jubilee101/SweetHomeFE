@@ -68,7 +68,7 @@ const ReservationManager = () => {
           <Row>
             <Col className="maintenance-col">
               <Content
-                className="manager-reservation-content" >
+                className="manager-maintenance-content" >
                 <MaintenancePanel />
               </Content>
             </Col>
@@ -109,7 +109,7 @@ const PublicUtilsPanel = () => {
         
       </Title>
       <div className="card-container">
-        <Tabs defaultActiveKey="1" 
+        <Tabs defaultActiveKey="1"
         type="card"
         >
           <TabPane tab="Add Utils" key="1" className="utilsTabPane">

@@ -8,11 +8,9 @@
     "@testing-library/jest-dom": "^5.16.4",
     "@testing-library/react": "^13.3.0",
     "@testing-library/user-event": "^13.5.0",
-<<<<<<< Updated upstream
+
     "antd": "^4.22.4",
-=======
-    "antd": "^4.22.3",
->>>>>>> Stashed changes
+
     "framer-motion": "^6.5.1",
     "package-lock.json": "^1.0.0",
     "react": "^18.2.0",
