@@ -29,6 +29,7 @@ const Discussion = () => {
     const [messageList, setMessageList] = useState([]);
     const [loading, setLoading] = useState(false);
     const [ident, setIdent] = useState({});
+    //this is necessary, because hook is async
     let user = {};
     useEffect(() => {
         loadData();
@@ -37,13 +38,6 @@ const Discussion = () => {
             pollMessage(user.email, loadData);
         }
         setUp();
-        // const interval = setInterval(() => {
-        //     loadData();
-        //   }, 3000);
-        
-        // return () => {
-        //     clearInterval(interval);
-        // }
     }, []);
     
     const chatListRef = useRef(null)
@@ -58,7 +52,6 @@ const Discussion = () => {
             const resp = await getUser();
             setIdent(resp);
             user = resp;
-            
         } catch(error) {
             message.error(error.message);
         }
