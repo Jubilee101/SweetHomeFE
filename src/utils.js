@@ -387,6 +387,7 @@ export const fetchMessages = () => {
     if (response.status !== 200) {
       throw Error("Fail to fetch messages")
     }
+    return response.json()
   })
 }
 
@@ -419,6 +420,7 @@ export const pollMessage = (loadData) => {
       console.log("time out" + response.status)
     }
     else {
+      console.log("200!")
       loadData();
     }
     pollMessage(loadData);

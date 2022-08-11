@@ -43,7 +43,6 @@ class ManagerHomePage extends React.Component {
                         size={"middle"} 
                         tabPosition={"left"} 
                         defaultActiveKey="1"
-                        destroyInactiveTabPane={true}
                         >
                         <TabPane
                             className="dashboard-content"

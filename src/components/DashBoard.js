@@ -208,7 +208,7 @@ const PersonalInvoice = () => {
         unreadPolling("RESERVATION", setUnreadNum, setCountReservation);
 
         setUnreadNum("PAYMENT", setCountPayment);
-        unreadPolling("PAYMENT", setUnreadNum, setCountPayment);
+        //unreadPolling("PAYMENT", setUnreadNum, setCountPayment);
 
         checkDue();
     }, []);

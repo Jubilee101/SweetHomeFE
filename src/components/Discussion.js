@@ -9,8 +9,6 @@ import {
     List, Input, 
     Form, 
     Avatar, 
-    Divider, 
-    Skeleton, 
     Layout,
     message,
  } from "antd";
@@ -34,13 +32,13 @@ const Discussion = () => {
     useEffect(() => {
         loadData();
         loadUser();
-        // pollMessage(loadData);
+        pollMessage(loadData);
     }, []);
     const chatListRef = useRef(null)
-    // useEffect(() => {
-    //     const current = chatListRef.current
-    //     current.scrollTop = current.scrollHeight
-    // }, [messageList])
+    useEffect(() => {
+        const current = chatListRef.current
+        current.scrollTop = current.scrollHeight
+    }, [messageList])
     const loadUser = async() => {
         try {
             const resp = await getUser();
@@ -57,71 +55,23 @@ const Discussion = () => {
             message.error(error.message);
         }
     }
-    const onDiscussionSubmit = async(data) => { 
+    const onDiscussionSubmit = async (data) => { 
         const formData = new FormData();
         const auth = localStorage.getItem("asManager");
         formData.append("text", data.text);
-        if (auth == true) {
+        if (auth === "true") {
             formData.append("name_and_room", user.name + " " + "Manager");
         }
         else {
             formData.append("name_and_room", user.name + " " + user.room);
         }
-        setLoading(true);
         try {
-            await sendMessage(formData);
+            sendMessage(formData);
+            loadData();
         } catch(error) {
             message.error(error.message);
-        } finally{
-            setLoading(false);
         }
     };
-
-    const fakeMsg = [
-        {
-            text: "Hi how are you",
-            date: "2022-8-10",
-            time: "16:16:30",
-            name_and_room: "hr D208"
-        },
-        {
-            text: "Hi how are you",
-            date: "2022-8-10",
-            time: "16:16:30",
-            name_and_room: "hr D208"
-        },
-        {
-            text: "Hi how are you",
-            date: "2022-8-10",
-            time: "16:16:30",
-            name_and_room: "hr D208"
-        },
-        {
-            text: "Hi how are you",
-            date: "2022-8-10",
-            time: "16:16:30",
-            name_and_room: "hr D208"
-        },
-        {
-            text: "Hi how are you",
-            date: "2022-8-10",
-            time: "16:16:30",
-            name_and_room: "hr D208"
-        },
-        {
-            text: "Hi how are you",
-            date: "2022-8-10",
-            time: "16:16:30",
-            name_and_room: "hr D208"
-        },
-        {
-            text: "I am great! what about you! aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
-            date: "2022-8-10",
-            time: "16:16:30",
-            name_and_room: "hr D208"
-        },
-    ]
-    console.log(user)
     const flag = (item) => 
     ((user.room !== null && (user.name + ' ' + user.room) === item.name_and_room) ||
      (user.room === null && (user.name + ' ' + "Manager") === item.name_and_room))
@@ -142,25 +92,27 @@ const Discussion = () => {
                                         backgroudColor: "#F5F5F5",
                                         padding: '10px 16px',
                                         border: '1px solid rgba(140, 140, 140, 0.35)',
-                                        ref:{chatListRef},
                                     }}
+                                    ref={chatListRef}
                                 >
                                     <List
-                                        dataSource={fakeMsg}
+                                        dataSource={messageList}
                                         renderItem={(item) => (
                                             
                                         <List.Item>
                                             <List.Item.Meta
                                                 avatar={<Avatar size="small" icon={<UserOutlined />}/>}
                                                 title={<Text style={{fontSize: "12px"}}>
-                                                    {item.name_and_room + (flag(item) ? " (You)" : "")}
+                                                    {item.name_and_room + (flag(item) ? " (You)" : "")
+                                                    }
                                                     </Text>}
                                                 description={
                                                     <div>
                                                     <div className="chat-bubble">
                                                     <Text style={{fontWeight: "600", color: "#F5F5F5"}}>{item.text}</Text>
                                                     </div>
-                                                    <Text style={{fontSize: "10px", marginLeft:"3px"}}>{item.time + ' ' + item.date}</Text>
+                                                    <Text style={{fontSize: "10px", marginLeft:"3px"}}>{
+                                                    item.time == undefined ? "" : (item.time + ' ' + item.date)}</Text>
                                                     </div>
                                                 }
                                             />
@@ -185,7 +137,7 @@ const Discussion = () => {
                                         >
                                             <TextArea
                                                 showCount
-                                                allowClear
+                                                allowClear={true}
                                                 style={{
                                                     height: 100,
                                                 }}
