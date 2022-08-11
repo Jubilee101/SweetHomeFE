@@ -55,7 +55,7 @@ const Discussion = () => {
             message.error(error.message);
         }
     }
-    const onDiscussionSubmit = async (data) => { 
+    const onDiscussionSubmit = (data) => { 
         const formData = new FormData();
         const auth = localStorage.getItem("asManager");
         formData.append("text", data.text);

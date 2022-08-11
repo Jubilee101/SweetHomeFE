@@ -164,9 +164,30 @@ export const checkDue = () => {
   });
 }
 
-export const unreadPolling = (type, setUnreadNum, setCount) => {
+// export const unreadPolling = (type, setUnreadNum, setCount) => {
+//   const authToken = localStorage.getItem("authToken");
+//   const pollUrl = `${domain}/watch?type=${type}`;
+//   return fetch(pollUrl, {
+//     method: "GET",
+//     headers: {
+//       Authorization: `Bearer ${authToken}`,
+//     },
+//   }).then((response) => {
+//     if (response.status !== 200) {
+//       console.log("time out" + response.status)
+//     }
+//     else {
+//       setUnreadNum(type, setCount)
+//       console.log("end set")
+//     }
+//     unreadPolling(type, setUnreadNum, setCount)
+//   });
+// }
+
+export const unreadPollingPersonal = (setNum, setCount1, type1, setCount2, type2, setCount3, type3, setCount4, type4) => {
   const authToken = localStorage.getItem("authToken");
-  const pollUrl = `${domain}/watch?type=${type}`;
+  const pollUrl = `${domain}/watch?type=PERSONAL`;
+  console.log(pollUrl);
   return fetch(pollUrl, {
     method: "GET",
     headers: {
@@ -177,10 +198,17 @@ export const unreadPolling = (type, setUnreadNum, setCount) => {
       console.log("time out" + response.status)
     }
     else {
-      setUnreadNum(type, setCount)
+      setNum(type1, setCount1)
+      setNum(type2, setCount2)
+      setNum(type3, setCount3)
+      setNum(type4, setCount4)
       console.log("end set")
     }
-    unreadPolling(type, setUnreadNum, setCount)
+    unreadPollingPersonal(setNum, 
+      setCount1, type1, 
+      setCount2, type2, 
+      setCount3, type3, 
+      setCount4, type4)
   });
 }
 

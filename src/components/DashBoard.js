@@ -15,7 +15,7 @@ import {
 } from "antd";
 import {
     getPublicInvoice, getPersonalInvoice, getUnreadNum,
-    clearPersonalInvoice, clearPublicInvoice, checkDue, unreadPolling, unreadPollingPublic
+    clearPersonalInvoice, clearPublicInvoice, checkDue, unreadPolling, unreadPollingPublic, unreadPollingPersonal
 } from "../utils";
 import "../styles/DashBoard.css"
 
@@ -58,7 +58,6 @@ class Dashboard extends React.Component {
                         offset={0}
                         className="personal-invoice-col"
                     >
-
                         <PersonalInvoice />
 
                     </Col>
@@ -199,17 +198,17 @@ const PersonalInvoice = () => {
     }
     useEffect(() => {
         setUnreadNum("MAIL", setCountMail);
-        unreadPolling("MAIL", setUnreadNum, setCountMail)
 
         setUnreadNum("OTHER", setCountOther);
-        unreadPolling("OTHER", setUnreadNum, setCountOther)
         
         setUnreadNum("RESERVATION", setCountReservation);
-        unreadPolling("RESERVATION", setUnreadNum, setCountReservation);
 
         setUnreadNum("PAYMENT", setCountPayment);
-        //unreadPolling("PAYMENT", setUnreadNum, setCountPayment);
-
+        unreadPollingPersonal(setUnreadNum, 
+        setCountMail, "MAIL", 
+        setCountOther, "OTHER", 
+        setCountReservation, "RESERVATION", 
+        setCountPayment, "PAYMENT");
         checkDue();
     }, []);
 
