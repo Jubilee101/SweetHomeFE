@@ -34,11 +34,14 @@ const Discussion = () => {
         loadUser();
         pollMessage(loadData);
     }, []);
+    
     const chatListRef = useRef(null)
+
     useEffect(() => {
         const current = chatListRef.current
         current.scrollTop = current.scrollHeight
     }, [messageList])
+
     const loadUser = async() => {
         try {
             const resp = await getUser();
@@ -55,7 +58,7 @@ const Discussion = () => {
             message.error(error.message);
         }
     }
-    const onDiscussionSubmit = (data) => { 
+    const onDiscussionSubmit = async (data) => { 
         const formData = new FormData();
         const auth = localStorage.getItem("asManager");
         formData.append("text", data.text);
@@ -66,7 +69,7 @@ const Discussion = () => {
             formData.append("name_and_room", user.name + " " + user.room);
         }
         try {
-            sendMessage(formData);
+            await sendMessage(formData);
             loadData();
         } catch(error) {
             message.error(error.message);

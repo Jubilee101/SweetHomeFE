@@ -435,24 +435,23 @@ export const sendMessage = (data) => {
   })
 }
 
-export const pollMessage = (loadData) => {
+export const pollMessage = async (loadData) => {
   const authToken = localStorage.getItem("authToken");
   const pollUrl = `${domain}/watch?type=MESSAGE`;
-  return fetch(pollUrl, {
+  const resp = await fetch(pollUrl, {
     method: "GET",
     headers: {
       Authorization: `Bearer ${authToken}`,
     },
-  }).then((response) => {
-    if (response.status !== 200) {
-      console.log("time out" + response.status)
-    }
-    else {
-      console.log("200!")
-      loadData();
-    }
-    pollMessage(loadData);
-  });
+  })
+  if (resp.status !== 200) {
+    console.log("time out" + resp.status)
+  }
+  else {
+    console.log("200!")
+    loadData();
+  }
+  await pollMessage(loadData);
 }
 
 export const getUser = () => {
