@@ -3,8 +3,8 @@
 }
 
 .resident-maintenance-content {
-  height: 60vh;
-  margin: 5vh 6vw;
+  height: 65vh;
+  margin: 2vh 2vw;
   display: flex;
 }
 
@@ -98,6 +98,8 @@
   justify-content: center;
   border-radius: 2vh;
   background: white;
+  flex-direction: column;
+  align-items: center;
 }
 
 /* .resident-reservation-col {
@@ -109,7 +111,7 @@
 } */
 
 .resident-utils-list{
-  height: 90%;
+  /* max-height: 100%; */
   overflow: auto;
   overflow-x: hidden;
   display: flex;
@@ -124,14 +126,15 @@
 
 .ant-tabs-content-holder {
   background: #ffff !important;
-  display: flex;
+  padding: 0;
+  /* display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: center; */
 }
 
 .ant-tabs-content .ant-tabs-content-top {
-  height: 100%;
-  padding-top: 5vh;
+  height: 100% !important;
+  padding-top: 2vh;
 }
 
 /* .util-modal{

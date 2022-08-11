@@ -333,7 +333,7 @@ const MaintenancePanel = () => {
                 // bodyStyle={{backgroundColor: '#6667AB', border: 0 }}
                 extra={<UpdateTimeButton id={item.id} getAllRequests={getAllRequests} />}
               >
-                <div style={{ fontSize: "14px", fontWeight: "480" }}>
+                <div style={{ fontSize: "14px", fontWeight: "400" }}>
                   {item.description}
                 </div>
               </Card>

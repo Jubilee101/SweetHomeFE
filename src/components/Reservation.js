@@ -26,7 +26,9 @@ import {
     RightCircleFilled,
     InfoCircleOutlined,
     FileDoneOutlined,
-    CoffeeOutlined
+    CoffeeOutlined,
+    DownCircleOutlined,
+    BookOutlined
 } from "@ant-design/icons";
 import {
     getAllPublicUtils,
@@ -42,7 +44,7 @@ const { Content } = Layout;
 const { TextArea } = Input;
 const { Option } = Select;
 const { TabPane } = Tabs;
-const { Text } = Typography;
+const { Text, Title } = Typography;
 
 const Reservation = () => {
     const [maintenanceList, setMaintenanceList] = useState([])
@@ -101,8 +103,18 @@ const Reservation = () => {
                     </Row>
                     <Row>
                         <Col className="resident-maintenance-col">
+                            <div style={{ width: "100%", display: "flex" }}>
+                                <Title
+                                    style={{ display: "flex", justifyContent: "start", alignItems: "center", fontSize: "20px", fontWeight: "500", marginTop: "3vh", marginLeft: "2vw", marginBottom: "0" }}
+                                >
+                                    <DownCircleOutlined style={{ marginRight: "1.5vw", fontSize: "18px" }} />
+                                    Choose reservation type
+                                </Title>
+
+                            </div>
+
                             <Content className="resident-maintenance-content"
-                            style={{display: "flex", justifyContent: "center", minWidth: "39vw", width: "39vw"}}
+                                style={{ display: "flex", justifyContent: "center", minWidth: "39vw", width: "39vw" }}
                             >
                                 <ReserveSomething
                                     getAllRequests={getAllRequests}
@@ -110,6 +122,7 @@ const Reservation = () => {
                                 />
                             </Content>
                         </Col>
+
                     </Row>
                 </Col>
                 <Col
@@ -153,13 +166,13 @@ const Reservation = () => {
 
 const ReserveSomething = ({ getAllRequests, getAllUtils }) => {
     return (
-            <div className="card-container" style={{display: "flex", justifyContent: "center", width: "39vw", minWidth: "39vw"}}>
+        <div className="card-container" style={{ display: "flex", justifyContent: "center", width: "39vw", minWidth: "39vw" }}>
             <Tabs
                 defaultActiveKey="1"
                 type="card"
-                style={{minWidth: "100%"}}
+                style={{ minWidth: "100%" }}
                 className="request-tabs"
-                >
+            >
                 <TabPane tab="Maintenance" key="1">
                     <SendMaintenanceRequest getAllRequests={getAllRequests} />
                 </TabPane>
@@ -232,8 +245,12 @@ const MaintenanceList = ({ maintenanceList, loadingMaintenance }) => {
 
 const UtilsList = ({ utils, loadingUtils }) => {
     return (
-        <Content>
-            <div>
+        <Content
+            style={{ width: "100%", display: "flex", justifyContent: "center" }}
+        >
+            <div
+                style={{ width: "100%" }}
+            >
                 <List
                     // className="manager-maintenance-list"
                     grid={{ gutter: 0, column: 1 }}
@@ -245,7 +262,7 @@ const UtilsList = ({ utils, loadingUtils }) => {
                             <Card
                                 key={item.id}
                                 title={
-                                    <div sclassName="card-content">
+                                    <div className="card-content">
                                         <Text ellipsis={true}>
                                             {item.category}
                                         </Text>
@@ -262,10 +279,8 @@ const UtilsList = ({ utils, loadingUtils }) => {
                                             <br />
                                             <Text ellipsis={true} >
                                                 Time Slot: {item.time_frame}
-
                                             </Text>
                                         </p>
-
                                     </div>
                                 }
                             </Card>
@@ -317,10 +332,10 @@ class SendMaintenanceRequest extends React.Component {
             <div>
                 <Form
                     className="problem-submit"
-                    labelCol={{ span: 6 }}
-                    wrapperCol={{ span: 18 }}
+                    labelCol={{ span: 5 }}
+                    wrapperCol={{ span: 19 }}
                     onFinish={this.onMaintenanceSubmit}
-                    style={{paddingBottom: "10%"}}
+                    style={{ paddingTop: "10%" }}
                 >
                     <Form.Item
                         name="description"
@@ -341,17 +356,17 @@ class SendMaintenanceRequest extends React.Component {
                             multiple={true}
                         />
                     </Form.Item>
-                    <div style={{display: "flex", justifyContent: "end"}}>
+                    <div style={{ display: "flex", justifyContent: "end" }}>
                         <Form.Item>
-                        <Button
-                            type="primary"
-                            htmlType="submit"
-                            shape="round"
-                            loading={this.state.loading}
-                        >
-                            Submit
-                        </Button>
-                    </Form.Item>
+                            <Button
+                                type="primary"
+                                htmlType="submit"
+                                shape="round"
+                                loading={this.state.loading}
+                            >
+                                Submit
+                            </Button>
+                        </Form.Item>
                     </div>
                 </Form>
             </div>
@@ -369,7 +384,7 @@ const ReservePublicUtil = ({ getAllUtils }) => {
             setCategories(oldData => [...resp]);
         } catch (error) {
             message.error(error.message);
-        } finally{
+        } finally {
             setLoading(false);
         }
     }
@@ -378,7 +393,7 @@ const ReservePublicUtil = ({ getAllUtils }) => {
     }, []);
 
     return (
-        <Content style={{display: "flex", overflow: "auto"}}>
+        <Content style={{ display: "flex", overflow: "auto", justifyContent: "center", height: "100%" }}>
             <div>
                 <List
                     className="resident-utils-list"
@@ -391,17 +406,21 @@ const ReservePublicUtil = ({ getAllUtils }) => {
                             <Card
                                 key={item.id}
                                 title={
-                                    <div className="card-content">
+                                    <div className="card-content" style={{ display: "flex", alignItems: "center", fontWeight: "600" }}>
                                         <Text ellipsis={true}>
                                             {item.category}
                                         </Text>
                                     </div>
                                 }
+                                style={{ backgroundColor: '#fafbfd', border: "1px" }}
                                 extra={<ReserveUtilButton category={item.category}
                                     getAllUtils={getAllUtils}
                                 />}
                             >
-                                {item.description}
+                                <div style={{ fontSize: "14px", fontWeight: "400" }}>
+                                    {item.description}
+                                </div>
+
                             </Card>
                         </List.Item>
                     )}
@@ -443,7 +462,7 @@ const ReserveUtilButton = ({ category, getAllUtils }) => {
                 shape="round"
                 size="medium"
                 onClick={handleSelect}>
-                Reserve
+                <BookOutlined />
             </Button>
             <Modal
                 destroyOnClose={true}
