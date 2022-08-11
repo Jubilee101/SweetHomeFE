@@ -212,7 +212,7 @@ const CancelReservationForm = () => {
               size="medium"
               loading={loading}
             >
-              Cancel reservations
+              Cancel Reservations
             </Button>
           </div>
 
@@ -288,12 +288,18 @@ const AddPublicUtilForm = () => {
 
 const MaintenancePanel = () => {
   const [maintenanceList, setMaintenanceList] = useState([])
+  const [loading, setLoading] = useState(false);
+
   const getAllRequests = async () => {
     try {
+      setLoading(true);
       const resp = await getAllMaintenanceRequest();
       setMaintenanceList(oldData => [...resp]);
     } catch (error) {
       message.error(error.message);
+      setLoading(false);
+    } finally {
+      setLoading(false);
     }
   }
   useEffect(() => {
@@ -304,6 +310,7 @@ const MaintenancePanel = () => {
     <Content style={{ width: "100%" }}>
       <div style={{ width: "100%" }}>
         <List
+          loading={loading}
           grid={{ gutter: 8, column: 1 }}
           className="manager-maintenance-list"
           size="middle"

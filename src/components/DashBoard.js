@@ -91,6 +91,7 @@ const PublicInvoice = () => {
     const clearNum = () => {
         setCountPublic(0);
         clearPublicInvoice();
+        message.success("Unread count cleared")
     }
 
     const loadData = async () => {
@@ -107,17 +108,24 @@ const PublicInvoice = () => {
 
     return (
 
-        <div className="33333"
+        <div
         style={{ height: "95%" }}>
             <Row
 
                 justify="start"
-                style={{ height: "10%", paddingTop: "1vh" }}
+                align="bottom"
+                style={{ height: "10%", paddingTop: "1vh", marginBottom: "1vh"}}
             >
                 <Col
-                    
-                    style={{height: "100%"}}
-                    offset={2}
+                offset={2}
+                span={7}
+                className="resident-public-invoice-title-col"
+                >
+                Public Invoice
+                </Col>
+                <Col
+                // style={{height: "6vh"}}
+                offset={1}
                 >
                     <Button
                         shape="round"
@@ -289,13 +297,22 @@ const PersonalInvoice = () => {
     }
 
     return (
-        <div style={{ height: "95%", display: "flex", flexDirection: "column", justifyContent: "space-evenly" }}>
-            <Row
-                gutter={[16, 28]}
-                style={{ height: "35%" }}
-            >
+        <div style={{ height: "95%" }}>
+            <Row style={{height: "10%",paddingTop: "1vh", marginBottom: "1vh"}} align="bottom">
                 <Col
-                span={12}>
+                span={8}
+                className="personal-invoice-title-col"
+                >
+                Personal Invoice
+                </Col>
+                
+            </Row>
+            <div style={{height: "90%", display: "flex", flexDirection: "column", justifyContent: "space-evenly"}}>
+              <Row
+                gutter={[16, 28]}
+                style={{ height: "42%" }}
+            >
+                <Col span={12}>
                     <Card
                         title="MAIL"
 
@@ -355,7 +372,7 @@ const PersonalInvoice = () => {
             </Row>
 
             <Row
-                style={{ height: "35%" }}
+                style={{ height: "42%" }}
                 gutter={[16, 28]}
             >
                 <Col span={12}>
@@ -415,7 +432,9 @@ const PersonalInvoice = () => {
                     </Card>
 
                 </Col>
-            </Row>
+            </Row>   
+            </div>
+           
             {visitMail && <PersonalInvoiceDrawer onClose={onMailDrawerClose} type="MAIL" invoiceList={mailList} visible={visitMail} />}
             {visitOther && <PersonalInvoiceDrawer onClose={onOtherDrawerClose} type="OTHER" invoiceList={otherList} visible={visitOther} />}
             {visitPayment && <PersonalInvoiceDrawer onClose={onPaymentDrawerClose} type="PAYMENT" invoiceList={paymentList} visible={visitPayment} />}

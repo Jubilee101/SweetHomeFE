@@ -167,6 +167,10 @@
   align-items: flex-end;
 }
 
+.ant-btn.ant-btn-primary.ant-btn-sm {
+  color: #fff;
+}
+
 .card-container p {
   margin: 0;
 }

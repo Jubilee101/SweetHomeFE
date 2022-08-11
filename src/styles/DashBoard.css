@@ -5,11 +5,33 @@
   margin-top: 10px;
 }
 
+.resident-public-invoice-title-col {
+  background: #fff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 2vh;
+  font-size: 1.5em;
+  height: 6vh;
+  font-weight: 500;
+}
+
 .public-invoice-col {
   height: 100%;
   display: flex;
   flex-direction: column;
   justify-content: center;
+}
+
+.personal-invoice-title-col {
+  background: #fff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 2vh;
+  font-size: 1.5em;
+  height: 6vh;
+  font-weight: 500;
 }
 
 .personal-invoice-col {
