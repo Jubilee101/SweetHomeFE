@@ -101,10 +101,10 @@
   background: #9193CF;
 }
 
-.ant-tabs-tab.ant-tabs-tab-active .ant-tabs-tab-btn {
+/* .ant-tabs-tab.ant-tabs-tab-active .ant-tabs-tab-btn {
   color: white;
   text-shadow: 0 0 0.25px currentcolor;
-}
+} */
 
 .ant-tabs-content-holder {
   background: #f0f2f5;
