@@ -32,7 +32,13 @@ const Discussion = () => {
     useEffect(() => {
         loadData();
         loadUser();
+        const interval = setInterval(() => {
+            loadData();
+          }, 3000);
         pollMessage(loadData);
+        return () => {
+            clearInterval(interval);
+        }
     }, []);
     
     const chatListRef = useRef(null)

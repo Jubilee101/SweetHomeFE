@@ -198,6 +198,7 @@ export const unreadPollingPersonal = (setNum, setCount1, type1, setCount2, type2
       console.log("time out" + response.status)
     }
     else {
+      console.log("200!!")
       setNum(type1, setCount1)
       setNum(type2, setCount2)
       setNum(type3, setCount3)
