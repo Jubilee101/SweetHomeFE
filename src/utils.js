@@ -436,9 +436,9 @@ export const sendMessage = (data) => {
   })
 }
 
-export const pollMessage = async (loadData) => {
+export const pollMessage = async (email, loadData) => {
   const authToken = localStorage.getItem("authToken");
-  const pollUrl = `${domain}/watch?type=MESSAGE`;
+  const pollUrl = `${domain}/watch/${email}`;
   const resp = await fetch(pollUrl, {
     method: "GET",
     headers: {
@@ -452,7 +452,7 @@ export const pollMessage = async (loadData) => {
     console.log("200!")
     loadData();
   }
-  await pollMessage(loadData);
+  await pollMessage(email, loadData);
 }
 
 export const getUser = () => {
