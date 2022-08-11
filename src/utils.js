@@ -164,9 +164,30 @@ export const checkDue = () => {
   });
 }
 
-export const unreadPolling = (type, setUnreadNum, setCount) => {
+// export const unreadPolling = (type, setUnreadNum, setCount) => {
+//   const authToken = localStorage.getItem("authToken");
+//   const pollUrl = `${domain}/watch?type=${type}`;
+//   return fetch(pollUrl, {
+//     method: "GET",
+//     headers: {
+//       Authorization: `Bearer ${authToken}`,
+//     },
+//   }).then((response) => {
+//     if (response.status !== 200) {
+//       console.log("time out" + response.status)
+//     }
+//     else {
+//       setUnreadNum(type, setCount)
+//       console.log("end set")
+//     }
+//     unreadPolling(type, setUnreadNum, setCount)
+//   });
+// }
+
+export const unreadPollingPersonal = (setNum, setCount1, type1, setCount2, type2, setCount3, type3, setCount4, type4) => {
   const authToken = localStorage.getItem("authToken");
-  const pollUrl = `${domain}/watch?type=${type}`;
+  const pollUrl = `${domain}/watch?type=PERSONAL`;
+  console.log(pollUrl);
   return fetch(pollUrl, {
     method: "GET",
     headers: {
@@ -177,11 +198,18 @@ export const unreadPolling = (type, setUnreadNum, setCount) => {
       console.log("time out" + response.status)
     }
     else {
-      // console.log("200!")
-      // console.log("begin set")
-      setUnreadNum(type, setCount)
+      console.log("200!!")
+      setNum(type1, setCount1)
+      setNum(type2, setCount2)
+      setNum(type3, setCount3)
+      setNum(type4, setCount4)
       console.log("end set")
     }
+    unreadPollingPersonal(setNum, 
+      setCount1, type1, 
+      setCount2, type2, 
+      setCount3, type3, 
+      setCount4, type4)
   });
 }
 
@@ -198,12 +226,11 @@ export const unreadPollingPublic = (type, setUnreadNum, setCount, loadData) => {
       console.log("time out" + response.status)
     }
     else {
-      // console.log("200!")
-      // console.log("begin set")
       setUnreadNum(type, setCount)
       console.log("end set")
       loadData();
     }
+    unreadPollingPublic(type, setUnreadNum, setCount, loadData);
   });
 }
 
@@ -375,5 +402,70 @@ export const cancelReservation = (data) => {
     if (response.status !== 200) {
       throw Error("Fail to cancel reservation")
     }
+  })
+}
+
+export const fetchMessages = () => {
+  const authToken = localStorage.getItem("authToken");
+  const msgUrl =  `${domain}/messages`;
+  return fetch(msgUrl, {
+    headers: {
+      Authorization: `Bearer ${authToken}`,
+    },
+  }).then((response) => {
+    if (response.status !== 200) {
+      throw Error("Fail to fetch messages")
+    }
+    return response.json()
+  })
+}
+
+export const sendMessage = (data) => {
+  const authToken = localStorage.getItem("authToken");
+  const msgUrl =  `${domain}/messages`;
+  return fetch(msgUrl, {
+    method: "POST",
+    headers: {
+      Authorization: `Bearer ${authToken}`,
+    },
+    body: data
+  }).then((response) => {
+    if (response.status !== 200) {
+      throw Error("Fail to send message")
+    }
+  })
+}
+
+export const pollMessage = async (email, loadData) => {
+  const authToken = localStorage.getItem("authToken");
+  const pollUrl = `${domain}/watch/${email}`;
+  const resp = await fetch(pollUrl, {
+    method: "GET",
+    headers: {
+      Authorization: `Bearer ${authToken}`,
+    },
+  })
+  if (resp.status !== 200) {
+    console.log("time out" + resp.status)
+  }
+  else {
+    console.log("200!")
+    loadData();
+  }
+  await pollMessage(email, loadData);
+}
+
+export const getUser = () => {
+  const authToken = localStorage.getItem("authToken");
+  const msgUrl =  `${domain}/user`;
+  return fetch(msgUrl, {
+    headers: {
+      Authorization: `Bearer ${authToken}`,
+    },
+  }).then((response) => {
+    if (response.status !== 200) {
+      throw Error("Fail to get user")
+    }
+    return response.json();
   })
 }

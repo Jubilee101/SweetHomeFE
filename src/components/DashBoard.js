@@ -15,7 +15,7 @@ import {
 } from "antd";
 import {
     getPublicInvoice, getPersonalInvoice, getUnreadNum,
-    clearPersonalInvoice, clearPublicInvoice, checkDue, unreadPolling, unreadPollingPublic
+    clearPersonalInvoice, clearPublicInvoice, checkDue, unreadPolling, unreadPollingPublic, unreadPollingPersonal
 } from "../utils";
 import "../styles/DashBoard.css"
 
@@ -58,7 +58,6 @@ class Dashboard extends React.Component {
                         offset={0}
                         className="personal-invoice-col"
                     >
-
                         <PersonalInvoice />
 
                     </Col>
@@ -80,12 +79,7 @@ const PublicInvoice = () => {
     useEffect(() => {
         loadData();
         setUnreadNum("PUBLIC", setCountPublic);
-        const pollPublic = setInterval(async () => {
-            await unreadPollingPublic("PUBLIC", setUnreadNum, setCountPublic, loadData)
-        }, 2000)
-        return function cleanUp(){
-            clearInterval(pollPublic);
-        }
+        unreadPollingPublic("PUBLIC", setUnreadNum, setCountPublic, loadData)
     }, []);
 
     const clearNum = () => {
@@ -218,32 +212,18 @@ const PersonalInvoice = () => {
     }
     useEffect(() => {
         setUnreadNum("MAIL", setCountMail);
-        const pollMail = setInterval(() => {
-                unreadPolling("MAIL", setUnreadNum, setCountMail)
-            }, 2000)
-        
+
         setUnreadNum("OTHER", setCountOther);
-        const pollOther = setInterval(() => {
-             unreadPolling("OTHER", setUnreadNum, setCountOther)
-            }, 2000)
         
         setUnreadNum("RESERVATION", setCountReservation);
-        const pollReservation = setInterval(() => {
-                unreadPolling("RESERVATION", setUnreadNum, setCountReservation);
-            }, 2000)
 
         setUnreadNum("PAYMENT", setCountPayment);
-        const pollPayment = setInterval(() => {
-            unreadPolling("PAYMENT", setUnreadNum, setCountPayment);
-        }, 2000)
+        unreadPollingPersonal(setUnreadNum, 
+        setCountMail, "MAIL", 
+        setCountOther, "OTHER", 
+        setCountReservation, "RESERVATION", 
+        setCountPayment, "PAYMENT");
         checkDue();
-
-        return function cleanUp() {
-            clearInterval(pollMail);
-            clearInterval(pollOther);
-            clearInterval(pollPayment);
-            clearInterval(pollReservation);
-        }
     }, []);
 
     const clickMailDrawer = () => {
