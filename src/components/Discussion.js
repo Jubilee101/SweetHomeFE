@@ -28,17 +28,22 @@ const { TextArea } = Input;
 const Discussion = () => {
     const [messageList, setMessageList] = useState([]);
     const [loading, setLoading] = useState(false);
-    const [user, setUser] = useState({})
+    const [ident, setIdent] = useState({});
+    let user = {};
     useEffect(() => {
         loadData();
-        loadUser();
-        const interval = setInterval(() => {
-            loadData();
-          }, 3000);
-        pollMessage(loadData);
-        return () => {
-            clearInterval(interval);
+        const setUp = async() => {
+            await loadUser();
+            pollMessage(user.email, loadData);
         }
+        setUp();
+        // const interval = setInterval(() => {
+        //     loadData();
+        //   }, 3000);
+        
+        // return () => {
+        //     clearInterval(interval);
+        // }
     }, []);
     
     const chatListRef = useRef(null)
@@ -51,7 +56,9 @@ const Discussion = () => {
     const loadUser = async() => {
         try {
             const resp = await getUser();
-            setUser(resp);
+            setIdent(resp);
+            user = resp;
+            
         } catch(error) {
             message.error(error.message);
         }
@@ -69,10 +76,10 @@ const Discussion = () => {
         const auth = localStorage.getItem("asManager");
         formData.append("text", data.text);
         if (auth === "true") {
-            formData.append("name_and_room", user.name + " " + "Manager");
+            formData.append("name_and_room", ident.name + " " + "Manager");
         }
         else {
-            formData.append("name_and_room", user.name + " " + user.room);
+            formData.append("name_and_room", ident.name + " " + ident.room);
         }
         try {
             await sendMessage(formData);
@@ -82,8 +89,8 @@ const Discussion = () => {
         }
     };
     const flag = (item) => 
-    ((user.room !== null && (user.name + ' ' + user.room) === item.name_and_room) ||
-     (user.room === null && (user.name + ' ' + "Manager") === item.name_and_room))
+    ((ident.room !== null && (ident.name + ' ' + ident.room) === item.name_and_room) ||
+     (ident.room === null && (ident.name + ' ' + "Manager") === item.name_and_room))
     return (
         <Layout className="discussion-layout">
             <Content style={{ height: "100%" }}>
