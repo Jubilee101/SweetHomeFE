@@ -117,8 +117,7 @@ const ResidentHomePage = () => {
                                 </div>
                             </span>}
                             key="2">
-                                
-                                  {activeTab == 2 ? <Reservation /> : <></>} 
+                                  {activeTab === "2" ? <Reservation /> : <></>} 
                         </TabPane>
                         <TabPane tab={
                             <span>

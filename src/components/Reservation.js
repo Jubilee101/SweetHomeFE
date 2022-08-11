@@ -205,7 +205,7 @@ const UtilsList = ({utils, loadingUtils}) => {
                         <Card
                             key={item.id}
                             title={
-                                <div sclassName="card-content">
+                                <div className="card-content">
                                     <Text ellipsis={true}>
                                         {item.category}
                                     </Text>
@@ -322,10 +322,13 @@ const ReservePublicUtil = ({getAllUtils}) => {
     const [loading, setLoading] = useState(false);
     const loadCategories = async () => {
         try {
+            setLoading(true);
             const resp = await getAllPublicUtils();
             setCategories(oldData => [...resp]);
         } catch (error) {
             message.error(error.message);
+        } finally{
+            setLoading(false);
         }
     }
     useEffect(() => {
