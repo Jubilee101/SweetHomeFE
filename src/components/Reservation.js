@@ -263,7 +263,13 @@ const MaintenanceList = ({ maintenanceList, loadingMaintenance }) => {
                                 style={{ backgroundColor: '#fafbfd', border: "1px" }}
                             >
                                 <div style={{ fontSize: "14px", fontWeight: "400" }}>
+                                <Text style={{ fontSize: "14px", fontWeight: "500"}}>
                                     {item.description}
+                                </Text>
+                                <br/>
+                                <Text style={{ fontSize: "9px", fontWeight: "400"}}>
+                                    {"submitted on " + item.submit_time + ' ' + item.submit_date}
+                                </Text>
                                 </div>
                             </Card>
                         </List.Item>
@@ -323,14 +329,13 @@ const UtilsList = ({ utils, loadingUtils }) => {
     )
 }
 
-class SendMaintenanceRequest extends React.Component {
-    state = {
-        loading: false,
-    };
-    fileInputRef = React.createRef();
-    onMaintenanceSubmit = async (values) => {
+const SendMaintenanceRequest = ({ getAllRequests }) => {
+    const [loading, setLoading] = useState(false);
+    const [form] = Form.useForm();
+    const fileInputRef = React.createRef();
+    const onMaintenanceSubmit = async (values) => {
         const formData = new FormData();
-        const { files } = this.fileInputRef.current;
+        const { files } = fileInputRef.current;
 
         if (files.length > 5) {
             message.error("You can at most upload 5 pictures.");
@@ -342,67 +347,64 @@ class SendMaintenanceRequest extends React.Component {
         }
 
         formData.append("description", values.description);
-        this.setState({
-            loading: true,
-        });
+        form.resetFields();
+        setLoading(true)
+
         try {
             await sendMaintenanceRequest(formData);
             message.success("upload successfully");
-            const { getAllRequests } = this.props;
             getAllRequests();
         } catch (error) {
             message.error(error.message);
         } finally {
-            this.setState({
-                loading: false,
-            });
+            setLoading(false);
         }
     }
-    render() {
-        return (
-            <div>
-                <Form
-                    className="problem-submit"
-                    labelCol={{ span: 5 }}
-                    wrapperCol={{ span: 19 }}
-                    onFinish={this.onMaintenanceSubmit}
-                    style={{ paddingTop: "10%" }}
+    return (
+        <div>
+            <Form
+                form={form}
+                className="problem-submit"
+                labelCol={{ span: 5 }}
+                wrapperCol={{ span: 19 }}
+                onFinish={onMaintenanceSubmit}
+                style={{ paddingTop: "10%" }}
+            >
+                <Form.Item
+                    name="description"
+                    label="Description"
+                    rules={[{ required: true, message: 'Input your Description' }]}
                 >
-                    <Form.Item
-                        name="description"
-                        label="Description"
-                        rules={[{ required: true, message: 'Input your Description' }]}
-                    >
-                        <TextArea showCount maxLength={150} />
+                    <TextArea showCount maxLength={150} />
+                </Form.Item>
+                <Form.Item
+                    name="picture"
+                    label="Picture"
+                    rules={[{ required: true, message: "Upload images for demostration" }]}
+                >
+                    <input
+                        type="file"
+                        accept="image/png, image/jpeg"
+                        ref={fileInputRef}
+                        multiple={true}
+                    />
+                </Form.Item>
+                <div style={{ display: "flex", justifyContent: "end" }}>
+                    <Form.Item>
+                        <Button
+                            type="primary"
+                            htmlType="submit"
+                            shape="round"
+                            loading={loading}
+                        >
+                            Submit
+                        </Button>
                     </Form.Item>
-                    <Form.Item
-                        name="picture"
-                        label="Picture"
-                        rules={[{ required: true, message: "Upload images for demostration" }]}
-                    >
-                        <input
-                            type="file"
-                            accept="image/png, image/jpeg"
-                            ref={this.fileInputRef}
-                            multiple={true}
-                        />
-                    </Form.Item>
-                    <div style={{ display: "flex", justifyContent: "end" }}>
-                        <Form.Item>
-                            <Button
-                                type="primary"
-                                htmlType="submit"
-                                shape="round"
-                                loading={this.state.loading}
-                            >
-                                Submit
-                            </Button>
-                        </Form.Item>
-                    </div>
-                </Form>
-            </div>
-        )
-    }
+                </div>
+            </Form>
+        </div>
+    )
+
 }
 
 const ReservePublicUtil = ({ getAllUtils }) => {

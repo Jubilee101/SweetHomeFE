@@ -73,7 +73,7 @@ const ManagerHomePage = () => {
                     <TabPane tab={
                         <span>
                             <div >
-                                <PieChartOutlined />
+                                <CarryOutOutlined />
                             </div>
                             <div style={{ fontSize: "12px", fontWeight: "600" }}>
                                 Reservation

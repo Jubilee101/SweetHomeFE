@@ -28,6 +28,7 @@ const Discussion = () => {
     const [messageList, setMessageList] = useState([]);
     const [loading, setLoading] = useState(false);
     const [ident, setIdent] = useState({});
+    const [form] = Form.useForm();
     //this is necessary, because hook is async
     let user = {};
     useEffect(() => {
@@ -67,6 +68,7 @@ const Discussion = () => {
         const formData = new FormData();
         const auth = localStorage.getItem("asManager");
         formData.append("text", data.text);
+        form.resetFields();
         setLoading(true);
         if (auth === "true") {
             formData.append("name_and_room", ident.name + " " + "Manager");
@@ -141,6 +143,7 @@ const Discussion = () => {
                                 style={{height: "16%"}}
                                 >
                                     <Form
+                                    form={form}
                                         className="discussion-send"
                                         onFinish={onDiscussionSubmit}
                                         // layout={"inline"}
@@ -177,6 +180,7 @@ const Discussion = () => {
                                                 size="large"
                                                 htmlType="submit"
                                                 loading={loading}
+                                                // onClick={(e) => {form.resetFields()}}
                                             >
                                                 <SendOutlined/>
                                             </Button>

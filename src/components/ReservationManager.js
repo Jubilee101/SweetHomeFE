@@ -126,6 +126,7 @@ const PublicUtilsPanel = () => {
 const CancelReservationForm = () => {
   const [categories, setCategories] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [form] = Form.useForm();
   const loadData = async () => {
     try {
       const resp = await getAllPublicUtils();
@@ -148,6 +149,7 @@ const CancelReservationForm = () => {
     formData.append("category", data.category);
     formData.append("date", data.date.format("YYYY-MM-DD"));
     formData.append("time_frame", data.time_frame);
+    form.resetFields()
     setLoading(true);
     console.log(formData)
     try {
@@ -162,6 +164,7 @@ const CancelReservationForm = () => {
   return (
     <>
       <Form
+        form={form}
         className="public-cancel"
         onFinish={onCancelSubmit}
         style={{
@@ -224,10 +227,12 @@ const CancelReservationForm = () => {
 
 const AddPublicUtilForm = () => {
   const [loading, setLoading] = useState(false);
+  const [form] = Form.useForm();
   const onAddSubmit = async (data) => {
     const formData = new FormData();
     formData.append("category", data.category);
     formData.append("description", data.description);
+    form.resetFields()
     setLoading(true);
     try {
       await addPublicUtil(formData);
@@ -241,6 +246,7 @@ const AddPublicUtilForm = () => {
   return (
     <>
       <Form
+        form={form}
         className="public-add"
         onFinish={onAddSubmit}
         style={{
@@ -329,12 +335,16 @@ const MaintenancePanel = () => {
                   </div>
                 }
                 style={{ backgroundColor: '#fafbfd', border: "1px" }}
-                // headStyle={{backgroundColor: '#0000', border: 0 }}
-                // bodyStyle={{backgroundColor: '#6667AB', border: 0 }}
                 extra={<UpdateTimeButton id={item.id} getAllRequests={getAllRequests} />}
               >
                 <div style={{ fontSize: "14px", fontWeight: "400" }}>
-                  {item.description}
+                  <Text style={{ fontSize: "14px", fontWeight: "500"}}>
+                      {item.description}
+                  </Text>
+                  <br/>
+                  <Text style={{ fontSize: "9px", fontWeight: "400"}}>
+                      {"submitted on " + item.submit_time + ' ' + item.submit_date}
+                  </Text>
                 </div>
               </Card>
             </List.Item>
