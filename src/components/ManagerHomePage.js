@@ -51,7 +51,7 @@ class ManagerHomePage extends React.Component {
                                     <div >
                                         <PieChartOutlined />
                                     </div>
-                                    <div style={{ fontSize: "12px", fontWeight: "700" }}>
+                                    <div style={{ fontSize: "12px", fontWeight: "600" }}>
                                         Dashboard
                                     </div>
                                 </span>
@@ -71,7 +71,7 @@ class ManagerHomePage extends React.Component {
                                 <div>
                                     <CarryOutOutlined />
                                 </div>
-                                <div style={{ fontSize: "12px", fontWeight: "700" }}>
+                                <div style={{ fontSize: "12px", fontWeight: "600" }}>
                                     Reservation
                                 </div>
                             </span>}
@@ -83,7 +83,7 @@ class ManagerHomePage extends React.Component {
                                 <div>
                                     <CommentOutlined />
                                 </div>
-                                <div style={{ fontSize: "12px", fontWeight: "700" }}>
+                                <div style={{ fontSize: "12px", fontWeight: "600" }}>
                                     Discussion
                                 </div>
                             </span>} key="3">

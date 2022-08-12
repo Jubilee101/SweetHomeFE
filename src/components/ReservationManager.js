@@ -366,8 +366,10 @@ const UpdateTimeButton = ({ id, getAllRequests }) => {
       getAllRequests();
     } catch (error) {
       message.error(error.message)
+      handleCancel();
     } finally {
       setLoading(false)
+      handleCancel();
     }
   };
 

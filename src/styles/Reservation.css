@@ -9,8 +9,8 @@
 }
 
 .resident-reservation-content {
-  height: 60vh;
-  margin: 7vh 2vw;
+  height: 65vh;
+  margin: 2vh 2vw;
   display: flex;
 }
 
@@ -102,16 +102,28 @@
   align-items: center;
 }
 
-/* .resident-reservation-col {
-  overflow: auto;
+.resident-reservation-col {
+  /* overflow: auto; */
+  width: 45vw;
   display: flex;
-  align-items: center;
+  justify-content: center;
   border-radius: 2vh;
   background: white;
-} */
+  flex-direction: column;
+  align-items: center;
+}
 
 .resident-utils-list{
   /* max-height: 100%; */
+  overflow: auto;
+  overflow-x: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 30vw;
+}
+
+.resident-maintenance-list {
   overflow: auto;
   overflow-x: hidden;
   display: flex;
@@ -141,3 +153,8 @@
   height: 600px;
   overflow: auto;
 } */
+
+.ant-btn.ant-btn-primary.util-button {
+  border-radius: 2vh;
+  
+}

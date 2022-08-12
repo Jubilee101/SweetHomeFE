@@ -28,7 +28,8 @@ import {
     FileDoneOutlined,
     CoffeeOutlined,
     DownCircleOutlined,
-    BookOutlined
+    BookOutlined,
+    FormatPainterOutlined
 } from "@ant-design/icons";
 import {
     getAllPublicUtils,
@@ -84,20 +85,22 @@ const Reservation = () => {
         >
             <Row>
                 <Col
-                    span={11}
+                    span={10}
                     offset={1}
                 >
-                    <Row>
+                    <Row
+                        style={{ marginTop: "2%" }}
+                    >
                         <Col
                             span={3}>
-                            <FileDoneOutlined className="resident-maintenance-requests-icon" />
+                            <FormatPainterOutlined className="resident-maintenance-requests-icon" />
                         </Col>
                         <Col className="resident-maintenance-title-col"
                             offset={1}
-                            span={11}
+                            span={13}
                         >
                             <Content className="resident-maintenance-title-col-content">
-                                Reserve Maintenance/Utils
+                                Reserve Maintenance / Utils
                             </Content>
                         </Col>
                     </Row>
@@ -105,7 +108,13 @@ const Reservation = () => {
                         <Col className="resident-maintenance-col">
                             <div style={{ width: "100%", display: "flex" }}>
                                 <Title
-                                    style={{ display: "flex", justifyContent: "start", alignItems: "center", fontSize: "20px", fontWeight: "500", marginTop: "3vh", marginLeft: "2vw", marginBottom: "0" }}
+                                    style={{ display: "flex", 
+                                    justifyContent: "start", 
+                                    alignItems: "center", 
+                                    fontSize: "20px", 
+                                    fontWeight: "500", 
+                                    marginTop: "3vh", 
+                                    marginLeft: "2vw", marginBottom: "0" }}
                                 >
                                     <DownCircleOutlined style={{ marginRight: "1.5vw", fontSize: "18px" }} />
                                     Choose reservation type
@@ -126,19 +135,20 @@ const Reservation = () => {
                     </Row>
                 </Col>
                 <Col
-                    span={11}
+                    offset={2}
+                    span={10}
                 >
-                    <Row>
+                    <Row style={{ marginTop: "2%" }}>
                         <Col span={3}>
                             <CoffeeOutlined className="resident-reservation-icon" />
                         </Col>
                         <Col
                             className="resident-reservation-title-col"
                             offset={1}
-                            span={8}
+                            span={9}
                         >
                             <Content className="resident-reservation-title-col-content">
-                                All Reservations
+                                Your Reservations
                             </Content>
                         </Col>
                     </Row>
@@ -146,6 +156,23 @@ const Reservation = () => {
                         <Col className="resident-reservation-col"
                             style={{ width: "100%" }}
                         >
+                            <div style={{ width: "100%", display: "flex" }}>
+                                <Title
+                                    style={{
+                                        display: "flex",
+                                        justifyContent: "start",
+                                        alignItems: "center",
+                                        fontSize: "20px",
+                                        fontWeight: "500",
+                                        marginTop: "3vh",
+                                        marginLeft: "2vw",
+                                        marginBottom: "0"
+                                    }}
+                                >
+                                    <DownCircleOutlined style={{ marginRight: "1.5vw", fontSize: "18px" }} />
+                                    Choose reservation type
+                                </Title>
+                            </div>
                             <Content
                                 className="resident-reservation-content"
                             >
@@ -170,7 +197,7 @@ const ReserveSomething = ({ getAllRequests, getAllUtils }) => {
             <Tabs
                 defaultActiveKey="1"
                 type="card"
-                style={{ minWidth: "100%" }}
+                style={{ width: "90%" }}
                 className="request-tabs"
             >
                 <TabPane tab="Maintenance" key="1">
@@ -186,10 +213,11 @@ const ReserveSomething = ({ getAllRequests, getAllUtils }) => {
 
 const ReservationList = ({ maintenanceList, utils, loadingMaintenance, loadingUtils }) => {
     return (
-        <div className="card-container">
+        <div className="card-container" style={{ display: "flex", justifyContent: "center", width: "39vw", minWidth: "39vw" }}>
             <Tabs
                 defaultActiveKey="1"
                 type="card"
+                style={{ width: "90%" }}
                 destroyInactiveTabPane={true}
             >
                 <TabPane tab="Maintenance" key="1">
@@ -211,10 +239,10 @@ const ReservationList = ({ maintenanceList, utils, loadingMaintenance, loadingUt
 
 const MaintenanceList = ({ maintenanceList, loadingMaintenance }) => {
     return (
-        <Content>
+        <Content style={{ display: "flex", overflow: "auto", justifyContent: "center", height: "100%" }}>
             <div>
                 <List
-                    className="manager-maintenance-list"
+                    className="manager-maintenance-list resident-maintenance-list"
                     grid={{ gutter: 0, column: 1 }}
                     size="middle"
                     loading={loadingMaintenance}
@@ -224,16 +252,19 @@ const MaintenanceList = ({ maintenanceList, loadingMaintenance }) => {
                             <Card
                                 key={item.id}
                                 title={
-                                    <div className="card-content">
+                                    <div className="card-content" style={{ display: "flex", alignItems: "center", fontWeight: "600" }}>
                                         <Text ellipsis={true}
-                                            style={item.start_time !== null ? {} : { color: "red" }}>
+                                            style={item.start_time !== null ? {} : { color: "e64203" }}>
                                             {item.user.name + ' ' + item.user.room}
                                         </Text>
                                         < RequestDetailButton item={item} />
                                     </div>
                                 }
+                                style={{ backgroundColor: '#fafbfd', border: "1px" }}
                             >
-                                {item.description}
+                                <div style={{ fontSize: "14px", fontWeight: "400" }}>
+                                    {item.description}
+                                </div>
                             </Card>
                         </List.Item>
                     )}
@@ -246,13 +277,12 @@ const MaintenanceList = ({ maintenanceList, loadingMaintenance }) => {
 const UtilsList = ({ utils, loadingUtils }) => {
     return (
         <Content
-            style={{ width: "100%", display: "flex", justifyContent: "center" }}
+            style={{ display: "flex", overflow: "auto", justifyContent: "center", height: "100%" }}
         >
             <div
-                style={{ width: "100%" }}
             >
                 <List
-                    // className="manager-maintenance-list"
+                    className="resident-maintenance-list"
                     grid={{ gutter: 0, column: 1 }}
                     size="middle"
                     loading={loadingUtils}
@@ -262,15 +292,16 @@ const UtilsList = ({ utils, loadingUtils }) => {
                             <Card
                                 key={item.id}
                                 title={
-                                    <div className="card-content">
+                                    <div className="card-content" style={{ display: "flex", alignItems: "center", fontWeight: "600" }}>
                                         <Text ellipsis={true}>
                                             {item.category}
                                         </Text>
                                     </div>
                                 }
+                                style={{ backgroundColor: '#fafbfd', border: "1px" }}
                             >
                                 {
-                                    <div>
+                                    <div style={{ fontSize: "14px", fontWeight: "500" }}>
                                         <p>
                                             <Text ellipsis={true} >
                                                 Date: {item.date}
@@ -474,7 +505,7 @@ const ReserveUtilButton = ({ category, getAllUtils }) => {
                 className="util-modal"
             >
                 <List
-                    grid={{ gutter: 8, column: 3 }}
+                    grid={{ gutter: 10, column: 3 }}
                     size="middle"
                     dataSource={timeslots}
                     renderItem={(slot) => (
@@ -521,10 +552,14 @@ const TimeSlotButton = ({ category, timeSlot, getAvailableTime, getAllUtils }) =
         >
             {
                 <Space direction="vertical">
-                    <Text type="secondary">
+                    <Text type="secondary"
+                    style={{color: "white"}}
+                    >
                         {timeSlot.date}
                     </Text>
-                    <Text type="secondary">
+                    <Text type="secondary"
+                    style={{color: "white"}}
+                    >
                         {timeSlot.time_frame}
                     </Text>
                 </Space>

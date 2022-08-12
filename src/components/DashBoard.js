@@ -19,7 +19,7 @@ import {
 } from "../utils";
 import "../styles/DashBoard.css"
 
-import { ClearOutlined, SmileOutlined, MessageOutlined, MailOutlined, MenuFoldOutlined, AppstoreAddOutlined, BankOutlined, CreditCardOutlined, ScheduleOutlined, SoundOutlined, BellOutlined } from "@ant-design/icons"
+import { ClearOutlined, SmileOutlined,DeleteOutlined,MessageOutlined, MailOutlined, MenuFoldOutlined, AppstoreAddOutlined, BankOutlined, CreditCardOutlined, ScheduleOutlined, SoundOutlined, BellOutlined } from "@ant-design/icons"
 const { Text, Title } = Typography;
 
 class Dashboard extends React.Component {
@@ -109,8 +109,16 @@ const PublicInvoice = () => {
                 align="bottom"
                 style={{ height: "10%", paddingTop: "1vh", marginBottom: "1vh"}}
             >
-                <Col
+                <Col 
                 offset={2}
+                span={20}
+                >
+
+                    <Row
+                    align="bottom"
+                    >
+                    <Col
+                // offset={2}
                 span={3}
                 >
                 <SoundOutlined className="resident-public-invoice-icon"/>
@@ -124,18 +132,23 @@ const PublicInvoice = () => {
                 Public Invoice
                 </Col>
                 <Col
-                // style={{height: "6vh"}}
-                offset={1}
+                style={{display:"flex",justifyContent: "end"}}
+                offset={9}
+                span={5}
                 >
                     <Button
                         shape="round"
                         type="primary"
-                        size="middle"
+                        size="large"
                         onClick={clearNum}
                     >
-                        <ClearOutlined />{`clear ${countPublic} unread`}
+                        <DeleteOutlined />{`clear ${countPublic} unread`}
                     </Button>
                 </Col>
+
+                    </Row>
+                </Col>
+                
             </Row>
             <Row
                 justify="start"
