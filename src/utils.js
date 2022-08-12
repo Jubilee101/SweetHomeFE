@@ -184,9 +184,10 @@ export const checkDue = () => {
 //   });
 // }
 
-export const unreadPollingPersonal = (setNum, setCount1, type1, setCount2, type2, setCount3, type3, setCount4, type4) => {
+
+export const unreadPollingPersonal = (email, setNum, setCount1, type1, setCount2, type2, setCount3, type3, setCount4, type4) => {
   const authToken = localStorage.getItem("authToken");
-  const pollUrl = `${domain}/watch?type=PERSONAL`;
+  const pollUrl = `${domain}/watch_personal/${email}`;
   console.log(pollUrl);
   return fetch(pollUrl, {
     method: "GET",
@@ -205,7 +206,7 @@ export const unreadPollingPersonal = (setNum, setCount1, type1, setCount2, type2
       setNum(type4, setCount4)
       console.log("end set")
     }
-    unreadPollingPersonal(setNum, 
+    unreadPollingPersonal(email, setNum, 
       setCount1, type1, 
       setCount2, type2, 
       setCount3, type3, 
@@ -215,7 +216,7 @@ export const unreadPollingPersonal = (setNum, setCount1, type1, setCount2, type2
 
 export const unreadPollingPublic = (type, setUnreadNum, setCount, loadData) => {
   const authToken = localStorage.getItem("authToken");
-  const pollUrl = `${domain}/watch?type=${type}`;
+  const pollUrl = `${domain}/watch_public`;
   return fetch(pollUrl, {
     method: "GET",
     headers: {

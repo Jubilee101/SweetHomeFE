@@ -254,7 +254,7 @@ const MaintenanceList = ({ maintenanceList, loadingMaintenance }) => {
                                 title={
                                     <div className="card-content" style={{ display: "flex", alignItems: "center", fontWeight: "600" }}>
                                         <Text ellipsis={true}
-                                            style={item.start_time !== null ? {} : { color: "e64203" }}>
+                                            style={item.start_time !== null ? {} : { color: "#e64203" }}>
                                             {item.user.name + ' ' + item.user.room}
                                         </Text>
                                         < RequestDetailButton item={item} />

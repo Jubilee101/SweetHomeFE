@@ -1,5 +1,5 @@
 import React, {
-    //useEffect, 
+    useEffect, 
     useState
 } from "react";
 import {
@@ -29,72 +29,75 @@ const { Sider, Header, Dropdown, Content, } = Layout;
 const { TabPane } = Tabs;
 const { TextArea } = Input;
 const { Title } = Typography
-class ManagerHomePage extends React.Component {
-
-    render() {
-        return (
-
-            <Layout
-                className="site-layout">
-                <Content className="site-layout-background">
-                    <Tabs
-                        className="nav-tabs" 
-                        style={{ height: "90vh"}} 
-                        size={"middle"} 
-                        tabPosition={"left"} 
-                        defaultActiveKey="1"
-                        >
-                        <TabPane
-                            className="dashboard-content"
-                            tab={
-                                <span>
-                                    <div >
-                                        <PieChartOutlined />
-                                    </div>
-                                    <div style={{ fontSize: "12px", fontWeight: "600" }}>
-                                        Dashboard
-                                    </div>
-                                </span>
-                            } key="1"
-                            style={{height: "100%"}}
-                            >
-                            <Title
-                                
-                                className="manager-dashboard-title"
-                            >
-                                Welcome to Your Manager Dashboard
-                            </Title>
-                            <DashBoardManager />
-                        </TabPane>
-                        <TabPane tab={
-                            <span>
-                                <div>
-                                    <CarryOutOutlined />
-                                </div>
-                                <div style={{ fontSize: "12px", fontWeight: "600" }}>
-                                    Reservation
-                                </div>
-                            </span>}
-                            key="2">
-                            <ReservationManager />
-                        </TabPane>
-                        <TabPane tab={
-                            <span>
-                                <div>
-                                    <CommentOutlined />
-                                </div>
-                                <div style={{ fontSize: "12px", fontWeight: "600" }}>
-                                    Discussion
-                                </div>
-                            </span>} key="3">
-                            <Discussion />
-                        </TabPane>
-                    </Tabs>
-                </Content>
-            </Layout>
-
-        );
+const ManagerHomePage = () => {
+    
+    const [activeTab, setActiveTab] = useState("1");
+    const changeTab = (activeKey) => {
+        setActiveTab(activeKey);
     }
+    return (
+        <Layout
+            className="site-layout">
+            <Content className="site-layout-background">
+                <Tabs
+                    activeKey={activeTab}
+                    onChange={changeTab}
+                    className="nav-tabs" 
+                    style={{ height: "90vh"}} 
+                    size={"middle"} 
+                    tabPosition={"left"} 
+                    defaultActiveKey="1"
+                    >
+                    <TabPane
+                        className="dashboard-content"
+                        tab={
+                            <span>
+                                <div >
+                                    <PieChartOutlined />
+                                </div>
+                                <div style={{ fontSize: "12px", fontWeight: "600" }}>
+                                    Dashboard
+                                </div>
+                            </span>
+                        } key="1"
+                        style={{height: "100%"}}
+                        >
+                        <Title
+                            
+                            className="manager-dashboard-title"
+                        >
+                            Welcome to Your Manager Dashboard
+                        </Title>
+                        <DashBoardManager />
+                    </TabPane>
+                    <TabPane tab={
+                        <span>
+                            <div >
+                                <PieChartOutlined />
+                            </div>
+                            <div style={{ fontSize: "12px", fontWeight: "600" }}>
+                                Reservation
+                            </div>
+                        </span>}
+                        key="2">
+                        {activeTab === "2" ? <ReservationManager /> : <></>} 
+                    </TabPane>
+                    <TabPane tab={
+                        <span>
+                            <div>
+                                <CommentOutlined />
+                            </div>
+                            <div style={{ fontSize: "12px", fontWeight: "600" }}>
+                                Discussion
+                            </div>
+                        </span>} key="3">
+                        <Discussion />
+                    </TabPane>
+                </Tabs>
+            </Content>
+        </Layout>
+    );
+    
 }
 
 export default ManagerHomePage;

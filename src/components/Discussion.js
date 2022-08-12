@@ -28,6 +28,7 @@ const Discussion = () => {
     const [messageList, setMessageList] = useState([]);
     const [loading, setLoading] = useState(false);
     const [ident, setIdent] = useState({});
+    //this is necessary, because hook is async
     let user = {};
     useEffect(() => {
         loadData();
@@ -36,13 +37,6 @@ const Discussion = () => {
             pollMessage(user.email, loadData);
         }
         setUp();
-        // const interval = setInterval(() => {
-        //     loadData();
-        //   }, 3000);
-
-        // return () => {
-        //     clearInterval(interval);
-        // }
     }, []);
 
     const chatListRef = useRef(null)
@@ -57,7 +51,6 @@ const Discussion = () => {
             const resp = await getUser();
             setIdent(resp);
             user = resp;
-
         } catch (error) {
             message.error(error.message);
         }
@@ -109,7 +102,6 @@ const Discussion = () => {
                                         borderRadius: "2vh",
                                         backgroudColor: "#ffff",
                                         padding: "2% 2%",
-                                        // border: '1px solid rgba(140, 140, 140, 0.35)',
                                     }}
                                     ref={chatListRef}
                                 >
@@ -171,7 +163,7 @@ const Discussion = () => {
                                                     background:"#f0f2f5",
                                                     borderRadius:"2vh",
                                                     width: "40vw",
-                                                    marginRight: "1%"
+                                                    marginRight: "1%",
                                                 }}
                                                 placeholder="Share your idea here!"
                                             />

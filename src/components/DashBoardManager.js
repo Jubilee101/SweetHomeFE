@@ -39,14 +39,6 @@ const DashBoardManager = () => {
             </Col>
             
           </Row>
-          <Row>
-            
-            <Col span={13} className="public-message-second-title">
-            
-            <EditOutlined style={{marginRight: "1vh"}}/>
-            Input invoice content
-            </Col>
-          </Row>
 
           <Row>
             <Col className="public-message-col" span={24}>
@@ -65,7 +57,7 @@ const DashBoardManager = () => {
           span={11}
         >
 
-          <Row justify="space-evenly" align="bottom">
+          <Row>
           <Col span={3}  className="public-message-title-icon">
               <ContactsOutlined />
             </Col>
@@ -73,12 +65,6 @@ const DashBoardManager = () => {
               <Content className="private-message-title-col-content">
                 Personal Invoice
               </Content>
-            </Col>
-            
-            <Col span={8} offset= {3} className="public-message-second-title">
-            
-            <EditOutlined style={{marginRight: "1vh"}}/>
-            Edit invoice form
             </Col>
           </Row>
           <Row>
@@ -222,7 +208,7 @@ const PersonalMessage = () => {
               label="Name"
               rules={[{ required: true, message: 'Please input your Name' }]}
             >
-              <Input/>
+              <Input/> 
             </Form.Item>
             <Form.Item
               name="text"

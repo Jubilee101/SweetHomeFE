@@ -15,7 +15,7 @@ import {
 } from "antd";
 import {
     getPublicInvoice, getPersonalInvoice, getUnreadNum,
-    clearPersonalInvoice, clearPublicInvoice, checkDue, unreadPolling, unreadPollingPublic, unreadPollingPersonal
+    clearPersonalInvoice, clearPublicInvoice, checkDue, unreadPolling, unreadPollingPublic, unreadPollingPersonal, getUser,
 } from "../utils";
 import "../styles/DashBoard.css"
 
@@ -223,7 +223,18 @@ const PersonalInvoice = () => {
         const resp = await getUnreadNum(type);
         setNum(resp.num);
     }
+    let user = {}
+    const loadUser = async() => {
+        try {
+            const resp = await getUser();
+            user = resp;
+        } catch(error) {
+            message.error(error.message);
+        }
+    }
     useEffect(() => {
+        checkDue();
+
         setUnreadNum("MAIL", setCountMail);
 
         setUnreadNum("OTHER", setCountOther);
@@ -231,12 +242,16 @@ const PersonalInvoice = () => {
         setUnreadNum("RESERVATION", setCountReservation);
 
         setUnreadNum("PAYMENT", setCountPayment);
-        unreadPollingPersonal(setUnreadNum, 
-        setCountMail, "MAIL", 
-        setCountOther, "OTHER", 
-        setCountReservation, "RESERVATION", 
-        setCountPayment, "PAYMENT");
-        checkDue();
+
+        const setUp = async() => {
+            await loadUser();
+            unreadPollingPersonal(user.email, setUnreadNum, 
+                setCountMail, "MAIL", 
+                setCountOther, "OTHER", 
+                setCountReservation, "RESERVATION", 
+                setCountPayment, "PAYMENT");
+            }
+        setUp();
     }, []);
 
     const clickMailDrawer = () => {
