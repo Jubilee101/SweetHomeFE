@@ -22,10 +22,10 @@
   background: #9193CF;
 }
 
-.ant-tabs-tab.ant-tabs-tab-active .ant-tabs-tab-btn {
+/* .ant-tabs-tab.ant-tabs-tab-active .ant-tabs-tab-btn {
   color: white;
   text-shadow: 0 0 0.25px currentcolor;
-}
+} */
 
 .ant-tabs-tab .anticon {
   font-size: 38px;
@@ -50,10 +50,11 @@
 }
 
 .ant-typography.manager-dashboard-title {
-  margin-left: 7%;
-  margin-bottom: 3%;
-  font-size: 2em;
-  font-weight: 400;
+  margin-top: 5vh;
+  margin-left: 4vw;
+  margin-bottom: 3vh;
+  font-size: 26px;
+  font-weight: 500;
 }
 
 .ant-tabs-left > .ant-tabs-nav .ant-tabs-tab {
