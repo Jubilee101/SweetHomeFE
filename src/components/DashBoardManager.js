@@ -86,11 +86,13 @@ const DashBoardManager = () => {
 
 const PublicMessage = () => {
   const [loading, setLoading] = useState(false);
+  const [form] = Form.useForm();
 
   const onPublicSubmit = async (data) => {
     const formData = new FormData();
     formData.append("text", data.text);
     console.log(data);
+    form.resetFields();
     setLoading(true);
     try {
       await sendPublicInvoice(formData);
@@ -110,6 +112,7 @@ const PublicMessage = () => {
           style={{ width: "90%" }}
         >
           <Form
+            form={form}
             className="public-sending"
             wrapperCol={{ span: 24 }}
             onFinish={onPublicSubmit}
@@ -152,14 +155,14 @@ const PublicMessage = () => {
 
 const PersonalMessage = () => {
   const [loading, setLoading] = useState(false);
-
+  const [form] = Form.useForm();
   const onPersonalSubmit = async (data) => {
     const formData = new FormData();
     formData.append("type", data.type);
     formData.append("room", data.room);
     formData.append("name", data.name);
     formData.append("text", data.text);
-
+    form.resetFields()
     setLoading(true);
     try {
       await sendPersonalInvoice(formData);
@@ -178,6 +181,7 @@ const PersonalMessage = () => {
           style={{ width: "91%" }}
         >
           <Form
+            form={form}
             className="personal-sending"
             labelCol={{ span: 6 }}
             wrapperCol={{ span: 16 }}
