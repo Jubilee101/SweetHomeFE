@@ -19,7 +19,7 @@ import {
 } from "../utils";
 import "../styles/DashBoard.css"
 
-import { ClearOutlined, SmileOutlined, MessageOutlined, MailOutlined, MenuFoldOutlined, AppstoreAddOutlined, BankOutlined, CreditCardOutlined, ScheduleOutlined } from "@ant-design/icons"
+import { ClearOutlined, SmileOutlined,DeleteOutlined,MessageOutlined, MailOutlined, MenuFoldOutlined, AppstoreAddOutlined, BankOutlined, CreditCardOutlined, ScheduleOutlined, SoundOutlined, BellOutlined } from "@ant-design/icons"
 const { Text, Title } = Typography;
 
 class Dashboard extends React.Component {
@@ -85,6 +85,7 @@ const PublicInvoice = () => {
     const clearNum = () => {
         setCountPublic(0);
         clearPublicInvoice();
+        message.success("Unread count cleared")
     }
 
     const loadData = async () => {
@@ -101,17 +102,39 @@ const PublicInvoice = () => {
 
     return (
 
-        <div className="33333"
+        <div
         style={{ height: "95%" }}>
             <Row
-
                 justify="start"
-                style={{ height: "10%", paddingTop: "1vh" }}
+                align="bottom"
+                style={{ height: "10%", paddingTop: "1vh", marginBottom: "1vh"}}
             >
+                <Col 
+                offset={2}
+                span={20}
+                >
+
+                    <Row
+                    align="bottom"
+                    >
+                    <Col
+                // offset={2}
+                span={3}
+                >
+                <SoundOutlined className="resident-public-invoice-icon"/>
+                </Col>
+                
                 <Col
-                    
-                    style={{height: "100%"}}
-                    offset={2}
+                offset={1}
+                span={6}
+                className="resident-public-invoice-title-col"
+                >
+                Public Invoice
+                </Col>
+                <Col
+                style={{display:"flex",justifyContent: "end"}}
+                offset={9}
+                span={5}
                 >
                     <Button
                         shape="round"
@@ -119,9 +142,13 @@ const PublicInvoice = () => {
                         size="large"
                         onClick={clearNum}
                     >
-                        <ClearOutlined />{`clear ${countPublic} unread`}
+                        <DeleteOutlined />{`clear ${countPublic} unread`}
                     </Button>
                 </Col>
+
+                    </Row>
+                </Col>
+                
             </Row>
             <Row
                 justify="start"
@@ -284,13 +311,28 @@ const PersonalInvoice = () => {
     }
 
     return (
-        <div style={{ height: "95%", display: "flex", flexDirection: "column", justifyContent: "space-evenly" }}>
-            <Row
-                gutter={[16, 28]}
-                style={{ height: "35%" }}
-            >
+        <div style={{ height: "95%" }}>
+            <Row style={{height: "10%",paddingTop: "1vh", marginBottom: "1vh"}} align="bottom">
                 <Col
-                span={12}>
+                span={3}
+                >
+                <BellOutlined className="resident-personal-invoice-icon"/>
+                </Col>
+                <Col
+                offset={1}
+                span={7}
+                className="personal-invoice-title-col"
+                >
+                Personal Invoice
+                </Col>
+                
+            </Row>
+            <div style={{height: "90%", display: "flex", flexDirection: "column", justifyContent: "space-evenly"}}>
+              <Row
+                gutter={[16, 28]}
+                style={{ height: "42%" }}
+            >
+                <Col span={12}>
                     <Card
                         title="MAIL"
 
@@ -350,7 +392,7 @@ const PersonalInvoice = () => {
             </Row>
 
             <Row
-                style={{ height: "35%" }}
+                style={{ height: "42%" }}
                 gutter={[16, 28]}
             >
                 <Col span={12}>
@@ -410,7 +452,9 @@ const PersonalInvoice = () => {
                     </Card>
 
                 </Col>
-            </Row>
+            </Row>   
+            </div>
+           
             {visitMail && <PersonalInvoiceDrawer onClose={onMailDrawerClose} type="MAIL" invoiceList={mailList} visible={visitMail} />}
             {visitOther && <PersonalInvoiceDrawer onClose={onOtherDrawerClose} type="OTHER" invoiceList={otherList} visible={visitOther} />}
             {visitPayment && <PersonalInvoiceDrawer onClose={onPaymentDrawerClose} type="PAYMENT" invoiceList={paymentList} visible={visitPayment} />}

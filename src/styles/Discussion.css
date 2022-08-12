@@ -1,6 +1,6 @@
 .ant-layout.discussion-layout {
-  height: 73vh;
-  margin: 7vh 6vw;
+  height: 80vh;
+  margin: 5vh 4vw;
   display: flex;
   background: #ffffff;
   border-radius: 2vh;
@@ -16,7 +16,7 @@
 }
 
 .discussion-list-div {
-  height: 60vh;
+  height: 60%;
   margin: 2vh 8vw;
   display: flex;
   border-radius: 3vh;
@@ -24,8 +24,10 @@
 
 .chat-bubble{
   width: fit-content;
-  max-width: 400px;
-  padding: 1%;
-  border-radius: 2vh;
-  background-color: #9193CF;
+  min-width: 3%;
+  max-width: 30%;
+  padding: 0.7% 1.5%;
+  border-radius: 2.5vh;
+  /* background-color: #9193CF; */
+  background-color: #6869ac;
 }

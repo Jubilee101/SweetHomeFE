@@ -35,7 +35,7 @@ const ManagerHomePage = () => {
     const changeTab = (activeKey) => {
         setActiveTab(activeKey);
     }
-        return (
+    return (
         <Layout
             className="site-layout">
             <Content className="site-layout-background">
@@ -55,11 +55,13 @@ const ManagerHomePage = () => {
                                 <div >
                                     <PieChartOutlined />
                                 </div>
-                                <div style={{ fontSize: "12px", fontWeight: "700" }}>
+                                <div style={{ fontSize: "12px", fontWeight: "600" }}>
                                     Dashboard
                                 </div>
                             </span>
-                        } key="1">
+                        } key="1"
+                        style={{height: "100%"}}
+                        >
                         <Title
                             
                             className="manager-dashboard-title"
@@ -70,10 +72,10 @@ const ManagerHomePage = () => {
                     </TabPane>
                     <TabPane tab={
                         <span>
-                            <div>
-                                <CarryOutOutlined />
+                            <div >
+                                <PieChartOutlined />
                             </div>
-                            <div style={{ fontSize: "12px", fontWeight: "700" }}>
+                            <div style={{ fontSize: "12px", fontWeight: "600" }}>
                                 Reservation
                             </div>
                         </span>}
@@ -85,7 +87,7 @@ const ManagerHomePage = () => {
                             <div>
                                 <CommentOutlined />
                             </div>
-                            <div style={{ fontSize: "12px", fontWeight: "700" }}>
+                            <div style={{ fontSize: "12px", fontWeight: "600" }}>
                                 Discussion
                             </div>
                         </span>} key="3">
@@ -94,7 +96,7 @@ const ManagerHomePage = () => {
                 </Tabs>
             </Content>
         </Layout>
-        );
+    );
     
 }
 

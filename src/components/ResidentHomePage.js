@@ -100,7 +100,7 @@ const ResidentHomePage = () => {
                                     <div >
                                         <PieChartOutlined />
                                     </div>
-                                    <div style={{ fontSize: "12px", fontWeight: "700" }}>
+                                    <div style={{ fontSize: "12px", fontWeight: "600" }}>
                                         Dashboard
                                     </div>
                                 </span>
@@ -112,7 +112,7 @@ const ResidentHomePage = () => {
                                 <div>
                                     <CarryOutOutlined />
                                 </div>
-                                <div style={{ fontSize: "12px", fontWeight: "700" }}>
+                                <div style={{ fontSize: "12px", fontWeight: "600" }}>
                                     Reservation
                                 </div>
                             </span>}
@@ -124,7 +124,7 @@ const ResidentHomePage = () => {
                                 <div>
                                     <CommentOutlined />
                                 </div>
-                                <div style={{ fontSize: "12px", fontWeight: "700" }}>
+                                <div style={{ fontSize: "12px", fontWeight: "600" }}>
                                     Discussion
                                 </div>
                             </span>} key="3">

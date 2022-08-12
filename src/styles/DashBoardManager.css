@@ -1,35 +1,45 @@
-.public-message-col {
-  min-width: 40%;
+.ant-tabs-content-holder {
+  height: 100%
+}
+
+.ant-layout.manager-dashboard-layout {
+  background:  #f0f2f5;
+}
+
+.public-message-title-icon {
+  font-size: 2em;
   display: flex;
+  justify-content: center;
   align-items: center;
-  border-radius: 2%;
+  height: 6vh;
+  color: rgb(0, 0, 0);
+  margin-bottom: 2vh;
+}
+
+.ant-col.public-message-title-icon {
+  /* margin-left: 2%; */
+  background: #ffff;
+  border-radius: 2vh;
+}
+
+.public-message-second-title {
+  background: #ffff;
+  font-size: 18px;
+  border-radius: 2vh;
+  margin-bottom: 2vh;
+  height: 5vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .public-message-title-col {
-  min-width: 40%;
-  display: flex;
-  align-items: center;
-  border-radius: 1vh;
+  /* margin-left: 2%; */
+  border-radius: 2vh;
   margin-bottom: 2vh;
-}
-
-.personal-message-col {
-  min-width: 40%;
-  display: flex;
-  align-items: center;
-  border-radius: 2%;
-}
-
-.personal-message-title-col {
-  min-width: 40%;
-  display: flex;
-  align-items: center;
-  border-radius: 1vh;
-  margin-bottom: 2vh;
-}
-
-.public-message-col-content {
-height: 60vh;
+  background: white;
+  /* background: #6689AB; */
+  color: rgb(0, 0, 0)
 }
 
 .public-message-title-col-content {
@@ -38,59 +48,107 @@ height: 60vh;
   justify-content: center;
   align-items: center;
   height: 6vh;
-  font-weight: 600;
+  font-weight: 500;
 }
 
-.personal-message-col-content {
-  height: 60vh;
-}
 
-.personal-message-title-col-content {
+.public-message-second-title-col-content {
   font-size: 1.5em;
   display: flex;
   justify-content: center;
   align-items: center;
   height: 6vh;
-  font-weight: 600;
-  }
-
-
-.ant-tabs-content-holder {
-  height: 100%
+  font-weight: 400;
 }
 
-.ant-col.public-message-col {
-  margin-right: 3%;
-  margin-left: 7%;
+.public-message-col {
+  border-radius: 2vh;
   background: white;
 }
 
-.ant-col.public-message-title-col {
-  margin-right: 3%;
-  margin-left: 7%;
+.public-message-col-content {
+  height: 50vh;
+}
+
+.private-message-title-col {
+  /* display: flex;
+  align-items: center; */
+  border-radius: 2vh;
+  margin-bottom: 2vh;
   background: white;
 }
 
-.ant-col.personal-message-col {
-  margin-left: 3%;
-  margin-right: 7%;
+.private-message-title-col-content {
+  font-size: 1.5em;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 6vh;
+  font-weight: 500;
+}
+
+.private-message-col {
+  border-radius: 2vh;
+  background: rgb(255, 255, 255);
+}
+    
+.private-message-col-content {
+    height: 57vh;
+}
+
+.ant-input.ant-input-borderless {
+  resize: none;
+}
+
+.ant-input {
+  resize: none;
+}
+
+
+
+
+/* .personal-message-col {
+  min-width: 40%;
+  display: flex;
+  align-items: center;
+  border-radius: 2%;
+} */
+
+/* .personal-message-title-col {
+  min-width: 40%;
+  display: flex;
+  align-items: center;
+  border-radius: 1vh;
+  margin-bottom: 2vh;
+} */
+
+
+
+/* .ant-col.public-message-col {
+  background: white;
+} */
+
+/* .ant-col.public-message-title-col {
+
+  background: white;
+}
+
+.ant-col.private-message-col {
+
   background: rgb(255, 255, 255);
 }
 
-.ant-col.personal-message-title-col {
-  margin-left: 3%;
-  margin-right: 7%;
+.ant-col.private-message-title-col {
+
   background: white;
-}
+} */
 
-.ant-layout.manager-dashboard-layout {
-  background:  #f0f2f5;
-}
 
-.public-sending {
+
+/* .public-sending {
   margin-left: 0%;
   height: 50%
-}
+} */
 
 .public-invoice-form {
   height: 100%;
@@ -107,6 +165,10 @@ height: 60vh;
   flex-direction: column;
   flex-wrap: nowrap;
   align-items: flex-end;
+}
+
+.ant-btn.ant-btn-primary.ant-btn-sm {
+  color: #fff;
 }
 
 .card-container p {

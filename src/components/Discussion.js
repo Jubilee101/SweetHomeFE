@@ -3,28 +3,27 @@ import React, {
     useState,
     useRef,
 } from "react";
-import { 
-    Button, 
-    Typography, 
-    List, Input, 
-    Form, 
-    Avatar, 
+import {
+    Button,
+    Typography,
+    List, Input,
+    Form,
+    Avatar,
     Layout,
     message,
- } from "antd";
+} from "antd";
 import { Content } from "antd/lib/layout/layout";
 
-import { 
+import {
     pollMessage,
     fetchMessages,
     sendMessage,
     getUser,
- } from "../utils";
- import { UserOutlined } from '@ant-design/icons';
- import "../styles/Discussion.css"
+} from "../utils";
+import { UserOutlined, SmileOutlined, SmileFilled, SendOutlined } from '@ant-design/icons';
+import "../styles/Discussion.css"
 const { Text } = Typography;
 const { TextArea } = Input;
-
 const Discussion = () => {
     const [messageList, setMessageList] = useState([]);
     const [loading, setLoading] = useState(false);
@@ -33,13 +32,13 @@ const Discussion = () => {
     let user = {};
     useEffect(() => {
         loadData();
-        const setUp = async() => {
+        const setUp = async () => {
             await loadUser();
             pollMessage(user.email, loadData);
         }
         setUp();
     }, []);
-    
+
     const chatListRef = useRef(null)
 
     useEffect(() => {
@@ -47,27 +46,28 @@ const Discussion = () => {
         current.scrollTop = current.scrollHeight
     }, [messageList])
 
-    const loadUser = async() => {
+    const loadUser = async () => {
         try {
             const resp = await getUser();
             setIdent(resp);
             user = resp;
-        } catch(error) {
+        } catch (error) {
             message.error(error.message);
         }
     }
-    const loadData = async() => { 
+    const loadData = async () => {
         try {
             const resp = await fetchMessages();
             setMessageList(oldData => [...resp]);
-        } catch(error) {
+        } catch (error) {
             message.error(error.message);
         }
     }
-    const onDiscussionSubmit = async (data) => { 
+    const onDiscussionSubmit = async (data) => {
         const formData = new FormData();
         const auth = localStorage.getItem("asManager");
         formData.append("text", data.text);
+        setLoading(true);
         if (auth === "true") {
             formData.append("name_and_room", ident.name + " " + "Manager");
         }
@@ -77,13 +77,15 @@ const Discussion = () => {
         try {
             await sendMessage(formData);
             loadData();
-        } catch(error) {
+            setLoading(false);
+        } catch (error) {
+            setLoading(false);
             message.error(error.message);
         }
     };
-    const flag = (item) => 
+    const flag = (item) =>
     ((ident.room !== null && (ident.name + ' ' + ident.room) === item.name_and_room) ||
-     (ident.room === null && (ident.name + ' ' + "Manager") === item.name_and_room))
+        (ident.room === null && (ident.name + ' ' + "Manager") === item.name_and_room))
     return (
         <Layout className="discussion-layout">
             <Content style={{ height: "100%" }}>
@@ -91,76 +93,92 @@ const Discussion = () => {
                     <Content>
                         <div className="discussion-form"
                             style={{ height: "100%" }}>
-                            <div style={{ width: "72%" }}>
+                            <div style={{ width: "100%", height: "100%", padding: "2% 3%", display: "flex", flexDirection: "column", justifyContent: "space-between" }}>
                                 <div
                                     id="dicussionMessage"
                                     style={{
-                                        height: 300,
+                                        height: "80%",
                                         overflow: 'auto',
                                         borderRadius: "2vh",
-                                        backgroudColor: "#F5F5F5",
-                                        padding: '10px 16px',
-                                        border: '1px solid rgba(140, 140, 140, 0.35)',
+                                        backgroudColor: "#ffff",
+                                        padding: "2% 2%",
                                     }}
                                     ref={chatListRef}
                                 >
                                     <List
+                                    loading={loading}
                                         dataSource={messageList}
                                         renderItem={(item) => (
-                                            
-                                        <List.Item>
-                                            <List.Item.Meta
-                                                avatar={<Avatar size="small" icon={<UserOutlined />}/>}
-                                                title={<Text style={{fontSize: "12px"}}>
-                                                    {item.name_and_room + (flag(item) ? " (You)" : "")
-                                                    }
+
+                                            <List.Item
+                                                size="small"
+                                                style={{ borderBottom: "0px" }}
+                                            >
+                                                <List.Item.Meta
+                                                    avatar={<Avatar size="middle"
+                                                        icon={<SmileFilled style={{ fontSize: "16px" }} />} />}
+                                                    title={<Text style={{ fontSize: "14px", fontWeight: "500" }}>
+                                                        {item.name_and_room + (flag(item) ? " (You)" : "")
+                                                        }
                                                     </Text>}
-                                                description={
-                                                    <div>
-                                                    <div className="chat-bubble">
-                                                    <Text style={{fontWeight: "600", color: "#F5F5F5"}}>{item.text}</Text>
-                                                    </div>
-                                                    <Text style={{fontSize: "10px", marginLeft:"3px"}}>{
-                                                    item.time == undefined ? "" : (item.time + ' ' + item.date)}</Text>
-                                                    </div>
+                                                    description={
+                                                        <div>
+                                                            <div className="chat-bubble">
+                                                                <Text style={{ fontWeight: "500", color: "#ffff", justifyContent: "center"}}>{item.text}</Text>
+                                                            </div>
+                                                            <Text style={{ fontSize: "10px", fontWeight: "500",marginLeft: "3px"}}>{
+                                                                item.time == undefined ? "" : (item.time + ' ' + item.date)}</Text>
+                                                        </div>
+                                                    }
+                                                />
+                                                {
                                                 }
-                                            />
-                                            {
-                                                
-                                            }
-                                        </List.Item>
+                                            </List.Item>
                                         )}
                                     />
                                 </div>
-                                <div>
+                                <div
+                                style={{height: "16%"}}
+                                >
                                     <Form
                                         className="discussion-send"
-                                        labelCol={{ span: 8 }}
-                                        wrapperCol={{ span: 16 }}
                                         onFinish={onDiscussionSubmit}
+                                        // layout={"inline"}
+                                        style={{width: "100%", display: "flex", justifyContent: "end"}}
                                     >
                                         <Form.Item
-                                            label="Text"
                                             name="text"
-                                            rules={[{ required: true, message: 'Type here' }]}
+                                            rules={[{ required: true, 
+                                                message: "Nothing to send!"
+                                        }]}
+                                            
                                         >
                                             <TextArea
-                                                showCount
+                                                // showCount
                                                 allowClear={true}
+                                                bordered={false}
+                                                rows={5}
                                                 style={{
-                                                    height: 100,
+                                                    height: "20%",
+                                                    background:"#f0f2f5",
+                                                    borderRadius:"2vh",
+                                                    width: "40vw",
+                                                    marginRight: "1%",
                                                 }}
+                                                placeholder="Share your idea here!"
                                             />
                                         </Form.Item>
-                                        <Form.Item wrapperCol={{ offset: 22, span: 4 }}>
-                                            <Button 
-                                            type="primary" 
-                                            shape="round" 
-                                            size="large" 
-                                            htmlType="submit"
-                                            loading={loading}
+                                        <Form.Item wrapperCol={{span: 4}}
+                                        style={{display: "flex", alignItems: "flex-end", marginLeft:"2%"}}
+                                        >
+                                                 <Button
+                                                type="primary"
+                                                shape="round"
+                                                size="large"
+                                                htmlType="submit"
+                                                loading={loading}
                                             >
-                                                Send
+                                                <SendOutlined/>
                                             </Button>
                                         </Form.Item>
                                     </Form>
