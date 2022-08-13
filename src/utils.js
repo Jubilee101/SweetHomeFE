@@ -408,7 +408,22 @@ export const cancelReservation = (data) => {
 
 export const fetchMessages = () => {
   const authToken = localStorage.getItem("authToken");
-  const msgUrl =  `${domain}/messages`;
+  const msgUrl =  `${domain}/messages/init`;
+  return fetch(msgUrl, {
+    headers: {
+      Authorization: `Bearer ${authToken}`,
+    },
+  }).then((response) => {
+    if (response.status !== 200) {
+      throw Error("Fail to fetch messages")
+    }
+    return response.json()
+  })
+}
+
+export const fetchMoreMessages = (id) => {
+  const authToken = localStorage.getItem("authToken");
+  const msgUrl =  `${domain}/messages/${id}`;
   return fetch(msgUrl, {
     headers: {
       Authorization: `Bearer ${authToken}`,
