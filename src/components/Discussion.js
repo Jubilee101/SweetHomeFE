@@ -35,7 +35,7 @@ const Discussion = () => {
         loadData();
         const setUp = async () => {
             await loadUser();
-            pollMessage(user.email, loadData);
+            pollMessage(user.email, setMessageList);
         }
         setUp();
     }, []);
@@ -78,7 +78,6 @@ const Discussion = () => {
         }
         try {
             await sendMessage(formData);
-            loadData();
             setLoading(false);
         } catch (error) {
             setLoading(false);

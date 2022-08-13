@@ -437,7 +437,7 @@ export const sendMessage = (data) => {
   })
 }
 
-export const pollMessage = async (email, loadData) => {
+export const pollMessage = async (email, setMessageList) => {
   const authToken = localStorage.getItem("authToken");
   const pollUrl = `${domain}/watch/${email}`;
   const resp = await fetch(pollUrl, {
@@ -450,10 +450,11 @@ export const pollMessage = async (email, loadData) => {
     console.log("time out" + resp.status)
   }
   else {
+    const message = await resp.json();
     console.log("200!")
-    loadData();
+    setMessageList(oldData => [...oldData, message]);
   }
-  await pollMessage(email, loadData);
+  await pollMessage(email, setMessageList);
 }
 
 export const getUser = () => {
