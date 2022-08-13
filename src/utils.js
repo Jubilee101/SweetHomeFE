@@ -408,7 +408,22 @@ export const cancelReservation = (data) => {
 
 export const fetchMessages = () => {
   const authToken = localStorage.getItem("authToken");
-  const msgUrl =  `${domain}/messages`;
+  const msgUrl =  `${domain}/messages/init`;
+  return fetch(msgUrl, {
+    headers: {
+      Authorization: `Bearer ${authToken}`,
+    },
+  }).then((response) => {
+    if (response.status !== 200) {
+      throw Error("Fail to fetch messages")
+    }
+    return response.json()
+  })
+}
+
+export const fetchMoreMessages = (id) => {
+  const authToken = localStorage.getItem("authToken");
+  const msgUrl =  `${domain}/messages/${id}`;
   return fetch(msgUrl, {
     headers: {
       Authorization: `Bearer ${authToken}`,
@@ -437,7 +452,7 @@ export const sendMessage = (data) => {
   })
 }
 
-export const pollMessage = async (email, loadData) => {
+export const pollMessage = async (email, setMessageList, chatListRef) => {
   const authToken = localStorage.getItem("authToken");
   const pollUrl = `${domain}/watch/${email}`;
   const resp = await fetch(pollUrl, {
@@ -450,10 +465,15 @@ export const pollMessage = async (email, loadData) => {
     console.log("time out" + resp.status)
   }
   else {
+    const message = await resp.json();
     console.log("200!")
-    loadData();
+    setMessageList(oldData => [...oldData, message]);
+    const current = chatListRef.current;
+    if (current.scrollHeight - current.scrollTop < 100) {
+      current.scrollTop = current.scrollHeight;
+    }
   }
-  await pollMessage(email, loadData);
+  await pollMessage(email, setMessageList, chatListRef);
 }
 
 export const getUser = () => {

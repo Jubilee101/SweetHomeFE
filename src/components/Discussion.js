@@ -17,35 +17,35 @@ import { Content } from "antd/lib/layout/layout";
 import {
     pollMessage,
     fetchMessages,
+    fetchMoreMessages,
     sendMessage,
     getUser,
 } from "../utils";
+import InfiniteScroll from 'react-infinite-scroll-component';
 import { UserOutlined, SmileOutlined, SmileFilled, SendOutlined } from '@ant-design/icons';
 import "../styles/Discussion.css"
+import { ColSize } from "antd/lib/grid";
 const { Text } = Typography;
 const { TextArea } = Input;
 const Discussion = () => {
     const [messageList, setMessageList] = useState([]);
     const [loading, setLoading] = useState(false);
+    const [hasMore, setHasMore] = useState(true);
     const [ident, setIdent] = useState({});
     const [form] = Form.useForm();
+    const [lastId, setLastId] = useState(0);
     //this is necessary, because hook is async
     let user = {};
     useEffect(() => {
         loadData();
         const setUp = async () => {
             await loadUser();
-            pollMessage(user.email, loadData);
+            pollMessage(user.email, setMessageList, chatListRef);
         }
         setUp();
     }, []);
 
     const chatListRef = useRef(null)
-
-    useEffect(() => {
-        const current = chatListRef.current
-        current.scrollTop = current.scrollHeight
-    }, [messageList])
 
     const loadUser = async () => {
         try {
@@ -56,14 +56,32 @@ const Discussion = () => {
             message.error(error.message);
         }
     }
+
+
     const loadData = async () => {
         try {
             const resp = await fetchMessages();
             setMessageList(oldData => [...resp]);
+            setLastId(resp.length !== 0 ? resp[0].id : 0);
         } catch (error) {
             message.error(error.message);
         }
     }
+
+    const loadMoreData = async () => {
+        console.log("on load more")
+        try {
+            const resp = await fetchMoreMessages(lastId);
+            setHasMore((resp.length > 0));
+            setMessageList(oldData => [...resp, ...oldData]);
+            setLastId(resp.length !== 0 ? resp[0].id : 0);
+            const current = chatListRef.current;
+            current.scrollTop += 1000;
+        } catch (error) {
+            message.error(error.message);
+        }
+    }
+
     const onDiscussionSubmit = async (data) => {
         const formData = new FormData();
         const auth = localStorage.getItem("asManager");
@@ -78,11 +96,16 @@ const Discussion = () => {
         }
         try {
             await sendMessage(formData);
-            loadData();
-            setLoading(false);
+            const current = chatListRef.current
+            current.scrollTop = current.scrollHeight
         } catch (error) {
-            setLoading(false);
+            
             message.error(error.message);
+        } finally {
+            setLoading(false);
+            if (lastId === 0) {
+                setLastId(messageList[0].id);
+            }
         }
     };
     const flag = (item) =>
@@ -104,8 +127,25 @@ const Discussion = () => {
                                         borderRadius: "2vh",
                                         backgroudColor: "#ffff",
                                         padding: "2% 2%",
+                                        display: "flex", 
+                                        flexDirection: "column-reverse"
                                     }}
                                     ref={chatListRef}
+                                >
+                                    
+                                <InfiniteScroll
+                                    dataLength={messageList.length}
+                                    next={loadMoreData}
+                                    hasMore={hasMore}
+                                    loader={<h4>Loading...</h4>}
+                                    scrollableTarget="dicussionMessage"
+                                    endMessage={
+                                        <p style={{ textAlign: 'center' }}>
+                                          <b>Yay! You have seen it all</b>
+                                        </p>
+                                      }
+                                    inverse={true}
+                                    style={{ display: "flex", flexDirection: "column-reverse" }}
                                 >
                                     <List
                                     loading={loading}
@@ -138,6 +178,7 @@ const Discussion = () => {
                                             </List.Item>
                                         )}
                                     />
+                                    </InfiniteScroll>
                                 </div>
                                 <div
                                 style={{height: "16%"}}
