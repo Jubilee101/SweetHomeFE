@@ -452,7 +452,7 @@ export const sendMessage = (data) => {
   })
 }
 
-export const pollMessage = async (email, setMessageList) => {
+export const pollMessage = async (email, setMessageList, chatListRef) => {
   const authToken = localStorage.getItem("authToken");
   const pollUrl = `${domain}/watch/${email}`;
   const resp = await fetch(pollUrl, {
@@ -468,8 +468,12 @@ export const pollMessage = async (email, setMessageList) => {
     const message = await resp.json();
     console.log("200!")
     setMessageList(oldData => [...oldData, message]);
+    const current = chatListRef.current;
+    if (current.scrollHeight - current.scrollTop < 100) {
+      current.scrollTop = current.scrollHeight;
+    }
   }
-  await pollMessage(email, setMessageList);
+  await pollMessage(email, setMessageList, chatListRef);
 }
 
 export const getUser = () => {

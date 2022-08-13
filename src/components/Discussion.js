@@ -40,7 +40,7 @@ const Discussion = () => {
         loadData();
         const setUp = async () => {
             await loadUser();
-            pollMessage(user.email, setMessageList);
+            pollMessage(user.email, setMessageList, chatListRef);
         }
         setUp();
     }, []);
