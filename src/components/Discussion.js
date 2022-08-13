@@ -24,6 +24,7 @@ import {
 import InfiniteScroll from 'react-infinite-scroll-component';
 import { UserOutlined, SmileOutlined, SmileFilled, SendOutlined } from '@ant-design/icons';
 import "../styles/Discussion.css"
+import { ColSize } from "antd/lib/grid";
 const { Text } = Typography;
 const { TextArea } = Input;
 const Discussion = () => {
@@ -69,16 +70,13 @@ const Discussion = () => {
 
     const loadMoreData = async () => {
         console.log("on load more")
-        console.log(lastId);
-        const current = chatListRef.current
-        const preHeight = current.offsetHeight - current.clientHeight;
         try {
             const resp = await fetchMoreMessages(lastId);
-            console.log(resp);
             setHasMore((resp.length > 0));
-            current.scrollTop = preHeight;
             setMessageList(oldData => [...resp, ...oldData]);
             setLastId(resp.length !== 0 ? resp[0].id : 0);
+            const current = chatListRef.current;
+            current.scrollTop += 1000;
         } catch (error) {
             message.error(error.message);
         }
