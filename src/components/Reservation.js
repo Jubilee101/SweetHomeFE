@@ -26,6 +26,7 @@ import {
     RightCircleFilled,
     InfoCircleOutlined,
     FileDoneOutlined,
+    WarningOutlined,
     DeleteOutlined,
     CoffeeOutlined,
     DownCircleOutlined,
@@ -315,7 +316,7 @@ const UtilsList = ({ getAllUtils, utils, loadingUtils }) => {
                                     </div>
                                 }
                                 style={{ backgroundColor: '#fafbfd', border: "1px" }}
-                                extra={isTodayOrBefore(item.date) ? <></> : <DeleteButton id={item.id} getAllUtils={getAllUtils}/>}
+                                extra={isTodayOrBefore(item.date) ? <></> : <DeleteButton item={item} getAllUtils={getAllUtils}/>}
                             >
                                 {
                                     <div style={{ fontSize: "14px", fontWeight: "500" }}>
@@ -340,12 +341,23 @@ const UtilsList = ({ getAllUtils, utils, loadingUtils }) => {
     )
 }
 
-const DeleteButton = ({id, getAllUtils}) => {
+const DeleteButton = ({item, getAllUtils}) => {
     const [loading, setLoading] = useState(false);
+    const [modalVisible, setModalVisible] = useState(false);
+    const handleCancel = () => {
+        setModalVisible(false);
+    }
+    const onClick = () => {
+        setModalVisible(true);
+    }
+    const onOk = () => {
+        onDelete();
+        setModalVisible(false);
+    }
     const onDelete = async () => {
         setLoading(true);
         try {
-            await deleteReservation(id);
+            await deleteReservation(item.id);
             message.success("delete reservation successfully");
             getAllUtils();
         } catch (error) {
@@ -355,14 +367,60 @@ const DeleteButton = ({id, getAllUtils}) => {
         }
     }
     return (
+        <>
         <Button 
         type="primary"
         htmlType="submit"
         shape="round"
-        onClick={onDelete}
-        loading={loading}>
+        onClick={onClick}
+        >
             <DeleteOutlined />
         </Button>
+        <Modal
+                destroyOnClose={true}
+                visible={modalVisible}
+                onCancel={handleCancel}
+                onOk = {onOk}
+                loading={loading}
+                className="util-modal"
+            >
+               <div
+               style = {{
+                display: "flex", 
+                flexDirection: "column",
+                overflow: "auto", 
+                justifyContent: "center", 
+                height: "100px",
+                marginLeft: "30px",
+                marginRight: "30px",
+                textAlign: "center",
+               }}
+               >
+                <Text
+                    style={{
+                        fontSize: "16px",
+                        fontWeight:"bold"
+                    }}
+                >
+                <WarningOutlined 
+                style={{
+                    color: "#FFD700",
+                    fontSize: "18px"
+                }}/>
+                {` Sure to delete the reservation of ${item.category}`}
+                </Text>
+                <br/>
+                <Text
+                    style={{
+                        fontSize: "16px",
+                        fontWeight:"bold"
+                    }}
+                >
+                {` on ${item.date} ${item.time_frame}?`}
+                </Text>
+                </div> 
+        </Modal>
+        </>
     )
 }
 
