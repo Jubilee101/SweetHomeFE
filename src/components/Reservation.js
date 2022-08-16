@@ -26,6 +26,7 @@ import {
     RightCircleFilled,
     InfoCircleOutlined,
     FileDoneOutlined,
+    DeleteOutlined,
     CoffeeOutlined,
     DownCircleOutlined,
     BookOutlined,
@@ -38,6 +39,7 @@ import {
     getAvailableTimeFrame,
     listAllPublicUtilsReservations,
     sendMaintenanceRequest,
+    deleteReservation,
 } from "../utils"
 
 import "../styles/Reservation.css"
@@ -178,6 +180,7 @@ const Reservation = () => {
                             >
                                 <ReservationList
                                     maintenanceList={maintenanceList}
+                                    getAllUtils={getAllUtils}
                                     utils={utils}
                                     loadingMaintenance={loadingMaintenance}
                                     loadingUtils={loadingUtils}
@@ -211,7 +214,7 @@ const ReserveSomething = ({ getAllRequests, getAllUtils }) => {
     );
 }
 
-const ReservationList = ({ maintenanceList, utils, loadingMaintenance, loadingUtils }) => {
+const ReservationList = ({ maintenanceList, getAllUtils, utils, loadingMaintenance, loadingUtils }) => {
     return (
         <div className="card-container" style={{ display: "flex", justifyContent: "center", width: "39vw", minWidth: "39vw" }}>
             <Tabs
@@ -228,6 +231,7 @@ const ReservationList = ({ maintenanceList, utils, loadingMaintenance, loadingUt
                 </TabPane>
                 <TabPane tab="Utils" key="2">
                     <UtilsList
+                        getAllUtils={getAllUtils}
                         utils={utils}
                         loadingUtils={loadingUtils}
                     />
@@ -280,7 +284,13 @@ const MaintenanceList = ({ maintenanceList, loadingMaintenance }) => {
     )
 }
 
-const UtilsList = ({ utils, loadingUtils }) => {
+const UtilsList = ({ getAllUtils, utils, loadingUtils }) => {
+    const isTodayOrBefore = (date) => {
+        let d1 = Date.parse(date);
+        let d2 = Date.now();
+        return d1 <= d2;
+    }
+    console.log(utils)
     return (
         <Content
             style={{ display: "flex", overflow: "auto", justifyContent: "center", height: "100%" }}
@@ -305,6 +315,7 @@ const UtilsList = ({ utils, loadingUtils }) => {
                                     </div>
                                 }
                                 style={{ backgroundColor: '#fafbfd', border: "1px" }}
+                                extra={isTodayOrBefore(item.date) ? <></> : <DeleteButton id={item.id} getAllUtils={getAllUtils}/>}
                             >
                                 {
                                     <div style={{ fontSize: "14px", fontWeight: "500" }}>
@@ -326,6 +337,32 @@ const UtilsList = ({ utils, loadingUtils }) => {
                 />
             </div>
         </Content>
+    )
+}
+
+const DeleteButton = ({id, getAllUtils}) => {
+    const [loading, setLoading] = useState(false);
+    const onDelete = async () => {
+        setLoading(true);
+        try {
+            await deleteReservation(id);
+            message.success("delete reservation successfully");
+            getAllUtils();
+        } catch (error) {
+            message.error(error.message);
+        } finally {
+            setLoading(false);
+        }
+    }
+    return (
+        <Button 
+        type="primary"
+        htmlType="submit"
+        shape="round"
+        onClick={onDelete}
+        loading={loading}>
+            <DeleteOutlined />
+        </Button>
     )
 }
 

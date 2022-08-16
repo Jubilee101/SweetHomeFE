@@ -405,6 +405,20 @@ export const cancelReservation = (data) => {
     }
   })
 }
+export const deleteReservation = (id) => {
+  const authToken = localStorage.getItem("authToken");
+  const deleteUrl = `${domain}/public_utils/${id}`;
+  return fetch(deleteUrl, {
+    method: "DELETE",
+    headers: {
+      Authorization: `Bearer ${authToken}`,
+    },
+  }).then((response) => {
+    if (response.status !== 200) {
+      throw Error("Fail to delete reservation")
+    }
+  })
+}
 
 export const fetchMessages = () => {
   const authToken = localStorage.getItem("authToken");
